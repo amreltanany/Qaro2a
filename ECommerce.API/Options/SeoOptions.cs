@@ -7,7 +7,7 @@ public class SeoOptions
     public string SiteName { get; set; } = "Qaro2a";
 
     public string DefaultDescription { get; set; } =
-        "Discover fashion and style at Qaro2a — curated clothing and accessories with a smooth shopping experience.";
+        "Qaro2a — your hub for books, publishing, podcasts, and literary dialogue.";
 
     /// <summary>Optional. Google largely ignores keywords; leave empty to omit the tag.</summary>
     public string? DefaultKeywords { get; set; }
