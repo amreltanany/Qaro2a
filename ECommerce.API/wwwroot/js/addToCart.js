@@ -34,7 +34,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(function (res) {
                     if (!res.ok) {
                         return res.json().then(function (body) {
-                            var msg = (body && body.message) ? body.message : 'Failed to add to cart.';
+                            var msg = (body && (body.message || (body.Errors && body.Errors.Message)))
+                                ? (body.message || body.Errors.Message)
+                                : 'Failed to add to cart.';
                             alert(msg);
                         }).catch(function () { alert('Failed to add to cart.'); });
                     }

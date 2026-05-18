@@ -34,7 +34,7 @@ namespace ECommerce.Application.Services.Implementations
         public async Task<CartItemDto> AddToCartAsync(string userId, int productId, int quantity)
         {
             var product = await _productRepository.GetByIdAsync(productId);
-            if (product == null) throw new Exception($"Product {productId} not found");
+            if (product == null) throw new KeyNotFoundException($"Product {productId} not found");
             if (product.Stock < quantity)
                 throw new InvalidOperationException($"Insufficient stock. Available: {product.Stock}");
 
@@ -45,7 +45,8 @@ namespace ECommerce.Application.Services.Implementations
                 await _cartItemRepository.UpdateAsync(existing);
                 product.ReduceStock(quantity);
                 await _productRepository.UpdateAsync(product);
-                return _mapper.Map<CartItemDto>(existing);
+                var updated = await _cartItemRepository.GetByIdAsync(existing.Id);
+                return _mapper.Map<CartItemDto>(updated!);
             }
 
             var cartItem = new CartItem(userId, productId, product.Price, quantity);

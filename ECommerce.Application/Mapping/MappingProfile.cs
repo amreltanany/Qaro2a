@@ -48,7 +48,7 @@ namespace ECommerce.Application.Mapping
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product!.Name));
 
             CreateMap<CartItem, CartItemDto>()
-                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product!.Name))
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : string.Empty))
                 .ForMember(dest => dest.AvailableStock, opt => opt.MapFrom(src => src.Product != null ? src.Product.Stock : 0));
 
             CreateMap<WishlistItem, WishlistItemDto>()

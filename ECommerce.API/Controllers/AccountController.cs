@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using ECommerce.Application.DTOs.Account;
 using Microsoft.AspNetCore.Http;
@@ -66,7 +67,9 @@ public class AccountController : ControllerBase
     [HttpGet("me")]
     public IActionResult GetCurrentUser()
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+            ?? User.FindFirstValue(JwtRegisteredClaimNames.NameId)
+            ?? User.FindFirstValue("sub");
         if (string.IsNullOrEmpty(userId)) return Unauthorized();
         return Ok(new { userId });
     }

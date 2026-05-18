@@ -140,6 +140,15 @@
             display: none !important;
         }
 
+        .navbar .nav-item:not(.nav-publish-btn) .nav-link {
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .navbar .nav-item:not(.nav-publish-btn) .nav-link:hover {
+            border-bottom-color: #4da3ff;
+        }
+
         .navbar .nav-link.active {
             color: #4da3ff !important;
             font-weight: 600;
