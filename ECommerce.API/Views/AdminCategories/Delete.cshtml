@@ -1,0 +1,16 @@
+@model ECommerce.Application.DTOs.Category.CategoryResponseDto
+@{
+    ViewData["Title"] = "Delete Category";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+<div class="dashboard-card card">
+    <div class="card-header">Delete Category</div>
+    <div class="card-body">
+        <p>Are you sure you want to delete the category <strong>@Model.Name</strong>?</p>
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
+</div>

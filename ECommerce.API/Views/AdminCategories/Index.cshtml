@@ -1,0 +1,41 @@
+@model IEnumerable<ECommerce.Application.DTOs.Category.CategoryResponseDto>
+@{
+    ViewData["Title"] = "Categories";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+<div class="dashboard-card card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span>Categories</span>
+        <a asp-action="Create" class="btn btn-primary btn-dashboard"><i class="bi bi-plus-lg me-1"></i>Add Category</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-dashboard table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model)
+                    {
+                        <tr>
+                            <td>@c.Id</td>
+                            <td>@c.Name</td>
+                            <td class="text-end">
+                                <a asp-action="Edit" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@c.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @if (!Model.Any())
+        {
+            <p class="text-muted text-center py-4 mb-0">No categories yet.</p>
+        }
+    </div>
+</div>

@@ -1,0 +1,199 @@
+@model IList<ECommerce.Application.DTOs.Product.ProductResponseDto>
+
+@{
+    ViewData["Title"] = "Shop";
+    var searchTerm = ViewBag.Search as string;
+    var isSearch = !string.IsNullOrWhiteSpace(searchTerm);
+    var categories = ViewBag.Categories as IEnumerable<ECommerce.Application.DTOs.Category.CategoryResponseDto>
+        ?? Enumerable.Empty<ECommerce.Application.DTOs.Category.CategoryResponseDto>();
+    var sortBy = (ViewBag.SortBy as string) ?? string.Empty;
+    var publishDateValue = ViewBag.PublishDate as string;
+    var authorValue = (ViewBag.Author as string) ?? string.Empty;
+    var minPriceValue = ViewBag.MinPrice;
+    var maxPriceValue = ViewBag.MaxPrice;
+    var selectedCategoryId = ViewBag.CategoryId as int?;
+}
+
+<link href="https://cdn.jsdelivr.net/npm/inter-ui@3.11.0/inter.min.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="~/button.css" />
+
+<section id="billboard">
+    <div class="container">
+        <div class="row justify-content-center shop-search-header">
+            <h1 class="section-title text-center mt-4" data-aos="fade-up">@(isSearch ? "Search results" : "Shop")</h1>
+            <div class="col-md-6 text-center" data-aos="fade-up" data-aos-delay="300">
+                @if (isSearch)
+                {
+                    <p class="mb-2">Results for &quot;@searchTerm&quot;</p>
+                    <div class="shop-back-wrapper">
+                        <a href="/Home/Shop" class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-arrow-left me-1"></i>Back to Shop
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <p>Books are mirrors read widely to see which reflection excites you most. Curiosity is the compass that leads to passion.</p>
+                }
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-fluid px-3 px-lg-4">
+        <div class="row g-4 py-3 align-items-start">
+            <aside class="col-12 col-lg-3 col-xl-2">
+                <div class="card p-3 sticky-top shop-filter-sidebar" style="top: 90px;">
+                    <h5 class="mb-3">Filters</h5>
+                    <form method="get" action="/Home/Shop" class="d-grid gap-3">
+                        <input type="hidden" name="s" value="@searchTerm" />
+
+                        <div>
+                            <label class="form-label">Publish Date</label>
+                            <input type="date" class="form-control" name="publishDate" value="@publishDateValue" />
+                        </div>
+
+                        <div>
+                            <label class="form-label">Author</label>
+                            <input type="text" class="form-control" name="author" value="@authorValue" placeholder="Author name..." />
+                        </div>
+
+                        <div>
+                            <label class="form-label">Price Range</label>
+                            <div class="d-flex gap-2">
+                                <input type="number" class="form-control" name="minPrice" step="0.01" min="0" value="@minPriceValue" placeholder="Min" />
+                                <input type="number" class="form-control" name="maxPrice" step="0.01" min="0" value="@maxPriceValue" placeholder="Max" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Category</label>
+                            <select class="form-select" name="categoryId">
+                                <option value="">All categories</option>
+                                @foreach (var category in categories)
+                                {
+                                    if (selectedCategoryId.HasValue && selectedCategoryId.Value == category.Id)
+                                    {
+                                        <option value="@category.Id" selected>@category.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@category.Id">@category.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Sort</label>
+                            <select class="form-select" name="sortBy">
+                                <option value="" selected="@(string.IsNullOrWhiteSpace(sortBy))">Newest</option>
+                                <option value="publishdate_desc" selected="@(sortBy == "publishdate_desc")">Publish date: newest first</option>
+                                <option value="publishdate_asc" selected="@(sortBy == "publishdate_asc")">Publish date: oldest first</option>
+                                <option value="author_asc" selected="@(sortBy == "author_asc")">Author: A-Z</option>
+                                <option value="author_desc" selected="@(sortBy == "author_desc")">Author: Z-A</option>
+                                <option value="price_asc" selected="@(sortBy == "price_asc")">Price: low to high</option>
+                                <option value="price_desc" selected="@(sortBy == "price_desc")">Price: high to low</option>
+                                <option value="category_asc" selected="@(sortBy == "category_asc")">Category: A-Z</option>
+                                <option value="category_desc" selected="@(sortBy == "category_desc")">Category: Z-A</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary w-100">Apply</button>
+                            <a href="/Home/Shop" class="btn btn-outline-secondary w-100">Reset</a>
+                        </div>
+                    </form>
+                </div>
+            </aside>
+
+            <div class="col-12 col-lg-9 col-xl-10">
+                @if (!Model.Any())
+                {
+                    <div class="row justify-content-center py-5">
+                        <div class="col-md-6 text-center text-muted">
+                            @if (isSearch)
+                            {
+                                <p class="mb-2">No products found for &quot;@searchTerm&quot;.</p>
+                            }
+                            else
+                            {
+                                <p class="mb-0">No products available at the moment.</p>
+                            }
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row g-4 py-1 shop-products-row" data-aos="fade-up" data-aos-delay="600">
+                        @foreach (var product in Model)
+                        {
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="banner-item image-zoom-effect product-card h-100">
+                                    <div class="image-holder">
+                                        <img src="@Url.Content(product.ImageUrl ?? "~/logo/Untitled_design-removebg-preview.png")"
+                                             alt="@product.Name"
+                                             class="img-fluid"
+                                             style="width: 100%; height: 300px; object-fit: cover;" />
+                                    </div>
+                                    <div class="banner-content py-4" style="padding-left:10px;width:100%">
+                                        <h5 class="element-title text-uppercase">
+                                            <span class="item-anchor" style="cursor: default;">@product.Name</span>
+                                        </h5>
+                                        <p>@product.Description</p>
+                                        <p class="mb-2">
+                                            <a href="/Home/Shop?author=@Uri.EscapeDataString(product.Author)" class="text-decoration-none">By @product.Author</a>
+                                        </p>
+                                        <div class="right-section mx-1" style="display: flex;justify-content: space-between;align-items: center;">
+                                            <div class="btn-left">
+                                                <span class="item-anchor text-black" style="cursor: default;">@product.Price.ToString("C")</span>
+                                            </div>
+                                            <button type="button" class="wishlist-btn btn-add-wishlist" title="Add to wishlist"
+                                                    data-product-id="@product.Id" data-product-name="@product.Name">
+                                                <i class="bi bi-heart"></i>
+                                            </button>
+                                            @if (product.Stock > 0)
+                                            {
+                                                <button type="button" class="button btn-add-cart" data-product-id="@product.Id" data-product-name="@product.Name">
+                                                    <span>Add to cart</span>
+                                                    <div class="cart">
+                                                        <svg viewBox="0 0 36 26">
+                                                            <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
+                                                            <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
+                                                        </svg>
+                                                    </div>
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="button btn-out-of-stock" disabled>
+                                                    <span style="padding-left: 0px; margin-left: 0px;">Out of stock</span>
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .shop-filter-sidebar {
+        max-width: 320px;
+    }
+
+    @@media (max-width: 991.98px) {
+        .shop-filter-sidebar {
+            position: static !important;
+            max-width: 100%;
+        }
+    }
+</style>
+
+<script src="~/js/addToCart.js"></script>
+<script src="~/js/addToWishlist.js"></script>

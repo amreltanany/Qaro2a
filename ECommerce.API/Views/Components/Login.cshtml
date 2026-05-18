@@ -1,0 +1,128 @@
+@{
+    ViewData["Title"] = "Login";
+}
+<script>
+    (function () {
+        var q = window.location.search;
+        if (q.indexOf('sessionExpired') !== -1 || q.indexOf('accountDeleted') !== -1) {
+            if (typeof localStorage !== 'undefined') {
+                localStorage.removeItem('token');
+                localStorage.removeItem('userId');
+            }
+            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
+            window.history.replaceState({}, document.title, window.location.pathname);
+            window.location.reload();
+            return;
+        }
+    })();
+</script>
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <h2 class="text-center mb-4">Login</h2>
+                <div id="loginError" class="alert alert-danger d-none" role="alert"></div>
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+                <p class="mt-3 text-center small">
+                    Don't have an account? <a asp-controller="Home" asp-action="Register">Register</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function parseApiErrorResponse(res) {
+    return res.text().then(function (text) {
+        var fallback = 'Something went wrong. Please try again.';
+        var t = (text || '').trim();
+        if (!t) return fallback;
+        if (t.charAt(0) === '{' || t.charAt(0) === '[') {
+            try {
+                var d = JSON.parse(t);
+                if (d && typeof d === 'object') {
+                    if (d.message) return d.message;
+                    if (d.title && d.title !== 'One or more validation errors occurred.') return d.title;
+                    if (d.detail) return d.detail;
+                    if (d.errors) {
+                        var keys = Object.keys(d.errors);
+                        if (keys.length && Array.isArray(d.errors[keys[0]]) && d.errors[keys[0]][0])
+                            return d.errors[keys[0]][0];
+                    }
+                }
+            } catch (e) { /* ignore */ }
+        }
+        return t;
+    });
+}
+
+document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var errEl = document.getElementById('loginError');
+    errEl.classList.add('d-none');
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+
+    fetch('/api/Account/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, password: password })
+    })
+    .then(function (res) {
+        if (!res.ok) return parseApiErrorResponse(res).then(function (msg) { throw new Error(msg); });
+        return res.json();
+    })
+    .then(function (data) {
+        // Store token client-side
+        localStorage.setItem('token', data.token);
+        // Cookie with 7-day expiry so Cart/Checkout work after closing browser
+        var expires = new Date();
+        expires.setDate(expires.getDate() + 7);
+        document.cookie = 'token=' + encodeURIComponent(data.token) + '; path=/; expires=' + expires.toUTCString() + '; SameSite=Lax';
+
+        var isAdmin = data.email && data.email.trim().toLowerCase() === 'amr_eltanany@outlook.com';
+        if (isAdmin) {
+            return fetch('/api/Account/me', { headers: { 'Authorization': 'Bearer ' + data.token } })
+                .then(function (res) { if (!res.ok) throw new Error('Could not get user'); return res.json(); })
+                .then(function (me) {
+                    localStorage.setItem('userId', me.userId);
+                    return fetch('/Dashboard/SetAdminCookie', {
+                        method: 'GET',
+                        headers: { 'Authorization': 'Bearer ' + data.token },
+                        credentials: 'include'
+                    });
+                })
+                .then(function (r) {
+                    if (!r.ok) return Promise.reject(new Error('Could not set admin session'));
+                    return r.json();
+                })
+                .then(function (payload) {
+                    window.location.href = payload.redirect || '/Dashboard/Index';
+                });
+        }
+        return fetch('/api/Account/me', {
+            headers: { 'Authorization': 'Bearer ' + data.token }
+        }).then(function (res) {
+            if (!res.ok) throw new Error('Could not get user');
+            return res.json();
+        }).then(function (me) {
+            localStorage.setItem('userId', me.userId);
+            window.location.href = '/Home/Shop';
+        });
+    })
+    .catch(function (err) {
+        errEl.textContent = err.message || 'Login failed';
+        errEl.classList.remove('d-none');
+    });
+});
+</script>

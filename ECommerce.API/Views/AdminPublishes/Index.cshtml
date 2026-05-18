@@ -1,0 +1,50 @@
+@model IEnumerable<ECommerce.Domain.Entities.Publish>
+@{
+    ViewData["Title"] = "Publish submissions";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+<div class="dashboard-card card">
+    <div class="card-header">
+        <span>Publish submissions</span>
+    </div>
+    <div class="card-body">
+        @if (!Model.Any())
+        {
+            <p class="text-muted mb-0">No submissions yet.</p>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-dashboard table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date</th>
+                            <th>User name</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>PDF</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>@(item.User?.FullName ?? "—")</td>
+                                <td>@(item.User?.Email ?? "—")</td>
+                                <td>@item.MobileNumber</td>
+                                <td>
+                                    <a href="@Url.Content("~" + item.PdfFilePath)" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-download me-1"></i>Download
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

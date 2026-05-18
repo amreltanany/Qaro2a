@@ -1,0 +1,56 @@
+@model IReadOnlyList<ECommerce.Domain.Entities.Contact>
+@{
+    ViewData["Title"] = "Contact messages";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+<div class="dashboard-card card">
+    <div class="card-header">
+        <span>Contact messages</span>
+    </div>
+    <div class="card-body">
+        @if (Model.Count == 0)
+        {
+            <p class="text-muted mb-0">No messages yet.</p>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-dashboard table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date</th>
+                            <th>User name</th>
+                            <th>User email</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>@item.UserName</td>
+                                <td>@item.UserEmail</td>
+                                <td>@item.Subject</td>
+                                <td class="text-break" style="max-width: 320px;">@item.Message</td>
+                                <td class="text-end">
+                                    <form asp-controller="AdminContacts" asp-action="Delete" method="post" class="d-inline"
+                                          onsubmit="return confirm('Delete this message?');">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash me-1"></i>Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

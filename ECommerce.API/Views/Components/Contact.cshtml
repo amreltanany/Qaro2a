@@ -1,0 +1,101 @@
+@model ECommerce.Application.DTOs.Contact.ContactSubmissionDto
+@{
+    ViewData["Title"] = "Contact";
+}
+         <link rel="stylesheet" type="text/css" href="~/Blog.css">
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title">
+      <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">Contact</h1>
+       
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section py-5">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+      
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4">
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+              <i class="bi bi-geo-alt flex-shrink-0"></i>
+              <div>
+                <h3>Address</h3>
+                <p>A108 Adam Street, New York, NY 535022</p>
+              </div>
+            </div><!-- End Info Item -->
+
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+              <i class="bi bi-telephone flex-shrink-0"></i>
+              <div>
+                <h3>Call Us</h3>
+                <p>+1 5589 55488 55</p>
+              </div>
+            </div><!-- End Info Item -->
+
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
+              <i class="bi bi-envelope flex-shrink-0"></i>
+              <div>
+                <h3>Email Us</h3>
+                <p>info@example.com</p>
+              </div>
+            </div><!-- End Info Item -->
+
+          </div>
+
+          <div class="col-lg-8">
+            @if (TempData["ContactSent"] as bool? == true)
+            {
+              <div class="sent-message d-block">Your message has been saved. Thank you!</div>
+            }
+            <form asp-controller="Contact" asp-action="Send" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+              @Html.AntiForgeryToken()
+              <div asp-validation-summary="All" class="text-danger mb-2"></div>
+              <div class="row gy-4">
+
+                <div class="col-md-6">
+                  <input asp-for="Name" class="form-control" placeholder="Your Name" />
+                  <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                  <input asp-for="Email" class="form-control" placeholder="Your Email" />
+                  <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-12">
+                  <input asp-for="Subject" class="form-control" placeholder="Subject" />
+                  <span asp-validation-for="Subject" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-12">
+                  <textarea asp-for="Message" class="form-control" rows="6" placeholder="Message"></textarea>
+                  <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-12 text-center">
+                  <div class="loading">Loading</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message">Your message has been saved. Thank you!</div>
+
+                  <button type="submit">Send Message</button>
+                </div>
+
+              </div>
+            </form>
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Contact Section -->
+
+  </main>

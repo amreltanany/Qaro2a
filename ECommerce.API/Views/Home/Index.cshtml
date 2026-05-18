@@ -1,0 +1,283 @@
+@model IList<ECommerce.Application.DTOs.Product.ProductResponseDto>
+
+@{
+    ViewData["Title"] = "Home";
+    string Q(string virtualPath, int width, string format, int quality = 82)
+        => $"{Url.Content(virtualPath)}?width={width}&format={format}&quality={quality}";
+
+    var heroWebp = Q("~/logo/Gemini_Generated_Image_g5fo4og5fo4og5fo.png", 1920, "webp", 80);
+    var heroJpeg = Q("~/logo/Gemini_Generated_Image_g5fo4og5fo4og5fo.png", 1920, "jpeg", 82);
+    var publishBannerUrl = Q("~/logo/test24.jpg", 1920, "jpeg", 82);
+    var aboutBackgroundUrl = Q("~/logo/aboutUsBackgrpund.png", 1600, "jpeg", 78);
+}
+
+@section Head {
+    <link rel="preload" as="image" href="@heroWebp" type="image/webp" fetchpriority="high" />
+    <style>
+        .video-overlay-toggle {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 62px;
+            height: 62px;
+            border: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a365d 0%, #2f5b92 100%);
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: 600;
+            z-index: 1050;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+
+        .video-overlay-toggle:hover {
+            transform: scale(1.04);
+            filter: brightness(1.08);
+        }
+
+        .video-overlay-toggle i {
+            display: inline-block;
+            transform: translateY(1px);
+        }
+
+        .video-overlay-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(12, 17, 25, 0.97);
+            display: none;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .video-overlay-screen.is-open {
+            display: block;
+        }
+
+        .video-overlay-close {
+            position: sticky;
+            top: 0;
+            margin-left: auto;
+            display: block;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 0;
+            background: #ffffff;
+            color: #111;
+            font-size: 1.5rem;
+            line-height: 1;
+            font-weight: 700;
+            z-index: 1;
+        }
+
+        .video-overlay-grid {
+            max-width: 1100px;
+            margin: 16px auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .video-overlay-card {
+            background: #0b1220;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+    </style>
+}
+
+<!--Hero-->
+<section>
+    <div class="col-auto" style="width:100%">
+        <picture>
+            <source type="image/webp" srcset="@heroWebp" />
+            <img src="@heroJpeg" alt="Qaro2a — home hero" class="img-fluid mb-4" data-aos="fade-up"
+                width="1920" height="1080" decoding="async" fetchpriority="high"
+                style="width:100%;height:auto">
+        </picture>
+    </div>
+</section>
+<!--Hero-->
+
+<!--New Arrivals-->
+<section id="billboard" class=" ">
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1 class="section-title text-center mt-4" data-aos="fade-up">New Collections</h1>
+            <div class="col-md-6 text-center" data-aos="fade-up" data-aos-delay="300">
+                <p>
+                    Every book in our collection is more than just pages—it’s a perspective. At Qaro2a, we believe
+                    storytelling is the heartbeat of humanity. From curated bestsellers to hidden gems by independent
+                    voices, we provide a platform where every narrative finds its home and every reader finds their next
+                    adventure
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="swiper main-swiper py-4" data-aos="fade-up" data-aos-delay="600">
+                <div class="swiper-wrapper d-flex border-animation-left">
+                    @foreach (var product in Model)
+                    {
+                        var rawImg = product.ImageUrl ?? "~/logo/Untitled_design-removebg-preview.png";
+                        var productSrc = Url.Content(rawImg);
+                        if (!productSrc.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                        {
+                            var q = productSrc.Contains('?', StringComparison.Ordinal) ? '&' : '?';
+                            productSrc = $"{productSrc}{q}width=720&format=webp&quality=80";
+                        }
+
+                        <div class="swiper-slide">
+                            <div class="banner-item image-zoom-effect">
+                                <div class="image-holder">
+                                    <a asp-controller="Home" asp-action="Shop">
+                                        <img src="@productSrc"
+                                            alt="@product.Name" class="img-fluid" loading="lazy" decoding="async"
+                                            width="400" height="300"
+                                            style="width: 100%; height: 300px; object-fit: cover;">
+                                    </a>
+                                </div>
+                                <div class="banner-content py-4" style="padding-left:10px">
+                                    <h5 class="element-title text-uppercase">
+                                        <a href="index.html" class="item-anchor">@product.Name</a>
+                                    </h5>
+                                    <p>@product.Description (author)</p>
+                                    <div class="btn-left">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--New Arrivals-->
+
+<!--publish-->
+<section>
+    <a href="#">
+        <div class="col-auto" style="width:100%">
+            <img src="@publishBannerUrl" alt="Publish with Qaro2a" class="img-fluid" data-aos="fade-up"
+                width="1920" height="600" loading="lazy" decoding="async" style="width:100%;height:auto">
+        </div>
+    </a>
+</section>
+<!--publish-->
+
+<!--broadcast-aboutUs-->
+<section class="py-5" style="background-image: url('@aboutBackgroundUrl');
+         background-size: cover; background-position: center;
+          background-repeat: no-repeat;">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-12 col-md-6">
+                <h2>About Us</h2>
+                <p class="mb-0">Qaro2a is a platform for book lovers to discover and share their favorite books. We are
+                    a team of book lovers who are passionate about books and we believe that books are the best way to
+                    learn and grow. <a asp-controller="Home" asp-action="About">Read more</a></p>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="ratio ratio-16x9">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/sVBZDAQQGCk?si=JrTsT0-V4xXo5RfA"
+                        title="YouTube video player" loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+
+                <div class="view_more">
+                    <a href="https://www.youtube.com/@@Qaro2a/" target="_blank" rel="noopener noreferrer">View more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--broadcast-aboutUs-->
+
+<button type="button" class="video-overlay-toggle" id="videoOverlayOpen" aria-label="Open videos">
+    <i class="bi bi-mic-fill" aria-hidden="true"></i>
+</button>
+
+<section class="video-overlay-screen" id="videoOverlayScreen" aria-hidden="true">
+    <button type="button" class="video-overlay-close" id="videoOverlayClose" aria-label="Close videos">
+        X
+    </button>
+    <div class="video-overlay-grid">
+        <div class="video-overlay-card">
+            <div class="ratio ratio-16x9">
+                <iframe src="https://www.youtube.com/embed/sVBZDAQQGCk?rel=0"
+                        title="Qaro2a Video 1" loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="video-overlay-card">
+            <div class="ratio ratio-16x9">
+                <iframe src="//www.youtube.com/embed/v-0hmm8M-fQ?si=Fze4WEdlxwY2uTnW"
+                        title="Qaro2a Video 2" loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="video-overlay-card">
+            <div class="ratio ratio-16x9">
+                <iframe src="//www.youtube.com/embed/UVg9fp96Aw0?si=sVYVgX91SdNdbORg"
+                        title="Qaro2a Video 3" loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="video-overlay-card">
+            <div class="ratio ratio-16x9">
+                <iframe src="https://www.youtube.com/embed/sVBZDAQQGCk?rel=0"
+                        title="Qaro2a Video 1" loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="video-overlay-card">
+            <div class="ratio ratio-16x9">
+                <iframe src="https://www.youtube.com/embed/sVBZDAQQGCk?rel=0"
+                        title="Qaro2a Video 1" loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="video-overlay-card">
+            <div class="ratio ratio-16x9">
+                <iframe src="https://www.youtube.com/embed/sVBZDAQQGCk?rel=0"
+                        title="Qaro2a Video 1" loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    
+</section>
+
+@section Scripts {
+    <script>
+        (function () {
+            var openBtn = document.getElementById('videoOverlayOpen');
+            var closeBtn = document.getElementById('videoOverlayClose');
+            var screen = document.getElementById('videoOverlayScreen');
+
+            if (!openBtn || !closeBtn || !screen) return;
+
+            function setScreenState(open) {
+                screen.classList.toggle('is-open', open);
+                screen.setAttribute('aria-hidden', open ? 'false' : 'true');
+                document.body.style.overflow = open ? 'hidden' : '';
+            }
+
+            openBtn.addEventListener('click', function () { setScreenState(true); });
+            closeBtn.addEventListener('click', function () { setScreenState(false); });
+            screen.addEventListener('click', function (event) {
+                if (event.target === screen) setScreenState(false);
+            });
+        })();
+    </script>
+}

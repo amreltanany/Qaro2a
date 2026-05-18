@@ -1,0 +1,64 @@
+@model ECommerce.API.ViewModels.CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="mb-4">Checkout</h2>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h5 class="mb-3">Order Summary</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th class="text-end">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.CartItems)
+                            {
+                                <tr>
+                                    <td>@item.ProductName</td>
+                                    <td>@item.Price.ToString("C")</td>
+                                    <td>@item.Quantity</td>
+                                    <td class="text-end">@item.Subtotal.ToString("C")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-end fw-bold mb-0">Grand Total: @Model.GrandTotal.ToString("C")</p>
+            </div>
+
+            <div class="col-lg-4 mt-4 mt-lg-0">
+                <h5 class="mb-3">Shipping details</h5>
+                <form asp-controller="Cart" asp-action="ConfirmCheckout" method="post" asp-antiforgery="true">
+                    <div class="mb-3">
+                        <label for="FullName" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="FullName" name="FullName" value="@Model.FullName" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Phone" class="form-label">Phone number</label>
+                        <input type="tel" class="form-control" id="Phone" name="Phone" value="@Model.Phone" placeholder="Enter your phone number" required/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Address" class="form-label">Address</label>
+                        <textarea class="form-control" id="Address" name="Address" rows="3" placeholder="Enter your shipping address" required>@Model.Address</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Place order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

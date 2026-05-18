@@ -1,0 +1,89 @@
+@model IEnumerable<ECommerce.Application.DTOs.Order.OrderResponseDto>
+@using ECommerce.Domain.Enums
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+<div class="dashboard-card card">
+    <div class="card-header">
+        <span>Orders</span>
+    </div>
+    <div class="card-body">
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        <div class="table-responsive">
+            <table class="table table-dashboard table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Date</th>
+                        <th>User</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Change status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>@order.Id</td>
+                            <td>@order.OrderDate.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(order.UserEmail))
+                                {
+                                    <span title="@order.UserId">@(order.UserName ?? order.UserEmail)</span>
+                                    <br /><small class="text-muted">@order.UserEmail</small>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Guest</span>
+                                }
+                            </td>
+                            <td>@order.TotalAmount.ToString("N2")</td>
+                            <td>
+                                <span class="badge @(order.Status == "Pending" ? "bg-secondary" : order.Status == "Shipped" ? "bg-primary" : order.Status == "Cancelled" ? "bg-danger" : "bg-success")">
+                                    @(order.Status == "Shipped" ? "On delivery" : order.Status)
+                                </span>
+                            </td>
+                            <td>
+                                <form asp-action="UpdateStatus" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@order.Id" />
+                                    <select name="newStatus" class="form-select form-select-sm" style="width: auto; display: inline-block;">
+                                        @if (order.Status == "Pending")
+                                        {<option value="Pending" selected>Pending</option>}
+                                        else
+                                        {<option value="Pending">Pending</option>}
+                                        @if (order.Status == "Paid")
+                                        {<option value="Paid" selected>Paid</option>}
+                                        else
+                                        {<option value="Paid">Paid</option>}
+                                        @if (order.Status == "Shipped")
+                                        {<option value="Shipped" selected>On delivery</option>}
+                                        else
+                                        {<option value="Shipped">On delivery</option>}
+                                        @if (order.Status == "Cancelled")
+                                        {<option value="Cancelled" selected>Cancelled</option>}
+                                        else
+                                        {<option value="Cancelled">Cancelled</option>}
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary ms-1">Update</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @if (!Model.Any())
+        {
+            <p class="text-muted text-center py-4 mb-0">No orders yet.</p>
+        }
+    </div>
+</div>

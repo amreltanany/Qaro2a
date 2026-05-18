@@ -1,0 +1,24 @@
+@model ECommerce.Application.DTOs.Category.CategoryUpdateDto
+@{
+    ViewData["Title"] = "Edit Category";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    var id = (int)ViewBag.Id;
+}
+<div class="dashboard-card card">
+    <div class="card-header">
+        <a href="@Url.Action("Index")" class="text-decoration-none text-muted me-2"><i class="bi bi-arrow-left"></i></a>
+        Edit Category
+    </div>
+    <div class="card-body">
+        <form asp-action="Edit" asp-route-id="@id" method="post">
+            @Html.AntiForgeryToken()
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
+</div>

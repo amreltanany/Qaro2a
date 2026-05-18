@@ -1,0 +1,63 @@
+/* Admin Dashboard */
+.dashboard-body {
+    min-height: 100vh;
+    background-color: #f4f6f9;
+}
+.dashboard-header {
+    background: #fff;
+    border-bottom: 1px solid #e9ecef;
+}
+.dashboard-main {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.dashboard-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    border: 1px solid #e9ecef;
+}
+.dashboard-card .card-header {
+    background: #fff;
+    border-bottom: 1px solid #e9ecef;
+    font-weight: 600;
+    padding: 1rem 1.25rem;
+}
+.table-dashboard th {
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.875rem;
+}
+.table-dashboard td {
+    vertical-align: middle;
+}
+.btn-dashboard {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.875rem;
+}
+/* Login page */
+.dashboard-login-wrap {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+.dashboard-login-card {
+    max-width: 400px;
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.15);
+}
+.dashboard-login-card .card-header {
+    background: transparent;
+    border: none;
+    padding: 1.5rem 1.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+}
+.dashboard-login-card .card-body {
+    padding: 1.5rem;
+}

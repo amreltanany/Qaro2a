@@ -1,0 +1,138 @@
+@model IEnumerable<ECommerce.Application.DTOs.Wishlist.WishlistItemDto>
+
+@{
+    ViewData["Title"] = "Wishlist";
+}
+
+<style>
+    .wishlist-section {
+        padding: 48px 0;
+    }
+    .wishlist-table th {
+        background: #f8f9fa;
+        font-weight: 600;
+    }
+    .wishlist-thumb {
+        width: 72px;
+        height: 72px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+    }
+    .wishlist-remove {
+        border: 0;
+        background: transparent;
+        color: #dc3545;
+        font-size: 1.25rem;
+    }
+    .wishlist-empty {
+        border: 1px dashed #ced4da;
+        border-radius: 10px;
+        padding: 24px;
+        text-align: center;
+        color: #6c757d;
+    }
+</style>
+
+<section class="wishlist-section">
+    <div class="container">
+        <h2 class="mb-4">My Wishlist</h2>
+
+        @if (Model == null || !Model.Any())
+        {
+            <div class="wishlist-empty">
+                Your wishlist is empty. <a asp-controller="Home" asp-action="Shop">Discover books</a>.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle wishlist-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr data-item-id="@item.Id">
+                                <td>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img src="@Url.Content(item.ImageUrl ?? "~/logo/Untitled_design-removebg-preview.png")"
+                                             alt="@item.ProductName" class="wishlist-thumb" />
+                                        <div>
+                                            <div class="fw-semibold">@item.ProductName</div>
+                                            <div class="small text-muted">@item.Description</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>@item.Price.ToString("C")</td>
+                                <td>
+                                    @if (item.AvailableStock > 0)
+                                    {
+                                        <span class="badge bg-success">In stock</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary" style="background-color: #dc3545 !important;" >Out of stock</span>
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    <button type="button" class="wishlist-remove btn-remove-wishlist" title="Remove">×</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <a asp-controller="Home" asp-action="Shop" class="btn btn-outline-primary mt-2">Continue shopping</a>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        (function () {
+            var token = typeof localStorage !== 'undefined' && localStorage.getItem('token');
+            function authHeaders() {
+                return {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                };
+            }
+
+            document.querySelectorAll('.btn-remove-wishlist').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var row = this.closest('tr');
+                    var itemId = row.getAttribute('data-item-id');
+                    if (!token) {
+                        window.location.href = '/Home/Login';
+                        return;
+                    }
+
+                    fetch('/api/Wishlist/items/' + itemId, {
+                        method: 'DELETE',
+                        headers: authHeaders()
+                    })
+                        .then(function (res) {
+                            if (!res.ok) {
+                                return res.json().then(function (body) {
+                                    var msg = (body && body.message) ? body.message : 'Failed to remove item.';
+                                    alert(msg);
+                                }).catch(function () { alert('Failed to remove item.'); });
+                            }
+                            window.location.reload();
+                        })
+                        .catch(function (err) {
+                            console.error(err);
+                            alert('Failed to remove item.');
+                        });
+                });
+            });
+        })();
+    </script>
+}
