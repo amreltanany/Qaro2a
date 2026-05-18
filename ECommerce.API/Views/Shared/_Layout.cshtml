@@ -104,6 +104,8 @@
     @if (!string.IsNullOrEmpty(ogImageAbsolute))
     {
         <meta property="og:image" content="@ogImageAbsolute" />
+        <meta property="og:image:secure_url" content="@ogImageAbsolute" />
+        <meta property="og:image:type" content="image/png" />
     }
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="@ogTitle" />
