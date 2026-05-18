@@ -1,4 +1,4 @@
-using System.Security.Claims;
+using ECommerce.API.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -11,16 +11,12 @@ namespace ECommerce.API.Filters;
 /// </summary>
 public class RequireAdminAttribute : Attribute, IAsyncAuthorizationFilter
 {
-    private const string AdminEmail = "amr_eltanany@outlook.com";
-
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         var result = await context.HttpContext.AuthenticateAsync("Identity.Application");
-        var email = result.Principal?.FindFirstValue(ClaimTypes.Email);
+        var email = UserClaimsHelper.GetEmail(result.Principal);
 
-        var isAdmin = result.Succeeded
-            && !string.IsNullOrWhiteSpace(email)
-            && email.Trim().Equals(AdminEmail, StringComparison.OrdinalIgnoreCase);
+        var isAdmin = result.Succeeded && UserClaimsHelper.IsAdminEmail(email);
 
         if (!isAdmin)
             context.Result = new ForbidResult();

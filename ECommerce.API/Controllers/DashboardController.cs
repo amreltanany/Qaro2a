@@ -1,5 +1,5 @@
-using System.Security.Claims;
 using ECommerce.API.Filters;
+using ECommerce.API.Helpers;
 using ECommerce.Domain.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +10,6 @@ namespace ECommerce.API.Controllers
 {
     public class DashboardController : Controller
     {
-        private const string AdminEmail = "amr_eltanany@outlook.com";
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
 
@@ -27,10 +26,10 @@ namespace ECommerce.API.Controllers
         [HttpGet]
         public async Task<IActionResult> SetAdminCookie()
         {
-            var email = User.FindFirstValue(ClaimTypes.Email);
-            if (string.IsNullOrEmpty(email) || !email.Trim().Equals(AdminEmail, StringComparison.OrdinalIgnoreCase))
+            var email = UserClaimsHelper.GetEmail(User);
+            if (!UserClaimsHelper.IsAdminEmail(email))
                 return Forbid();
-            var user = await _userManager.FindByEmailAsync(email.Trim());
+            var user = await _userManager.FindByEmailAsync(email!.Trim());
             if (user == null) return Forbid();
             await _signInManager.SignInAsync(user, isPersistent: true);
             return Json(new { redirect = Url.Action(nameof(Index), "Dashboard") });

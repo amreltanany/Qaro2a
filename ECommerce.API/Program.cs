@@ -141,7 +141,8 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminOnly", policy =>
         policy.RequireAssertion(context =>
-            context.User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value == "amr_eltanany@outlook.com"));
+            ECommerce.API.Helpers.UserClaimsHelper.IsAdminEmail(
+                ECommerce.API.Helpers.UserClaimsHelper.GetEmail(context.User))));
 });
 
 #endregion

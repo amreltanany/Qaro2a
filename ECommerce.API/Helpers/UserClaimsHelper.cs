@@ -5,6 +5,22 @@ namespace ECommerce.API.Helpers;
 
 public static class UserClaimsHelper
 {
+    public const string AdminEmail = "amr_eltanany@outlook.com";
+
+    public static string? GetEmail(ClaimsPrincipal? user)
+    {
+        if (user?.Identity?.IsAuthenticated != true)
+            return null;
+
+        return user.FindFirstValue(ClaimTypes.Email)
+            ?? user.FindFirstValue(JwtRegisteredClaimNames.Email)
+            ?? user.FindFirstValue("email");
+    }
+
+    public static bool IsAdminEmail(string? email) =>
+        !string.IsNullOrWhiteSpace(email)
+        && email.Trim().Equals(AdminEmail, StringComparison.OrdinalIgnoreCase);
+
     public static string? GetUserId(ClaimsPrincipal? user)
     {
         if (user?.Identity?.IsAuthenticated != true)
