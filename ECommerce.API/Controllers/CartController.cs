@@ -1,6 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
+using ECommerce.API.Helpers;
 using ECommerce.API.ViewModels;
 using ECommerce.Application.Interfaces;
 using ECommerce.Domain.Entities;
@@ -22,24 +20,14 @@ namespace ECommerce.API.Controllers
             _userManager = userManager;
         }
 
-        private Task<string?> GetUserIdFromCookieAsync()
-        {
-            var token = Request.Cookies["token"];
-            if (string.IsNullOrEmpty(token)) return Task.FromResult<string?>(null);
-            var handler = new JwtSecurityTokenHandler();
-            JwtSecurityToken? jwtToken;
-            try { jwtToken = handler.ReadJwtToken(token); }
-            catch { return Task.FromResult<string?>(null); }
-            var userId = jwtToken.Claims
-                .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier || c.Type == JwtRegisteredClaimNames.NameId)
-                ?.Value;
-            return Task.FromResult(userId);
-        }
+        private string? ResolveUserId() =>
+            UserClaimsHelper.GetUserId(User)
+            ?? UserClaimsHelper.GetUserIdFromJwtString(Request.Cookies["token"]);
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var userId = await GetUserIdFromCookieAsync();
+            var userId = ResolveUserId();
             if (string.IsNullOrEmpty(userId))
                 return RedirectToAction("Login", "Home", new { sessionExpired = true });
 
@@ -50,7 +38,7 @@ namespace ECommerce.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Checkout()
         {
-            var userId = await GetUserIdFromCookieAsync();
+            var userId = ResolveUserId();
             if (string.IsNullOrEmpty(userId))
                 return RedirectToAction("Login", "Home", new { sessionExpired = true });
 
@@ -77,7 +65,7 @@ namespace ECommerce.API.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ConfirmCheckout(string FullName, string Email, string Phone, string Address)
         {
-            var userId = await GetUserIdFromCookieAsync();
+            var userId = ResolveUserId();
             if (string.IsNullOrEmpty(userId))
                 return RedirectToAction("Login", "Home", new { sessionExpired = true });
 

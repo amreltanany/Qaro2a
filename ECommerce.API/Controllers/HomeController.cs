@@ -1,9 +1,8 @@
+using ECommerce.API.Helpers;
 using ECommerce.Application.DTOs.Query;
 using ECommerce.Application.Interfaces;
 using ECommerce.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 
 public class HomeController : Controller
 {
@@ -24,22 +23,9 @@ public class HomeController : Controller
         _wishlistService = wishlistService;
     }
 
-    private Task<string?> GetUserIdFromCookieAsync()
-    {
-        var token = Request.Cookies["token"];
-        if (string.IsNullOrEmpty(token)) return Task.FromResult<string?>(null);
-
-        var handler = new JwtSecurityTokenHandler();
-        JwtSecurityToken? jwtToken;
-        try { jwtToken = handler.ReadJwtToken(token); }
-        catch { return Task.FromResult<string?>(null); }
-
-        var userId = jwtToken.Claims
-            .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier || c.Type == JwtRegisteredClaimNames.NameId)
-            ?.Value;
-
-        return Task.FromResult(userId);
-    }
+    private string? GetUserId() =>
+        UserClaimsHelper.GetUserId(User)
+        ?? UserClaimsHelper.GetUserIdFromJwtString(Request.Cookies["token"]);
 
     public async Task<IActionResult> Index()
     {
@@ -106,7 +92,7 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Wishlist()
     {
-        var userId = await GetUserIdFromCookieAsync();
+        var userId = GetUserId();
         if (string.IsNullOrEmpty(userId))
             return RedirectToAction("Login", "Home", new { sessionExpired = true });
 
