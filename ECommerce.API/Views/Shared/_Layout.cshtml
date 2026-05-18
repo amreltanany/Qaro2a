@@ -426,8 +426,6 @@
                 </div>
             </div>
         </nav>
-        <form id="logoutIdentityForm" method="post" asp-controller="Dashboard" asp-action="Logout"
-            style="display: none;">@Html.AntiForgeryToken()</form>
         @RenderBody()
     </main>
 
@@ -508,6 +506,15 @@
 
     <script>
         (function () {
+            if (new URLSearchParams(window.location.search).get('logout') === '1') {
+                localStorage.removeItem('token');
+                localStorage.removeItem('userId');
+                document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
+                if (window.history.replaceState) {
+                    var clean = window.location.pathname + window.location.hash;
+                    window.history.replaceState({}, '', clean);
+                }
+            }
             function applyAuthState() {
                 var token = typeof localStorage !== 'undefined' && localStorage.getItem('token');
                 var guestEls = document.querySelectorAll('.nav-auth-guest');
@@ -529,10 +536,7 @@
             if (logoutLink) {
                 logoutLink.addEventListener('click', function (e) {
                     e.preventDefault();
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('userId');
-                    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
-                    document.getElementById('logoutIdentityForm').submit();
+                    window.location.href = '/Dashboard/Logout';
                 });
             }
         })();

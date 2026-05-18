@@ -43,12 +43,12 @@ namespace ECommerce.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            Response.Cookies.Delete("token");
+            return RedirectToAction("Index", "Home", new { logout = 1 });
         }
     }
 }
