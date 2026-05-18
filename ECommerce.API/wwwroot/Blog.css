@@ -363,6 +363,21 @@ section,
   font-weight: 700;
 }
 
+@media (max-width: 575.98px) {
+  .page-title h1 {
+    font-size: 1.5rem;
+  }
+
+  .section-title h2 {
+    font-size: 1.65rem;
+  }
+
+  .about .content h3 {
+    font-size: 1.35rem;
+    line-height: 1.3;
+  }
+}
+
 .about .content ul {
   list-style: none;
   padding: 0;

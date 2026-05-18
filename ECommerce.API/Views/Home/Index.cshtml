@@ -90,8 +90,8 @@
 }
 
 <!--Hero-->
-<section>
-    <div class="col-auto" style="width:100%">
+<section class="overflow-hidden">
+    <div class="w-100">
         <picture>
             <source type="image/webp" srcset="@heroWebp" />
             <img src="@heroJpeg" alt="Qaro2a — home hero" class="img-fluid mb-4" data-aos="fade-up"
@@ -103,7 +103,7 @@
 <!--Hero-->
 
 <!--New Arrivals-->
-<section id="billboard" class=" ">
+<section id="billboard" class="overflow-hidden">
     <div class="container">
         <div class="row justify-content-center">
             <h1 class="section-title text-center mt-4" data-aos="fade-up">New Collections</h1>
@@ -118,7 +118,7 @@
         </div>
         <div class="row">
             <div class="swiper main-swiper py-4" data-aos="fade-up" data-aos-delay="600">
-                <div class="swiper-wrapper d-flex border-animation-left">
+                <div class="swiper-wrapper border-animation-left">
                     @foreach (var product in Model)
                     {
                         var rawImg = product.ImageUrl ?? "~/logo/Untitled_design-removebg-preview.png";
@@ -158,9 +158,9 @@
 <!--New Arrivals-->
 
 <!--publish-->
-<section>
+<section class="overflow-hidden">
     <a href="#">
-        <div class="col-auto" style="width:100%">
+        <div class="w-100">
             <img src="@publishBannerUrl" alt="Publish with Qaro2a" class="img-fluid" data-aos="fade-up"
                 width="1920" height="600" loading="lazy" decoding="async" style="width:100%;height:auto">
         </div>
@@ -169,7 +169,7 @@
 <!--publish-->
 
 <!--broadcast-aboutUs-->
-<section class="py-5" style="background-image: url('@aboutBackgroundUrl');
+<section class="py-5 overflow-hidden" style="background-image: url('@aboutBackgroundUrl');
          background-size: cover; background-position: center;
           background-repeat: no-repeat;">
     <div class="container">
