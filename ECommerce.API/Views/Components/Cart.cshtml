@@ -33,7 +33,7 @@
                             var atMaxStock = item.Quantity >= item.AvailableStock;
                             <tr data-item-id="@item.Id" data-max-stock="@item.AvailableStock">
                                 <td>@item.ProductName</td>
-                                <td>@item.Price.ToString("C")</td>
+                                <td>@item.Price.ToString("N2") EGP</td>
                                 <td>
                                     <div class="d-flex align-items-center gap-1 flex-wrap">
                                         <button type="button" class="btn btn-sm btn-outline-secondary cart-qty-minus" aria-label="Decrease quantity">−</button>
@@ -42,7 +42,7 @@
                                     </div>
                                     
                                 </td>
-                                <td class="text-end cart-subtotal">@item.Subtotal.ToString("C")</td>
+                                <td class="text-end cart-subtotal">@item.Subtotal.ToString("N2") EGP</td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-outline-danger cart-remove-item" aria-label="Remove item" title="Remove">×</button>
                                 </td>

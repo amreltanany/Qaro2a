@@ -21,6 +21,10 @@ namespace ECommerce.API.Middleware
             }
             catch (Exception ex)
             {
+                // MVC pages should not return JSON; only API routes use this handler.
+                if (!context.Request.Path.StartsWithSegments("/api"))
+                    throw;
+
                 await HandleExceptionAsync(context, ex);
             }
         }

@@ -1,7 +1,10 @@
 using ECommerce.API.Helpers;
+using ECommerce.API.ViewModels;
 using ECommerce.Application.DTOs.Query;
 using ECommerce.Application.Interfaces;
+using ECommerce.Domain.Entities;
 using ECommerce.Infrastructure.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 public class HomeController : Controller
@@ -10,17 +13,26 @@ public class HomeController : Controller
     private readonly ICategoryService _categoryService;
     private readonly IOrderService _orderService;
     private readonly IWishlistService _wishlistService;
+    private readonly UserManager<User> _userManager;
+    private readonly ICartItemRepository _cartItemRepository;
+    private readonly IWishlistItemRepository _wishlistItemRepository;
 
     public HomeController(
         IProductService productService,
         ICategoryService categoryService,
         IOrderService orderService,
-        IWishlistService wishlistService)
+        IWishlistService wishlistService,
+        UserManager<User> userManager,
+        ICartItemRepository cartItemRepository,
+        IWishlistItemRepository wishlistItemRepository)
     {
         _productService = productService;
         _categoryService = categoryService;
         _orderService = orderService;
         _wishlistService = wishlistService;
+        _userManager = userManager;
+        _cartItemRepository = cartItemRepository;
+        _wishlistItemRepository = wishlistItemRepository;
     }
 
     private string? GetUserId() =>
@@ -108,5 +120,117 @@ public class HomeController : Controller
     public IActionResult Register()
     {
         return View("/Views/Components/Register.cshtml");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> MyAccount()
+    {
+        var userId = GetUserId();
+        if (string.IsNullOrEmpty(userId))
+            return RedirectToAction("Login", new { sessionExpired = true });
+
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+            return RedirectToAction("Login", new { sessionExpired = true });
+
+        var orders = (await _orderService.GetOrdersByUserIdAsync(userId)).ToList();
+        var model = new MyAccountViewModel
+        {
+            Email = user.Email ?? string.Empty,
+            FullName = user.FullName ?? string.Empty,
+            Orders = orders,
+            StatusMessage = TempData["StatusMessage"] as string,
+            ErrorMessage = TempData["ErrorMessage"] as string
+        };
+        return View("/Views/Components/MyAccount.cshtml", model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateProfile(string fullName, string? currentPassword, string? newPassword)
+    {
+        var userId = GetUserId();
+        if (string.IsNullOrEmpty(userId))
+            return RedirectToAction("Login", new { sessionExpired = true });
+
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+            return RedirectToAction("Login", new { sessionExpired = true });
+
+        if (string.IsNullOrWhiteSpace(fullName))
+        {
+            TempData["ErrorMessage"] = "Full name is required.";
+            return RedirectToAction(nameof(MyAccount));
+        }
+
+        user.FullName = fullName.Trim();
+
+        if (!string.IsNullOrWhiteSpace(newPassword))
+        {
+            if (string.IsNullOrWhiteSpace(currentPassword))
+            {
+                TempData["ErrorMessage"] = "Enter your current password to set a new password.";
+                return RedirectToAction(nameof(MyAccount));
+            }
+
+            var passwordResult = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+            if (!passwordResult.Succeeded)
+            {
+                TempData["ErrorMessage"] = string.Join(" ", passwordResult.Errors.Select(e => e.Description));
+                return RedirectToAction(nameof(MyAccount));
+            }
+        }
+
+        var updateResult = await _userManager.UpdateAsync(user);
+        if (!updateResult.Succeeded)
+        {
+            TempData["ErrorMessage"] = "Could not save profile changes.";
+            return RedirectToAction(nameof(MyAccount));
+        }
+
+        TempData["StatusMessage"] = "Profile updated successfully.";
+        return RedirectToAction(nameof(MyAccount));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteAccount(string deletePassword)
+    {
+        var userId = GetUserId();
+        if (string.IsNullOrEmpty(userId))
+            return RedirectToAction("Login", new { sessionExpired = true });
+
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+            return RedirectToAction("Login", new { sessionExpired = true });
+
+        if (!await _userManager.CheckPasswordAsync(user, deletePassword))
+        {
+            TempData["ErrorMessage"] = "Password is incorrect. Account was not deleted.";
+            return RedirectToAction(nameof(MyAccount));
+        }
+
+        await _orderService.DeleteOrdersByUserIdAsync(userId);
+        await _cartItemRepository.DeleteByUserIdAsync(userId);
+
+        var wishlistItems = await _wishlistItemRepository.GetByUserIdAsync(userId);
+        foreach (var item in wishlistItems)
+            await _wishlistItemRepository.DeleteAsync(item);
+
+        var deleteResult = await _userManager.DeleteAsync(user);
+        if (!deleteResult.Succeeded)
+        {
+            TempData["ErrorMessage"] = "Could not delete account. Please try again.";
+            return RedirectToAction(nameof(MyAccount));
+        }
+
+        Response.Cookies.Delete("token");
+        return RedirectToAction("Index");
+    }
+
+    [HttpGet]
+    public IActionResult Error()
+    {
+        return Content("Something went wrong. Please try again later.", "text/plain");
     }
 }
