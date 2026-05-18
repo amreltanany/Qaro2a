@@ -1,5 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+using ECommerce.API.Helpers;
 using ECommerce.Application.Interfaces;
 using ECommerce.Domain.Entities;
 using Microsoft.AspNetCore.Hosting;
@@ -21,29 +20,14 @@ public class PublishController : Controller
         _environment = environment;
     }
 
-    private string? GetUserIdFromCookie()
-    {
-        var token = Request.Cookies["token"];
-        if (string.IsNullOrEmpty(token)) return null;
-        try
-        {
-            var handler = new JwtSecurityTokenHandler();
-            var jwtToken = handler.ReadJwtToken(token);
-            var userId = jwtToken.Claims
-                .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier || c.Type == "nameid")
-                ?.Value;
-            return userId;
-        }
-        catch
-        {
-            return null;
-        }
-    }
+    private string? ResolveUserId() =>
+        UserClaimsHelper.GetUserId(User)
+        ?? UserClaimsHelper.GetUserIdFromJwtString(Request.Cookies["token"]);
 
     [HttpGet]
     public IActionResult Index()
     {
-        var userId = GetUserIdFromCookie();
+        var userId = ResolveUserId();
         if (string.IsNullOrEmpty(userId))
             return RedirectToAction("Login", "Home", new { returnUrl = Url.Action(nameof(Index)) });
 
@@ -54,7 +38,7 @@ public class PublishController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Index(string mobileNumber, IFormFile? pdfFile, CancellationToken cancellationToken = default)
     {
-        var userId = GetUserIdFromCookie();
+        var userId = ResolveUserId();
         if (string.IsNullOrEmpty(userId))
             return RedirectToAction("Login", "Home", new { returnUrl = Url.Action(nameof(Index)) });
 

@@ -31,8 +31,16 @@ namespace ECommerce.API.Controllers
             if (string.IsNullOrEmpty(userId))
                 return RedirectToAction("Login", "Home", new { sessionExpired = true });
 
-            var cartItems = await _cartService.GetCartByUserIdAsync(userId);
-            return View("/Views/Components/Cart.cshtml", cartItems);
+            try
+            {
+                var cartItems = await _cartService.GetCartByUserIdAsync(userId);
+                return View("/Views/Components/Cart.cshtml", cartItems);
+            }
+            catch (Exception)
+            {
+                TempData["CartError"] = "Unable to load your cart. Data may be out of sync — please try again after we refresh.";
+                return View("/Views/Components/Cart.cshtml", Enumerable.Empty<ECommerce.Application.DTOs.Cart.CartItemDto>());
+            }
         }
 
         [HttpGet]

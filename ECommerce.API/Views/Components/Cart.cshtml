@@ -8,6 +8,11 @@
     <div class="container">
         <h2 class="mb-4">Your Cart</h2>
 
+        @if (TempData["CartError"] is string cartError)
+        {
+            <div class="alert alert-warning" role="alert">@cartError</div>
+        }
+
         @if (Model == null || !Model.Any())
         {
             <div class="text-muted">
