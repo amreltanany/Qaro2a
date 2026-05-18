@@ -20,6 +20,7 @@
                 "Index" => "Home",
                 "Shop" => "Shop",
                 "MyAccount" => "My Account",
+                "Broadcast" => "Podcast",
                 "PrivacyPolicy" => "Privacy Policy",
                 "TermsOfService" => "Terms of Service",
                 _ => string.IsNullOrEmpty(action) ? "Home" : string.Concat(action.Select((c, i) => i > 0 && char.IsUpper(c) ? " " + c : c.ToString()))
@@ -352,7 +353,7 @@
                             <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Home", "Blog")"
                                     asp-controller="Home" asp-action="Blog">Blog</a></li>
                             <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Home", "Broadcast")"
-                                    asp-controller="Home" asp-action="Broadcast"><i class="bi bi-mic-fill me-1"></i> BROADCAST</a></li>
+                                    asp-controller="Home" asp-action="Broadcast"><i class="bi bi-mic-fill me-1"></i> Podcast</a></li>
                             <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Home", "About")"
                                     asp-controller="Home" asp-action="ABOUT">ABOUT</a></li>
                             <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Contact", "Index")"
