@@ -1,9 +1,9 @@
 @{
     ViewData["Title"] = "About";
 }
-         <link rel="stylesheet" type="text/css" href="~/Blog.css">
+<link rel="stylesheet" type="text/css" href="~/Blog.css" asp-append-version="true">
 
-  <main class="main">
+<main class="main">
     <div class="page-title">
       <div class="container d-lg-flex justify-content-between align-items-center">
         <h1 class="mb-2 mb-lg-0">About</h1>
@@ -17,8 +17,7 @@
 
           <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
             <p class="who-we-are">Who We Are</p>
-            <h3>The Ultimate Hub for Books, Publishing & Dialogue
-</h3>
+            <h3>The Ultimate Hub for Books, Publishing & Dialogue</h3>
             <p class="fst-italic">
             At Qaro2a, we are a premier literary hub shaping the future of reading. As a dynamic podcast, insightful book reviewer, and forward thinking publisher, we are dedicated to championing books and empowering the entire literary ecosystem. Through engaging discussions and strategic support, we bridge the gap between creative authors and passionate readers.
             </p>
@@ -32,15 +31,15 @@
           <div class="col-lg-6 about-images" data-aos="fade-up" data-aos-delay="200">
             <div class="row gy-4">
               <div class="col-lg-6">
-                <img src="~/blog_img/WhatsApp Image 2026-05-18 at 9.00.29 PM.jpeg" class="img-fluid" alt="">
+                <img src="@Url.Content("~/blog_img/about-hero.jpeg")" class="img-fluid" alt="Qaro2a team" asp-append-version="true" />
               </div>
               <div class="col-lg-6">
                 <div class="row gy-4">
                   <div class="col-lg-12">
-                    <img src="~/blog_img/Screenshot 2026-05-16 132348.png" class="img-fluid" alt="">
+                    <img src="@Url.Content("~/blog_img/about-gallery-1.png")" class="img-fluid" alt="Qaro2a event" asp-append-version="true" />
                   </div>
                   <div class="col-lg-12">
-                    <img src="~/blog_img/Screenshot 2026-05-16 132425.png" class="img-fluid" alt="">
+                    <img src="@Url.Content("~/blog_img/about-gallery-2.png")" class="img-fluid" alt="Qaro2a community" asp-append-version="true" />
                   </div>
                 </div>
               </div>
@@ -51,17 +50,15 @@
         </div>
 
       </div>
-    </section><!-- /About Section -->
+    </section>
 
-    <!-- Team Section -->
     <section id="team" class="team section py-5">
 
-      <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <div class="section-title-container d-flex align-items-center justify-content-between">
           <h2>Team</h2>
         </div>
-      </div><!-- End Section Title -->
+      </div>
 
       <div class="container">
 
@@ -69,7 +66,7 @@
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="~/blog_img/blog_members/Alia.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="@Url.Content("~/blog_img/blog_members/Alia.jpg")" class="img-fluid" alt="Alia" asp-append-version="true" /></div>
               <div class="member-info">
                 <h4>Alia</h4>
                 <span>Title</span>
@@ -78,15 +75,15 @@
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
                   <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""> <i class="bi bi-linkedin"></i> </a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
                 </div>
               </div>
             </div>
-          </div><!-- End Team Member -->
+          </div>
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="~/blog_img/team/Aia.png" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="@Url.Content("~/blog_img/team/Aia.png")" class="img-fluid" alt="Aia" asp-append-version="true" /></div>
               <div class="member-info">
                 <h4>Aia</h4>
                 <span>Title</span>
@@ -95,50 +92,50 @@
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
                   <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""> <i class="bi bi-linkedin"></i> </a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
                 </div>
               </div>
             </div>
-          </div><!-- End Team Member -->
+          </div>
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="~/blog_img/team/Mamdouh.png" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="@Url.Content("~/blog_img/team/Mamdouh.png")" class="img-fluid" alt="Mamdouh" asp-append-version="true" /></div>
               <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>CTO</span>
+                <h4>Mamdouh</h4>
+                <span>Title</span>
                 <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
                   <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""> <i class="bi bi-linkedin"></i> </a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
                 </div>
               </div>
             </div>
-          </div><!-- End Team Member -->
+          </div>
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="~/blog_img/team/Rana.png" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="@Url.Content("~/blog_img/team/Rana.png")" class="img-fluid" alt="Rana" asp-append-version="true" /></div>
               <div class="member-info">
-                <h4>Amanda Jepson</h4>
-                <span>Accountant</span>
+                <h4>Rana</h4>
+                <span>Title</span>
                 <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
                   <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""> <i class="bi bi-linkedin"></i> </a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
                 </div>
               </div>
             </div>
-          </div><!-- End Team Member -->
+          </div>
 
         </div>
 
       </div>
 
-    </section><!-- /Team Section -->
+    </section>
 
   </main>
