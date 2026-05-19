@@ -87,9 +87,11 @@ public class HomeController : Controller
         return View("/Views/Components/Blog.cshtml");
     }
 
-    public IActionResult Broadcast()
+    public IActionResult Broadcast() => RedirectToActionPermanent(nameof(Podcast));
+
+    public IActionResult Podcast()
     {
-        return View("/Views/Components/Broadcast.cshtml");
+        return View("/Views/Components/Podcast.cshtml");
     }
 
     public IActionResult Contact()

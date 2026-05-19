@@ -20,7 +20,7 @@
                 "Index" => "Home",
                 "Shop" => "Shop",
                 "MyAccount" => "My Account",
-                "Broadcast" => "Podcast",
+                "Podcast" => "Podcast",
                 "PrivacyPolicy" => "Privacy Policy",
                 "TermsOfService" => "Terms of Service",
                 _ => string.IsNullOrEmpty(action) ? "Home" : string.Concat(action.Select((c, i) => i > 0 && char.IsUpper(c) ? " " + c : c.ToString()))
@@ -352,8 +352,8 @@
                             @await Component.InvokeAsync("AdminNav", new { section = "main" })
                             <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Home", "Blog")"
                                     asp-controller="Home" asp-action="Blog">Blog</a></li>
-                            <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Home", "Broadcast")"
-                                    asp-controller="Home" asp-action="Broadcast"><i class="bi bi-mic-fill me-1"></i> Podcast</a></li>
+                            <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Home", "Podcast")"
+                                    asp-controller="Home" asp-action="Podcast"><i class="bi bi-mic-fill me-1"></i> Podcast</a></li>
                             <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Home", "About")"
                                     asp-controller="Home" asp-action="About">About</a></li>
                             <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Contact", "Index")"
@@ -471,10 +471,12 @@
                         <div class="col-12 col-sm-6 col-md-3 text-center">
                             <h5 class="text-white mb-3 ">CONNECT</h5>
                             <ul class="list-unstyled mb-0 small opacity-90">
-                                <li class="mb-2"><span class="text-white text-decoration-none">01234567890</span>
+                                <li class="mb-2">
+                                    <a href="https://wa.me/201555012590" class="text-white text-decoration-none" target="_blank" rel="noopener noreferrer">+201555012590</a>
                                 </li>
-                                <li class="mb-2"><span
-                                        class="text-white text-decoration-none">qaro2a.official@gmail.com</span></li>
+                                <li class="mb-2">
+                                    <a href="mailto:qaro2a.official@gmail.com" class="text-white text-decoration-none">qaro2a.official@gmail.com</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
