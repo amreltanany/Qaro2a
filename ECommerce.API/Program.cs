@@ -91,8 +91,15 @@ builder.Services.AddImageSharp(options =>
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        b => b.MigrationsAssembly("ECommerce.Infrastructure") // Add this line
-    ));
+        sql =>
+        {
+            sql.MigrationsAssembly("ECommerce.Infrastructure");
+            // Azure SQL can return 40613 while the database resumes from pause/auto-pause.
+            sql.EnableRetryOnFailure(
+                maxRetryCount: 6,
+                maxRetryDelay: TimeSpan.FromSeconds(30),
+                errorNumbersToAdd: null);
+        }));
 #endregion
 
 #region Authentication / Authorization
@@ -213,11 +220,38 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-app.MapGet("/health", () => Results.Ok(new
+app.MapGet("/health", async (AppDbContext db, CancellationToken cancellationToken) =>
 {
-    status = "ok",
-    utc = DateTime.UtcNow
-}));
+    try
+    {
+        var canConnect = await db.Database.CanConnectAsync(cancellationToken);
+        if (!canConnect)
+        {
+            return Results.Json(new
+            {
+                status = "degraded",
+                database = "unavailable",
+                utc = DateTime.UtcNow
+            }, statusCode: StatusCodes.Status503ServiceUnavailable);
+        }
+
+        return Results.Ok(new
+        {
+            status = "ok",
+            database = "connected",
+            utc = DateTime.UtcNow
+        });
+    }
+    catch
+    {
+        return Results.Json(new
+        {
+            status = "degraded",
+            database = "error",
+            utc = DateTime.UtcNow
+        }, statusCode: StatusCodes.Status503ServiceUnavailable);
+    }
+});
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
