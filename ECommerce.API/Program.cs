@@ -213,6 +213,11 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+app.MapGet("/health", () => Results.Ok(new
+{
+    status = "ok",
+    utc = DateTime.UtcNow
+}));
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

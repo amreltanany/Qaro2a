@@ -6,6 +6,7 @@ using ECommerce.Domain.Entities;
 using ECommerce.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 public class HomeController : Controller
 {
@@ -233,6 +234,7 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Error()
     {
-        return Content("Something went wrong. Please try again later.", "text/plain");
+        ViewData["RequestId"] = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+        return View("/Views/Home/Error.cshtml");
     }
 }

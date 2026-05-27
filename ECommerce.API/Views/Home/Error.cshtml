@@ -1,0 +1,33 @@
+@{
+    ViewData["Title"] = "Something went wrong";
+    var requestId = ViewData["RequestId"] as string;
+}
+
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4 p-md-5 text-center">
+                    <h1 class="h3 mb-3">Something went wrong.</h1>
+                    <p class="text-muted mb-4">
+                        We could not complete your request right now. Please refresh the page or try again in a moment.
+                    </p>
+
+                    @if (!string.IsNullOrWhiteSpace(requestId))
+                    {
+                        <p class="small text-muted mb-4">
+                            Request ID: <code>@requestId</code>
+                        </p>
+                    }
+
+                    <div class="d-flex justify-content-center gap-2 flex-wrap">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Go to Home</a>
+                        <button type="button" class="btn btn-outline-secondary" onclick="window.location.reload();">
+                            Refresh Page
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

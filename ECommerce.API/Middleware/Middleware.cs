@@ -1,16 +1,19 @@
 using System.Net;
 using System.Text.Json;
 using FluentValidation;
+using Microsoft.Extensions.Logging;
 
 namespace ECommerce.API.Middleware
 {
     public class ExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionHandlingMiddleware> _logger;
 
-        public ExceptionHandlingMiddleware(RequestDelegate next)
+        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -21,6 +24,12 @@ namespace ECommerce.API.Middleware
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex,
+                    "Unhandled exception. Method={Method}, Path={Path}, TraceId={TraceId}",
+                    context.Request.Method,
+                    context.Request.Path,
+                    context.TraceIdentifier);
+
                 // MVC pages should not return JSON; only API routes use this handler.
                 if (!context.Request.Path.StartsWithSegments("/api"))
                     throw;
