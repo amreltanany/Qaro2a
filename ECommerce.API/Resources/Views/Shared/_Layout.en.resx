@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value>
+  </resheader>
+  <data name="Home" xml:space="preserve"><value>Home</value></data>
+  <data name="Shop" xml:space="preserve"><value>Shop</value></data>
+  <data name="My Account" xml:space="preserve"><value>My Account</value></data>
+  <data name="Podcast" xml:space="preserve"><value>Podcast</value></data>
+  <data name="Privacy Policy" xml:space="preserve"><value>Privacy Policy</value></data>
+  <data name="Terms of Service" xml:space="preserve"><value>Terms of Service</value></data>
+  <data name="Pages" xml:space="preserve"><value>Pages</value></data>
+  <data name="Menu" xml:space="preserve"><value>Menu</value></data>
+  <data name="Blog" xml:space="preserve"><value>Blog</value></data>
+  <data name="About" xml:space="preserve"><value>About</value></data>
+  <data name="Contact" xml:space="preserve"><value>Contact</value></data>
+  <data name="Publish" xml:space="preserve"><value>Publish</value></data>
+  <data name="Login" xml:space="preserve"><value>Login</value></data>
+  <data name="Account" xml:space="preserve"><value>Account</value></data>
+  <data name="Wishlist" xml:space="preserve"><value>Wishlist</value></data>
+  <data name="Cart" xml:space="preserve"><value>Cart</value></data>
+  <data name="Who We Are" xml:space="preserve"><value>WHO WE ARE</value></data>
+  <data name="We are a multidimensional literary HUB where stories come to life." xml:space="preserve"><value>We are a multidimensional literary HUB where stories come to life.</value></data>
+  <data name="Connect" xml:space="preserve"><value>CONNECT</value></data>
+  <data name="Follow Us" xml:space="preserve"><value>FOLLOW US</value></data>
+  <data name="All Rights Reserved." xml:space="preserve"><value>All Rights Reserved.</value></data>
+  <data name="Built by" xml:space="preserve"><value>Built by</value></data>
+  <data name="English" xml:space="preserve"><value>English</value></data>
+  <data name="Arabic" xml:space="preserve"><value>Arabic</value></data>
+  <data name="Search by product, author, or date..." xml:space="preserve"><value>Search by product, author, or date...</value></data>
+  <data name="Order placed" xml:space="preserve"><value>Order placed</value></data>
+  <data name="OK" xml:space="preserve"><value>OK</value></data>
+</root>

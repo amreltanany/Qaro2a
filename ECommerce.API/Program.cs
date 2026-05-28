@@ -12,6 +12,8 @@ using ECommerce.Infrastructure.Services.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -28,7 +30,11 @@ var builder = WebApplication.CreateBuilder(args);
 #region Services
 builder.Services.AddControllers();
 
-builder.Services.AddControllersWithViews();
+builder.Services
+    .AddControllersWithViews()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+    .AddDataAnnotationsLocalization();
+builder.Services.AddLocalization();
 
 builder.Services.Configure<SeoOptions>(builder.Configuration.GetSection(SeoOptions.SectionName));
 
@@ -181,6 +187,12 @@ builder.Services.AddHostedService<ECommerce.API.BackgroundServices.CartExpiryHos
 
 var app = builder.Build();
 
+var supportedCultures = new[]
+{
+    new CultureInfo("en"),
+    new CultureInfo("ar")
+};
+
 #region Middleware Pipeline
 if (app.Environment.IsDevelopment())
 {
@@ -196,6 +208,18 @@ else
 app.UseResponseCompression();
 
 app.UseImageSharp();
+
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures,
+    RequestCultureProviders = new List<IRequestCultureProvider>
+    {
+        new CookieRequestCultureProvider(),
+        new AcceptLanguageHeaderRequestCultureProvider()
+    }
+});
 
 var staticFileOptions = new StaticFileOptions
 {
