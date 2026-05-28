@@ -61,3 +61,44 @@
 .dashboard-login-card .card-body {
     padding: 1.5rem;
 }
+
+/* Mobile-friendly admin */
+@media (max-width: 991.98px) {
+    .dashboard-header .navbar-brand {
+        font-size: 1rem;
+        max-width: 65%;
+    }
+
+    .dashboard-header .navbar-nav {
+        width: 100%;
+    }
+
+    .dashboard-header .navbar-nav .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .dashboard-main {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+
+    .table-dashboard {
+        font-size: 0.8125rem;
+    }
+
+    .order-mobile-card {
+        background: #fff;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 1rem;
+    }
+
+    .order-details-panel {
+        border-radius: 8px;
+    }
+}
+
+.order-details-panel .table {
+    margin-bottom: 0;
+}

@@ -7,35 +7,7 @@
     ViewData["Title"] = L("Wishlist", "المفضلة");
 }
 
-<style>
-    .wishlist-section {
-        padding: 48px 0;
-    }
-    .wishlist-table th {
-        background: #f8f9fa;
-        font-weight: 600;
-    }
-    .wishlist-thumb {
-        width: 72px;
-        height: 72px;
-        object-fit: cover;
-        border-radius: 8px;
-        border: 1px solid #e9ecef;
-    }
-    .wishlist-remove {
-        border: 0;
-        background: transparent;
-        color: #dc3545;
-        font-size: 1.25rem;
-    }
-    .wishlist-empty {
-        border: 1px dashed #ced4da;
-        border-radius: 10px;
-        padding: 24px;
-        text-align: center;
-        color: #6c757d;
-    }
-</style>
+<link rel="stylesheet" href="~/css/wishlist.css" asp-append-version="true" />
 
 <section class="wishlist-section">
     <div class="container">

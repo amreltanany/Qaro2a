@@ -1,9 +1,14 @@
 @model bool
+@using System.Globalization
+@{
+    var isArabic = string.Equals(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+}
 @if (Model)
 {
     <li class="nav-item">
         <a class="nav-link text-white" asp-controller="Dashboard" asp-action="Index">
-            <i class="bi bi-grid-1x2 me-1"></i>Dashboard
+            <i class="bi bi-grid-1x2 me-1"></i>@L("Dashboard", "لوحة التحكم")
         </a>
     </li>
 }

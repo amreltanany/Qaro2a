@@ -1,4 +1,4 @@
-using System.Security.Claims;
+using ECommerce.API.Helpers;
 using ECommerce.Application.DTOs.Wishlist;
 using ECommerce.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -21,7 +21,7 @@ namespace ECommerce.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMyWishlist()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("sub");
+            var userId = UserClaimsHelper.GetUserId(User);
             if (string.IsNullOrEmpty(userId)) return Unauthorized();
             var items = await _wishlistService.GetWishlistByUserIdAsync(userId);
             return Ok(items);
@@ -31,7 +31,7 @@ namespace ECommerce.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToWishlist([FromBody] AddToWishlistDto dto)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("sub");
+            var userId = UserClaimsHelper.GetUserId(User);
             if (string.IsNullOrEmpty(userId)) return Unauthorized();
             var item = await _wishlistService.AddToWishlistAsync(userId, dto.ProductId);
             return Ok(item);
@@ -41,7 +41,7 @@ namespace ECommerce.API.Controllers
         [HttpDelete("items/{itemId}")]
         public async Task<IActionResult> RemoveItem(int itemId)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("sub");
+            var userId = UserClaimsHelper.GetUserId(User);
             if (string.IsNullOrEmpty(userId)) return Unauthorized();
             await _wishlistService.RemoveWishlistItemAsync(itemId, userId);
             return NoContent();

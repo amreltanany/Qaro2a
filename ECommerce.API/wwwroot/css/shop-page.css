@@ -1,0 +1,10 @@
+.shop-filter-sidebar {
+    max-width: 320px;
+}
+
+@media (max-width: 991.98px) {
+    .shop-filter-sidebar {
+        position: static !important;
+        max-width: 100%;
+    }
+}

@@ -211,7 +211,7 @@ app.UseImageSharp();
 
 app.UseRequestLocalization(new RequestLocalizationOptions
 {
-    DefaultRequestCulture = new RequestCulture("en"),
+    DefaultRequestCulture = new RequestCulture("ar"),
     SupportedCultures = supportedCultures,
     SupportedUICultures = supportedCultures,
     RequestCultureProviders = new List<IRequestCultureProvider>

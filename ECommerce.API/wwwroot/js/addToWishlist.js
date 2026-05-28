@@ -14,6 +14,27 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     }
 
+    function getErrorMessage(body, fallback) {
+        if (!body || typeof body !== 'object') return fallback;
+        if (body.message) return body.message;
+        if (body.detail) return body.detail;
+        if (body.title && body.title !== 'One or more validation errors occurred.') return body.title;
+        if (body.errors && body.errors.Message) return body.errors.Message;
+        if (body.Errors && body.Errors.Message) return body.Errors.Message;
+        return fallback;
+    }
+
+    function readErrorMessage(res, fallback) {
+        return res.text().then(function (text) {
+            if (!text) return fallback;
+            try {
+                return getErrorMessage(JSON.parse(text), fallback);
+            } catch (e) {
+                return text.trim() || fallback;
+            }
+        }).catch(function () { return fallback; });
+    }
+
     function setButtonState(btn, isActive, itemId) {
         btn.classList.toggle('active', isActive);
         if (itemId) {
@@ -48,10 +69,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                     .then(function (res) {
                         if (!res.ok) {
-                            return res.json().then(function (body) {
-                                var msg = (body && body.message) ? body.message : 'Failed to remove from wishlist.';
+                            return readErrorMessage(res, 'Failed to remove from wishlist.').then(function (msg) {
                                 alert(msg);
-                            }).catch(function () { alert('Failed to remove from wishlist.'); });
+                            });
                         }
                         setButtonState(btn, false);
                     })
@@ -69,10 +89,13 @@ document.addEventListener('DOMContentLoaded', function () {
             })
                 .then(function (res) {
                     if (!res.ok) {
-                        return res.json().then(function (body) {
-                            var msg = (body && body.message) ? body.message : 'Failed to add to wishlist.';
+                        if (res.status === 401) {
+                            window.location.href = '/Home/Login';
+                            return;
+                        }
+                        return readErrorMessage(res, 'Failed to add to wishlist.').then(function (msg) {
                             alert(msg);
-                        }).catch(function () { alert('Failed to add to wishlist.'); });
+                        });
                     }
 
                     return res.json().then(function (data) {

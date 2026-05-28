@@ -16,74 +16,155 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
-        <div class="table-responsive">
-            <table class="table table-dashboard table-hover mb-0">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Date</th>
-                        <th>User</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                        <th>Change status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var order in Model)
-                    {
-                        <tr>
-                            <td>@order.Id</td>
-                            <td>@order.OrderDate.ToString("yyyy-MM-dd HH:mm")</td>
-                            <td>
-                                @if (!string.IsNullOrEmpty(order.UserEmail))
-                                {
-                                    <span title="@order.UserId">@(order.UserName ?? order.UserEmail)</span>
-                                    <br /><small class="text-muted">@order.UserEmail</small>
-                                }
-                                else
-                                {
-                                    <span class="text-muted">Guest</span>
-                                }
-                            </td>
-                            <td>@order.TotalAmount.ToString("N2")</td>
-                            <td>
-                                <span class="badge @(order.Status == "Pending" ? "bg-secondary" : order.Status == "Shipped" ? "bg-primary" : order.Status == "Cancelled" ? "bg-danger" : "bg-success")">
-                                    @(order.Status == "Shipped" ? "On delivery" : order.Status)
-                                </span>
-                            </td>
-                            <td>
-                                <form asp-action="UpdateStatus" method="post" class="d-inline">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="id" value="@order.Id" />
-                                    <select name="newStatus" class="form-select form-select-sm" style="width: auto; display: inline-block;">
-                                        @if (order.Status == "Pending")
-                                        {<option value="Pending" selected>Pending</option>}
-                                        else
-                                        {<option value="Pending">Pending</option>}
-                                        @if (order.Status == "Paid")
-                                        {<option value="Paid" selected>Paid</option>}
-                                        else
-                                        {<option value="Paid">Paid</option>}
-                                        @if (order.Status == "Shipped")
-                                        {<option value="Shipped" selected>On delivery</option>}
-                                        else
-                                        {<option value="Shipped">On delivery</option>}
-                                        @if (order.Status == "Cancelled")
-                                        {<option value="Cancelled" selected>Cancelled</option>}
-                                        else
-                                        {<option value="Cancelled">Cancelled</option>}
-                                    </select>
-                                    <button type="submit" class="btn btn-sm btn-outline-primary ms-1">Update</button>
-                                </form>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+
         @if (!Model.Any())
         {
             <p class="text-muted text-center py-4 mb-0">No orders yet.</p>
+        }
+        else
+        {
+            <div class="d-none d-md-block table-responsive">
+                <table class="table table-dashboard table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date</th>
+                            <th>User</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Change status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model)
+                        {
+                            var collapseId = $"order-details-{order.Id}";
+                            <tr>
+                                <td>@order.Id</td>
+                                <td>@order.OrderDate.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(order.UserEmail))
+                                    {
+                                        <span title="@order.UserId">@(order.UserName ?? order.UserEmail)</span>
+                                        <br /><small class="text-muted">@order.UserEmail</small>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Guest</span>
+                                    }
+                                </td>
+                                <td>@order.TotalAmount.ToString("N2") EGP</td>
+                                <td>
+                                    <span class="badge @(order.Status == "Pending" ? "bg-secondary" : order.Status == "Shipped" ? "bg-primary" : order.Status == "Cancelled" ? "bg-danger" : "bg-success")">
+                                        @(order.Status == "Shipped" ? "On delivery" : order.Status)
+                                    </span>
+                                </td>
+                                <td>
+                                    <form asp-action="UpdateStatus" method="post" class="d-flex flex-wrap gap-1 align-items-center">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@order.Id" />
+                                        <select name="newStatus" class="form-select form-select-sm" style="min-width: 8rem;">
+                                            @if (order.Status == "Pending")
+                                            {<option value="Pending" selected>Pending</option>}
+                                            else
+                                            {<option value="Pending">Pending</option>}
+                                            @if (order.Status == "Paid")
+                                            {<option value="Paid" selected>Paid</option>}
+                                            else
+                                            {<option value="Paid">Paid</option>}
+                                            @if (order.Status == "Shipped")
+                                            {<option value="Shipped" selected>On delivery</option>}
+                                            else
+                                            {<option value="Shipped">On delivery</option>}
+                                            @if (order.Status == "Cancelled")
+                                            {<option value="Cancelled" selected>Cancelled</option>}
+                                            else
+                                            {<option value="Cancelled">Cancelled</option>}
+                                        </select>
+                                        <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-secondary" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#@collapseId"
+                                            aria-expanded="false" aria-controls="@collapseId">
+                                        Details
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" class="p-0 border-0">
+                                    <div class="collapse" id="@collapseId">
+                                        @await Html.PartialAsync("_OrderDetailsPartial", order)
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-md-none">
+                @foreach (var order in Model)
+                {
+                    var collapseId = $"order-details-mobile-{order.Id}";
+                    <div class="order-mobile-card mb-3">
+                        <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                            <div>
+                                <strong>Order #@order.Id</strong>
+                                <div class="small text-muted">@order.OrderDate.ToString("yyyy-MM-dd HH:mm")</div>
+                            </div>
+                            <span class="badge @(order.Status == "Pending" ? "bg-secondary" : order.Status == "Shipped" ? "bg-primary" : order.Status == "Cancelled" ? "bg-danger" : "bg-success")">
+                                @(order.Status == "Shipped" ? "On delivery" : order.Status)
+                            </span>
+                        </div>
+                        <div class="small mb-2">
+                            @if (!string.IsNullOrEmpty(order.UserEmail))
+                            {
+                                <div>@(order.UserName ?? order.UserEmail)</div>
+                                <div class="text-muted">@order.UserEmail</div>
+                            }
+                            else
+                            {
+                                <span class="text-muted">Guest</span>
+                            }
+                        </div>
+                        <div class="fw-semibold mb-2">Total: @order.TotalAmount.ToString("N2") EGP</div>
+                        <form asp-action="UpdateStatus" method="post" class="d-flex flex-wrap gap-2 align-items-center mb-2">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@order.Id" />
+                            <select name="newStatus" class="form-select form-select-sm flex-grow-1">
+                                @if (order.Status == "Pending")
+                                {<option value="Pending" selected>Pending</option>}
+                                else
+                                {<option value="Pending">Pending</option>}
+                                @if (order.Status == "Paid")
+                                {<option value="Paid" selected>Paid</option>}
+                                else
+                                {<option value="Paid">Paid</option>}
+                                @if (order.Status == "Shipped")
+                                {<option value="Shipped" selected>On delivery</option>}
+                                else
+                                {<option value="Shipped">On delivery</option>}
+                                @if (order.Status == "Cancelled")
+                                {<option value="Cancelled" selected>Cancelled</option>}
+                                else
+                                {<option value="Cancelled">Cancelled</option>}
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
+                        </form>
+                        <button class="btn btn-sm btn-outline-secondary w-100" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#@collapseId"
+                                aria-expanded="false" aria-controls="@collapseId">
+                            View order items
+                        </button>
+                        <div class="collapse mt-2" id="@collapseId">
+                            @await Html.PartialAsync("_OrderDetailsPartial", order)
+                        </div>
+                    </div>
+                }
+            </div>
         }
     </div>
 </div>
