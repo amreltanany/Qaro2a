@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value></resheader>
+  <data name="Home" xml:space="preserve"><value>Home</value></data>
+  <data name="Qaro2a home hero" xml:space="preserve"><value>Qaro2a home hero</value></data>
+  <data name="New Collections" xml:space="preserve"><value>New Collections</value></data>
+  <data name="Every book in our collection is more than just pages-it is a perspective. At Qaro2a, we believe storytelling is the heartbeat of humanity. From curated bestsellers to hidden gems by independent voices, we provide a platform where every narrative finds its home and every reader finds their next adventure." xml:space="preserve"><value>Every book in our collection is more than just pages-it is a perspective. At Qaro2a, we believe storytelling is the heartbeat of humanity. From curated bestsellers to hidden gems by independent voices, we provide a platform where every narrative finds its home and every reader finds their next adventure.</value></data>
+  <data name="Publish with Qaro2a" xml:space="preserve"><value>Publish with Qaro2a</value></data>
+  <data name="About Us" xml:space="preserve"><value>About Us</value></data>
+  <data name="Qaro2a is a platform for book lovers to discover and share their favorite books. We are a team of book lovers who are passionate about books and we believe that books are the best way to learn and grow." xml:space="preserve"><value>Qaro2a is a platform for book lovers to discover and share their favorite books. We are a team of book lovers who are passionate about books and we believe that books are the best way to learn and grow.</value></data>
+  <data name="Read more" xml:space="preserve"><value>Read more</value></data>
+  <data name="View more" xml:space="preserve"><value>View more</value></data>
+  <data name="Open videos" xml:space="preserve"><value>Open videos</value></data>
+  <data name="Close videos" xml:space="preserve"><value>Close videos</value></data>
+</root>

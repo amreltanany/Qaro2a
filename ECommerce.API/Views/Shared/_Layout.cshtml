@@ -1,12 +1,9 @@
 @using System.Text.Json
 @using System.Globalization
-@using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.Extensions.Options
 @using ECommerce.API.Options
 @inject IOptions<SeoOptions> SeoOptions
-@inject IViewLocalizer Localizer
 @{
-    string T(string key) => Localizer[key].Value;
     var rawTitle = ViewData["Title"] as string;
     string pageTitle;
     if (!string.IsNullOrWhiteSpace(rawTitle))
@@ -21,18 +18,18 @@
         {
             pageTitle = action switch
             {
-                "Index" => T("Home"),
-                "Shop" => T("Shop"),
-                "MyAccount" => T("My Account"),
-                "Podcast" => T("Podcast"),
-                "PrivacyPolicy" => T("Privacy Policy"),
-                "TermsOfService" => T("Terms of Service"),
-                _ => string.IsNullOrEmpty(action) ? T("Home") : string.Concat(action.Select((c, i) => i > 0 && char.IsUpper(c) ? " " + c : c.ToString()))
+                "Index" => "Home",
+                "Shop" => "Shop",
+                "MyAccount" => "My Account",
+                "Podcast" => "Podcast",
+                "PrivacyPolicy" => "Privacy Policy",
+                "TermsOfService" => "Terms of Service",
+                _ => string.IsNullOrEmpty(action) ? "Home" : string.Concat(action.Select((c, i) => i > 0 && char.IsUpper(c) ? " " + c : c.ToString()))
             };
         }
         else if (string.Equals(action, "Index", StringComparison.OrdinalIgnoreCase))
         {
-            pageTitle = string.IsNullOrEmpty(controller) ? T("Home") : controller;
+            pageTitle = string.IsNullOrEmpty(controller) ? "Home" : controller;
         }
         else if (!string.IsNullOrEmpty(action))
         {
@@ -40,7 +37,7 @@
         }
         else
         {
-            pageTitle = T("Home");
+            pageTitle = "Home";
         }
     }
 
@@ -84,10 +81,11 @@
 
     var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
     var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
     var htmlLang = isArabic ? "ar" : "en";
     var htmlDir = isArabic ? "rtl" : "ltr";
     var switchToCulture = isArabic ? "en" : "ar";
-    var switchLabel = isArabic ? Localizer["English"] : Localizer["Arabic"];
+    var switchLabel = isArabic ? "English" : "العربية";
     var returnUrl = $"{Context.Request.PathBase}{Context.Request.Path}{Context.Request.QueryString}";
 }
 <!DOCTYPE html>
@@ -309,7 +307,7 @@
 
                 <form role="search" method="get" class="form-group" asp-controller="Home" asp-action="Shop">
                     <input type="search" id="search-form" class="form-control border-0 border-bottom"
-                        placeholder="@Localizer["Search by product, author, or date..."]" value="@(ViewBag.Search ?? "")" name="s" />
+                        placeholder="@L("Search by product, author, or date...", "ابحث باسم المنتج أو المؤلف أو التاريخ...")" value="@(ViewBag.Search ?? "")" name="s" />
                     <button type="submit" class="search-submit border-0 position-absolute bg-white"
                         style="top: 15px;right: 15px;">
                         <svg class="search" width="24" height="24">
@@ -317,13 +315,13 @@
                         </svg>
                     </button>
                 </form>
-                <h5 class="cat-list-title">@Localizer["Pages"]</h5>
+                <h5 class="cat-list-title">@L("Pages", "الصفحات")</h5>
                 <ul class="cat-list">
                     <li class="cat-list-item">
-                        <a asp-controller="Home" asp-action="Index" title="@Localizer["Home"]">@Localizer["Home"]</a>
+                        <a asp-controller="Home" asp-action="Index" title="@L("Home", "الرئيسية")">@L("Home", "الرئيسية")</a>
                     </li>
                     <li class="cat-list-item">
-                        <a asp-controller="Home" asp-action="Shop" title="@Localizer["Shop"]">@Localizer["Shop"]</a>
+                        <a asp-controller="Home" asp-action="Shop" title="@L("Shop", "متجر")">@L("Shop", "متجر")</a>
                     </li>
                 </ul>
             </div>
@@ -351,28 +349,26 @@
 
                 <div class="offcanvas offcanvas-end text-bg-dark w-100" tabindex="-1" id="offcanvasNavbar">
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title text-white">@Localizer["Menu"]</h5>
+                        <h5 class="offcanvas-title text-white">@L("Menu", "القائمة")</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
                     </div>
 
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-center flex-grow-1 gap-lg-4">
-                            <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Home", "Index")"
-                                    asp-controller="Home" asp-action="Index">@Localizer["Home"]</a></li>
                             <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Home", "Shop")"
-                                    asp-controller="Home" asp-action="Shop">@Localizer["Shop"]</a></li>
+                                    asp-controller="Home" asp-action="Shop">@L("Shop", "متجر")</a></li>
                             @await Component.InvokeAsync("AdminNav", new { section = "main" })
                             <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Home", "Blog")"
-                                    asp-controller="Home" asp-action="Blog">@Localizer["Blog"]</a></li>
+                                    asp-controller="Home" asp-action="Blog">@L("Blog", "اخبار")</a></li>
                             <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Home", "Podcast")"
-                                    asp-controller="Home" asp-action="Podcast"><i class="bi bi-mic-fill me-1"></i> @Localizer["Podcast"]</a></li>
+                                    asp-controller="Home" asp-action="Podcast"><i class="bi bi-mic-fill me-1"></i> @L("Podcast", "بودكاست")</a></li>
                             <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Home", "About")"
-                                    asp-controller="Home" asp-action="About">@Localizer["About"]</a></li>
+                                    asp-controller="Home" asp-action="About">@L("About", "عنا")</a></li>
                             <li class="nav-item"><a class="nav-link text-white @GetActiveClass("Contact", "Index")"
-                                    asp-controller="Contact" asp-action="Index">@Localizer["Contact"]</a></li>
+                                    asp-controller="Contact" asp-action="Index">@L("Contact", "تواصل معنا")</a></li>
                             <li class="nav-item nav-publish-btn">
                                 <a class="nav-link text-white @GetActiveClass("Home", "Publish")" asp-controller="Home"
-                                    asp-action="Publish">@Localizer["Publish"]</a>
+                                    asp-action="Publish">@L("Publish", "انشر كتاب")</a>
                             </li>
                         </ul>
                         <ul
@@ -389,7 +385,7 @@
                                                 d="M312 24a56 56 0 1 0 -112 0 56 56 0 1 0 112 0zM107.9 169.8c2.5-6 8.3-9.8 14.8-9.8l33 0-2.7 9.2-30.7 104.3c-8.9 30.3 9 62 39.6 70l124.7 32.5-52.5 118.2c-5.4 12.1 .1 26.3 12.2 31.7s26.3-.1 31.7-12.2L334.3 387c10-22.6-2.6-48.7-26.5-55l-55.4-14.4 26.1-82.7 3.1 6.2c9.5 19 28.9 31 50.1 31l60.2 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-60.2 0c-3 0-5.8-1.7-7.2-4.4l-29.5-58.9c-14.9-29.8-45.4-48.6-78.7-48.6l-93.8 0c-25.8 0-49.1 15.5-59.1 39.4L33.8 222.8c-5.1 12.2 .7 26.3 12.9 31.4s26.3-.7 31.4-12.9l29.7-71.4zM199 182.8l6.7-22.8 10.7 0c12.1 0 23.3 5.4 30.8 14.5l-41.3 130.9-32-8.3c-4.4-1.1-6.9-5.7-5.7-10L199 182.8zM111.2 391.6c-2.4 6.7-6.5 12.6-12 17.2l-90.7 76c-10.2 8.5-11.5 23.7-3 33.8s23.7 11.5 33.8 3l90.7-76c12-10 21.1-23.1 26.4-37.8l5.2-14.6-11.9-3.1c-12-3.1-23-8.2-32.6-14.9l-5.9 16.4zM452 57.9C464.6 17.8 477.4 16 480 16s15.4 1.8 28 41.9C519.9 96 528 159.1 528 256s-8.1 160-20 198.1c-12.6 40.1-25.4 41.9-28 41.9s-15.4-1.8-28-41.9c-9.1-29-15.9-72.4-18.7-134.1l-48 0c2.8 65.2 10.1 113.8 20.9 148.4 13.5 43 36.6 75.6 73.8 75.6s60.3-32.6 73.8-75.6C567.9 423.3 576 354.4 576 256S567.9 88.7 553.8 43.6C540.3 .6 517.2-32 480-32S419.7 .6 406.2 43.6c-9.9 31.7-16.9 75.2-20.1 132.4l48.1 0c3.2-53.3 9.6-91.7 17.8-118.1z" />
                                         </svg>
                                     </span>
-                                    <span>@Localizer["Login"]</span>
+                                    <span>@L("Login", "تسجيل الدخول")</span>
                                 </a>
                             </li>
 
@@ -397,7 +393,7 @@
                                 <a asp-controller="Home" asp-action="MyAccount" class="text-white text-decoration-none">
                                     <span class="d-none d-lg-inline text-uppercase"> <div class="tooltip-container">
                                            <i class="bi bi-person-circle fs-4"></i>
-                                            <span class="tooltip-text">@Localizer["Account"]</span>
+                                            <span class="tooltip-text">@L("Account", "الحساب")</span>
                                         </div></span>
                                     <i class="bi bi-person-circle d-lg-none fs-5"></i>
                                 </a>
@@ -407,7 +403,7 @@
                                     <span class="d-none d-lg-inline text-uppercase">
                                         <div class="tooltip-container">
                                            <i class="bi bi-bookmark-heart fs-4"></i>
-                                            <span class="tooltip-text">@Localizer["Wishlist"]</span>
+                                            <span class="tooltip-text">@L("Wishlist", "المفضلة")</span>
                                         </div>
                                     </span>
                                     <svg class="d-lg-none" width="24" height="24" viewBox="0 0 24 24">
@@ -419,7 +415,7 @@
                                 <a asp-controller="Cart" asp-action="Index" class="text-white text-decoration-none">
                                     <span class="d-none d-lg-inline text-uppercase"> <div class="tooltip-container">
                                            <i class="bi bi-cart3 fs-4"></i>
-                                            <span class="tooltip-text">@Localizer["Cart"]</span>
+                                            <span class="tooltip-text">@L("Cart", "السلة")</span>
                                         </div>
                                     </span></span>
                                     <svg class="d-lg-none" width="24" height="24" viewBox="0 0 24 24">
@@ -463,34 +459,34 @@
                 <div class="container text-white">
                     <div class="row g-4 py-4">
                         <div class="col-12 col-sm-6 col-md-3">
-                            <h5 class="text-white mb-2">@Localizer["Who We Are"]</h5>
-                            <p class="mb-0 small opacity-90">@Localizer["We are a multidimensional literary HUB where stories come to life."]</p>
+                            <h5 class="text-white mb-2">@L("Who We Are", "من نحن")</h5>
+                            <p class="mb-0 small opacity-90">@L("We are a multidimensional literary HUB where stories come to life.", "نحن منصة أدبية متعددة الأبعاد حيث تنبض القصص بالحياة.")</p>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
-                            <h5 class="text-white mb-3 text-center">@Localizer["Pages"]</h5>
+                            <h5 class="text-white mb-3 text-center">@L("Pages", "الصفحات")</h5>
                             <div style="display: flex;align-items: center; justify-content: space-around;">
                                 <ul class="list-unstyled mb-0 small opacity-90">
                                     <li class="mb-2"><a asp-controller="Home" asp-action="Index"
-                                            class="text-white text-decoration-none">@Localizer["Home"]</a></li>
+                                            class="text-white text-decoration-none">@L("Home", "الرئيسية")</a></li>
                                     <li class="mb-2"><a asp-controller="Home" asp-action="Shop"
-                                            class="text-white text-decoration-none">@Localizer["Shop"]</a></li>
+                                            class="text-white text-decoration-none">@L("Shop", "متجر")</a></li>
 
                                     <li class="mb-2"><a asp-controller="Home" asp-action="Blog"
-                                            class="text-white text-decoration-none">@Localizer["Blog"]</a></li>
+                                            class="text-white text-decoration-none">@L("Blog", "اخبار")</a></li>
                                 </ul>
 
                                 <ul class="list-unstyled mb-0 small opacity-90">
                                     <li class="mb-2"><a asp-controller="Home" asp-action="About"
-                                            class="text-white text-decoration-none">@Localizer["About"]</a></li>
+                                            class="text-white text-decoration-none">@L("About", "عنا")</a></li>
                                     <li class="mb-2"><a asp-controller="Cart" asp-action="Index"
-                                            class="text-white text-decoration-none">@Localizer["Cart"]</a></li>
+                                            class="text-white text-decoration-none">@L("Cart", "السلة")</a></li>
                                     <li class="mb-2"><a asp-controller="Home" asp-action="Publish"
-                                            class="text-white text-decoration-none">@Localizer["Publish"]</a></li>
+                                            class="text-white text-decoration-none">@L("Publish", "انشر كتاب")</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3 text-center">
-                            <h5 class="text-white mb-3 ">@Localizer["Connect"]</h5>
+                            <h5 class="text-white mb-3 ">@L("Connect", "تواصل")</h5>
                             <ul class="list-unstyled mb-0 small opacity-90">
                                 <li class="mb-2">
                                     <a href="https://wa.me/201555012590" class="text-white text-decoration-none" target="_blank" rel="noopener noreferrer">+201555012590</a>
@@ -501,7 +497,7 @@
                             </ul>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
-                            <h5 class="text-white mb-3">@Localizer["Follow Us"]</h5>
+                            <h5 class="text-white mb-3">@L("Follow Us", "تابعنا")</h5>
                             <div class="d-flex flex-wrap gap-3">
                                 <a href="https://tr.ee/5cAPZdijch" class="text-white opacity-75" aria-label="Spotify"><i
                                         class="bi bi-spotify fs-4"></i></a>
@@ -515,10 +511,10 @@
                     <hr class="border-light border-opacity-25 my-4" />
                     <div class="text-center small text-white opacity-90 pb-3">
                        <p>
-    &copy; @DateTime.Now.Year Qaro2a. @Localizer["All Rights Reserved."] | 
-    <a asp-controller="Home" asp-action="PrivacyPolicy" class="text-white text-decoration-none">@Localizer["Privacy Policy"]</a> | 
-    <a asp-controller="Home" asp-action="TermsOfService" class="text-white text-decoration-none">@Localizer["Terms of Service"]</a> | 
-    @Localizer["Built by"] <a href="https://amreltanany.github.io/portfolio-/" target="_blank" class="text-white text-decoration-none">Amr El Tanany</a>
+    &copy; @DateTime.Now.Year Qaro2a. @L("All Rights Reserved.", "جميع الحقوق محفوظة.") | 
+    <a asp-controller="Home" asp-action="PrivacyPolicy" class="text-white text-decoration-none">@L("Privacy Policy", "سياسة الخصوصية")</a> | 
+    <a asp-controller="Home" asp-action="TermsOfService" class="text-white text-decoration-none">@L("Terms of Service", "شروط الخدمة")</a> | 
+    @L("Built by", "تم التطوير بواسطة") <a href="https://amreltanany.github.io/portfolio-/" target="_blank" class="text-white text-decoration-none">Amr El Tanany</a>
 </p>
                     </div>
                 </div>
@@ -578,7 +574,7 @@
     {
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                Swal.fire({ title: '@Localizer["Order placed"]', icon: 'success', confirmButtonText: '@Localizer["OK"]' });
+                Swal.fire({ title: '@L("Order placed", "تم تأكيد الطلب")', icon: 'success', confirmButtonText: '@L("OK", "حسنًا")' });
             });
         </script>
     }

@@ -13,17 +13,17 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value>
   </resheader>
   <data name="Home" xml:space="preserve"><value>الرئيسية</value></data>
-  <data name="Shop" xml:space="preserve"><value>المتجر</value></data>
+  <data name="Shop" xml:space="preserve"><value>متجر</value></data>
   <data name="My Account" xml:space="preserve"><value>حسابي</value></data>
   <data name="Podcast" xml:space="preserve"><value>بودكاست</value></data>
   <data name="Privacy Policy" xml:space="preserve"><value>سياسة الخصوصية</value></data>
   <data name="Terms of Service" xml:space="preserve"><value>شروط الخدمة</value></data>
   <data name="Pages" xml:space="preserve"><value>الصفحات</value></data>
   <data name="Menu" xml:space="preserve"><value>القائمة</value></data>
-  <data name="Blog" xml:space="preserve"><value>المدونة</value></data>
-  <data name="About" xml:space="preserve"><value>من نحن</value></data>
-  <data name="Contact" xml:space="preserve"><value>اتصل بنا</value></data>
-  <data name="Publish" xml:space="preserve"><value>انشر</value></data>
+  <data name="Blog" xml:space="preserve"><value>اخبار</value></data>
+  <data name="About" xml:space="preserve"><value>عنا</value></data>
+  <data name="Contact" xml:space="preserve"><value>تواصل معنا</value></data>
+  <data name="Publish" xml:space="preserve"><value>انشر كتاب</value></data>
   <data name="Login" xml:space="preserve"><value>تسجيل الدخول</value></data>
   <data name="Account" xml:space="preserve"><value>الحساب</value></data>
   <data name="Wishlist" xml:space="preserve"><value>المفضلة</value></data>
