@@ -1,13 +1,16 @@
 @{
-    ViewData["Title"] = "Publish";
+    var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    ViewData["Title"] = L("Publish", "انشر كتابك");
     var mobile = ViewBag.MobileNumber as string ?? string.Empty;
 }
 
 <section class="py-5">
     <div class="container" style="max-width: 720px;">
-        <h2 class="mb-3">Publish with Qaro2a</h2>
+        <h2 class="mb-3">@L("Publish with Qaro2a", "انشر مع قاروعه")</h2>
         <p class="text-muted mb-4">
-            Submit your manuscript as a PDF. Our team will review your submission and get back to you.
+            @L("Submit your manuscript as a PDF. Our team will review your submission and get back to you.", "أرسل مخطوطتك بصيغة PDF، وسيقوم فريقنا بمراجعتها والرد عليك.")
         </p>
 
         @if (TempData["PublishSuccess"] is string success)
@@ -22,18 +25,18 @@
                     <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
                     <div class="mb-3">
-                        <label for="mobileNumber" class="form-label">Mobile number</label>
+                        <label for="mobileNumber" class="form-label">@L("Mobile number", "رقم الهاتف")</label>
                         <input type="tel" class="form-control" id="mobileNumber" name="mobileNumber"
                                value="@mobile" required maxlength="30" placeholder="+20 ..." />
                     </div>
 
                     <div class="mb-4">
-                        <label for="pdfFile" class="form-label">Manuscript (PDF, max 5 MB)</label>
+                        <label for="pdfFile" class="form-label">@L("Manuscript (PDF, max 5 MB)", "المخطوطة (PDF بحد أقصى 5 ميجابايت)")</label>
                         <input type="file" class="form-control" id="pdfFile" name="pdfFile" accept=".pdf,application/pdf" required />
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
+                    <button type="submit" class="btn btn-primary">@L("Submit", "إرسال")</button>
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary ms-2">@L("Cancel", "إلغاء")</a>
                 </form>
             </div>
         </div>

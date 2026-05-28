@@ -1,7 +1,10 @@
 @model IEnumerable<ECommerce.Application.DTOs.Wishlist.WishlistItemDto>
 
 @{
-    ViewData["Title"] = "Wishlist";
+    var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    ViewData["Title"] = L("Wishlist", "المفضلة");
 }
 
 <style>
@@ -36,12 +39,12 @@
 
 <section class="wishlist-section">
     <div class="container">
-        <h2 class="mb-4">My Wishlist</h2>
+        <h2 class="mb-4">@L("My Wishlist", "مفضلتي")</h2>
 
         @if (Model == null || !Model.Any())
         {
             <div class="wishlist-empty">
-                Your wishlist is empty. <a asp-controller="Home" asp-action="Shop">Discover books</a>.
+                @L("Your wishlist is empty.", "قائمة المفضلة فارغة.") <a asp-controller="Home" asp-action="Shop">@L("Discover books", "اكتشف الكتب")</a>.
             </div>
         }
         else
@@ -50,10 +53,10 @@
                 <table class="table table-hover align-middle wishlist-table">
                     <thead>
                         <tr>
-                            <th>Item</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                            <th class="text-end">Action</th>
+                            <th>@L("Item", "المنتج")</th>
+                            <th>@L("Price", "السعر")</th>
+                            <th>@L("Stock", "المخزون")</th>
+                            <th class="text-end">@L("Action", "الإجراء")</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,22 +77,22 @@
                                 <td>
                                     @if (item.AvailableStock > 0)
                                     {
-                                        <span class="badge bg-success">In stock</span>
+                                        <span class="badge bg-success">@L("In stock", "متوفر")</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-secondary" style="background-color: #dc3545 !important;" >Out of stock</span>
+                                        <span class="badge bg-secondary" style="background-color: #dc3545 !important;" >@L("Out of stock", "غير متوفر")</span>
                                     }
                                 </td>
                                 <td class="text-end">
-                                    <button type="button" class="wishlist-remove btn-remove-wishlist" title="Remove">×</button>
+                                    <button type="button" class="wishlist-remove btn-remove-wishlist" title="@L("Remove", "حذف")">×</button>
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
-            <a asp-controller="Home" asp-action="Shop" class="btn btn-outline-primary mt-2">Continue shopping</a>
+            <a asp-controller="Home" asp-action="Shop" class="btn btn-outline-primary mt-2">@L("Continue shopping", "متابعة التسوق")</a>
         }
     </div>
 </section>
@@ -98,6 +101,9 @@
     <script>
         (function () {
             var token = typeof localStorage !== 'undefined' && localStorage.getItem('token');
+            var i18n = {
+                failedRemove: '@L("Failed to remove item.", "فشل حذف المنتج.")'
+            };
             function authHeaders() {
                 return {
                     'Content-Type': 'application/json',
@@ -121,15 +127,15 @@
                         .then(function (res) {
                             if (!res.ok) {
                                 return res.json().then(function (body) {
-                                    var msg = (body && body.message) ? body.message : 'Failed to remove item.';
+                                    var msg = (body && body.message) ? body.message : i18n.failedRemove;
                                     alert(msg);
-                                }).catch(function () { alert('Failed to remove item.'); });
+                                }).catch(function () { alert(i18n.failedRemove); });
                             }
                             window.location.reload();
                         })
                         .catch(function (err) {
                             console.error(err);
-                            alert('Failed to remove item.');
+                            alert(i18n.failedRemove);
                         });
                 });
             });

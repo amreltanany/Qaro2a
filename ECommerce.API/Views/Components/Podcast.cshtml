@@ -1,12 +1,15 @@
 @{
-    ViewData["Title"] = "Podcast";
+    var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    ViewData["Title"] = L("Podcast", "بودكاست");
 }
 
 <section class="py-5" style="background: #0b1220; min-height: 100vh;">
     <div class="container">
         <div class="text-center text-white mb-5">
-            <h1 class="mb-2">Podcast</h1>
-            <p class="mb-0">Watch the latest videos from Qaro2a.</p>
+            <h1 class="mb-2">@L("Podcast", "بودكاست")</h1>
+            <p class="mb-0">@L("Watch the latest videos from Qaro2a.", "شاهد أحدث فيديوهات قاروعه.")</p>
         </div>
 
         <div class="row g-4">

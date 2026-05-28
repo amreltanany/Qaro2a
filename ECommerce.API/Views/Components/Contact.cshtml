@@ -1,6 +1,9 @@
 @model ECommerce.Application.DTOs.Contact.ContactSubmissionDto
 @{
-    ViewData["Title"] = "Contact";
+    var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    ViewData["Title"] = L("Contact", "تواصل معنا");
 }
          <link rel="stylesheet" type="text/css" href="~/Blog.css">
 
@@ -9,7 +12,7 @@
     <!-- Page Title -->
     <div class="page-title">
       <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">Contact</h1>
+        <h1 class="mb-2 mb-lg-0">@L("Contact", "تواصل معنا")</h1>
        
       </div>
     </div><!-- End Page Title -->
@@ -27,7 +30,7 @@
             <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
               <i class="bi bi-geo-alt flex-shrink-0"></i>
               <div>
-                <h3>Address</h3>
+                <h3>@L("Address", "العنوان")</h3>
                 <p>A108 Adam Street, New York, NY 535022</p>
               </div>
             </div><!-- End Info Item -->
@@ -35,7 +38,7 @@
             <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
               <i class="bi bi-telephone flex-shrink-0"></i>
               <div>
-                <h3>Call Us</h3>
+                <h3>@L("Call Us", "اتصل بنا")</h3>
                 <p>+201555012590</p>
               </div>
             </div><!-- End Info Item -->
@@ -43,7 +46,7 @@
             <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
               <i class="bi bi-envelope flex-shrink-0"></i>
               <div>
-                <h3>Email Us</h3>
+                <h3>@L("Email Us", "راسلنا")</h3>
                 <p>info@example.com</p>
               </div>
             </div><!-- End Info Item -->
@@ -53,7 +56,7 @@
           <div class="col-lg-8">
             @if (TempData["ContactSent"] as bool? == true)
             {
-              <div class="sent-message d-block">Your message has been saved. Thank you!</div>
+              <div class="sent-message d-block">@L("Your message has been saved. Thank you!", "تم حفظ رسالتك. شكراً لك!")</div>
             }
             <form asp-controller="Contact" asp-action="Send" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
               @Html.AntiForgeryToken()
@@ -61,31 +64,31 @@
               <div class="row gy-4">
 
                 <div class="col-md-6">
-                  <input asp-for="Name" class="form-control" placeholder="Your Name" />
+                  <input asp-for="Name" class="form-control" placeholder="@L("Your Name", "الاسم")" />
                   <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
 
                 <div class="col-md-6">
-                  <input asp-for="Email" class="form-control" placeholder="Your Email" />
+                  <input asp-for="Email" class="form-control" placeholder="@L("Your Email", "البريد الإلكتروني")" />
                   <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
 
                 <div class="col-md-12">
-                  <input asp-for="Subject" class="form-control" placeholder="Subject" />
+                  <input asp-for="Subject" class="form-control" placeholder="@L("Subject", "الموضوع")" />
                   <span asp-validation-for="Subject" class="text-danger"></span>
                 </div>
 
                 <div class="col-md-12">
-                  <textarea asp-for="Message" class="form-control" rows="6" placeholder="Message"></textarea>
+                  <textarea asp-for="Message" class="form-control" rows="6" placeholder="@L("Message", "الرسالة")"></textarea>
                   <span asp-validation-for="Message" class="text-danger"></span>
                 </div>
 
                 <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
+                  <div class="loading">@L("Loading", "جاري التحميل")</div>
                   <div class="error-message"></div>
-                  <div class="sent-message">Your message has been saved. Thank you!</div>
+                  <div class="sent-message">@L("Your message has been saved. Thank you!", "تم حفظ رسالتك. شكراً لك!")</div>
 
-                  <button type="submit">Send Message</button>
+                  <button type="submit">@L("Send Message", "إرسال الرسالة")</button>
                 </div>
 
               </div>

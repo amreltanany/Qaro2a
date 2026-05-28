@@ -1,5 +1,8 @@
 @{
-    ViewData["Title"] = "Login";
+    var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    ViewData["Title"] = L("Login", "تسجيل الدخول");
 }
 <script>
     (function () {
@@ -20,21 +23,21 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-5">
-                <h2 class="text-center mb-4">Login</h2>
+                <h2 class="text-center mb-4">@L("Login", "تسجيل الدخول")</h2>
                 <div id="loginError" class="alert alert-danger d-none" role="alert"></div>
                 <form id="loginForm">
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
+                        <label for="email" class="form-label">@L("Email", "البريد الإلكتروني")</label>
                         <input type="email" class="form-control" id="email" name="email" required>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="password" class="form-label">@L("Password", "كلمة المرور")</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                    <button type="submit" class="btn btn-primary w-100">@L("Login", "تسجيل الدخول")</button>
                 </form>
                 <p class="mt-3 text-center small">
-                    Don't have an account? <a asp-controller="Home" asp-action="Register">Register</a>
+                    @L("Don't have an account?", "ليس لديك حساب؟") <a asp-controller="Home" asp-action="Register">@L("Register", "إنشاء حساب")</a>
                 </p>
             </div>
         </div>
@@ -42,9 +45,15 @@
 </section>
 
 <script>
+var i18n = {
+    fallbackError: '@L("Something went wrong. Please try again.", "حدث خطأ ما. حاول مرة أخرى.")',
+    couldNotGetUser: '@L("Could not get user", "تعذر تحميل بيانات المستخدم")',
+    couldNotSetAdminSession: '@L("Could not set admin session", "تعذر إنشاء جلسة المدير")',
+    loginFailed: '@L("Login failed", "فشل تسجيل الدخول")'
+};
 function parseApiErrorResponse(res) {
     return res.text().then(function (text) {
-        var fallback = 'Something went wrong. Please try again.';
+        var fallback = i18n.fallbackError;
         var t = (text || '').trim();
         if (!t) return fallback;
         if (t.charAt(0) === '{' || t.charAt(0) === '[') {
@@ -93,7 +102,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
         var isAdmin = data.email && data.email.trim().toLowerCase() === 'amr_eltanany@outlook.com';
         if (isAdmin) {
             return fetch('/api/Account/me', { headers: { 'Authorization': 'Bearer ' + data.token } })
-                .then(function (res) { if (!res.ok) throw new Error('Could not get user'); return res.json(); })
+                .then(function (res) { if (!res.ok) throw new Error(i18n.couldNotGetUser); return res.json(); })
                 .then(function (me) {
                     localStorage.setItem('userId', me.userId);
                     return fetch('/Dashboard/SetAdminCookie', {
@@ -103,7 +112,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
                     });
                 })
                 .then(function (r) {
-                    if (!r.ok) return Promise.reject(new Error('Could not set admin session'));
+                    if (!r.ok) return Promise.reject(new Error(i18n.couldNotSetAdminSession));
                     return r.json();
                 })
                 .then(function (payload) {
@@ -113,7 +122,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
         return fetch('/api/Account/me', {
             headers: { 'Authorization': 'Bearer ' + data.token }
         }).then(function (res) {
-            if (!res.ok) throw new Error('Could not get user');
+            if (!res.ok) throw new Error(i18n.couldNotGetUser);
             return res.json();
         }).then(function (me) {
             localStorage.setItem('userId', me.userId);
@@ -121,7 +130,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
         });
     })
     .catch(function (err) {
-        errEl.textContent = err.message || 'Login failed';
+        errEl.textContent = err.message || i18n.loginFailed;
         errEl.classList.remove('d-none');
     });
 });

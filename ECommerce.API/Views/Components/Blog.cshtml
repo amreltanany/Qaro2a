@@ -1,5 +1,8 @@
 @{
-    ViewData["Title"] = "Blog";
+    var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    ViewData["Title"] = L("Blog", "الأخبار");
 }
 <link rel="stylesheet" type="text/css" href="~/Blog.css">
 
@@ -10,10 +13,10 @@
                 <div class="col-lg-4">
                     <div class="post-entry lg">
                         <span><img src="~/logo/Untitled_design-removebg-preview.png" alt="" class="img-fluid"></span>
-                        <div class="post-meta"><span class="date">NEW RELEASE</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                        <h2><span class="Author_title">The Architects of the Loop: Meet the Authors</span></h2>
+                        <div class="post-meta"><span class="date">@L("NEW RELEASE", "إصدار جديد")</span> <span class="mx-1">•</span> <span>@L("Jul 5th '22", "٥ يوليو ٢٠٢٢")</span></div>
+                        <h2><span class="Author_title">@L("The Architects of the Loop: Meet the Authors", "مهندسو الحلقة: تعرف على الكتّاب")</span></h2>
                         <p class="mb-4 d-block">
-                            The power of "Halaqat al-Zanb" lies in its diversity. Four distinct voices came together, each bringing a unique psychological lens to the theme of guilt, creating a rich, multi-dimensional experience for the reader.
+                            @L("The power of \"Halaqat al-Zanb\" lies in its diversity. Four distinct voices came together, each bringing a unique psychological lens to the theme of guilt, creating a rich, multi-dimensional experience for the reader.", "تكمن قوة \"حلقة الذنب\" في تنوعها؛ فقد اجتمعت أربعة أصوات مختلفة، يحمل كل منها منظوراً نفسياً فريداً لمفهوم الذنب، لتقديم تجربة ثرية ومتعددة الأبعاد للقارئ.")
                         </p>
                     </div>
                 </div>
@@ -61,40 +64,40 @@
                         <!-- Trending Section -->
                         <div class="col-lg-4">
                             <div class="trending">
-                                <h3>Trending</h3>
+                                <h3>@L("Trending", "الأكثر رواجاً")</h3>
                                 <ul class="trending-post">
                                     <li>
                                         <a href="#">
                                             <span class="number">1</span>
-                                            <h3>A high-stakes journey of survival and liberation between intense action and deep philosophical questions</h3>
+                                            <h3>@L("A high-stakes journey of survival and liberation between intense action and deep philosophical questions", "رحلة عالية المخاطر بين البقاء والتحرر، تجمع بين الأكشن المكثف والأسئلة الفلسفية العميقة")</h3>
                                             <span class="author">Arkhabil El Molouk</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
                                             <span class="number">1</span>
-                                            <h3>A high-stakes journey of survival and liberation between intense action and deep philosophical questions</h3>
+                                            <h3>@L("A high-stakes journey of survival and liberation between intense action and deep philosophical questions", "رحلة عالية المخاطر بين البقاء والتحرر، تجمع بين الأكشن المكثف والأسئلة الفلسفية العميقة")</h3>
                                             <span class="author">Arkhabil El Molouk</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
                                             <span class="number">1</span>
-                                            <h3>A high-stakes journey of survival and liberation between intense action and deep philosophical questions</h3>
+                                            <h3>@L("A high-stakes journey of survival and liberation between intense action and deep philosophical questions", "رحلة عالية المخاطر بين البقاء والتحرر، تجمع بين الأكشن المكثف والأسئلة الفلسفية العميقة")</h3>
                                             <span class="author">Arkhabil El Molouk</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
                                             <span class="number">1</span>
-                                            <h3>A high-stakes journey of survival and liberation between intense action and deep philosophical questions</h3>
+                                            <h3>@L("A high-stakes journey of survival and liberation between intense action and deep philosophical questions", "رحلة عالية المخاطر بين البقاء والتحرر، تجمع بين الأكشن المكثف والأسئلة الفلسفية العميقة")</h3>
                                             <span class="author">Arkhabil El Molouk</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
                                             <span class="number">1</span>
-                                            <h3>A high-stakes journey of survival and liberation between intense action and deep philosophical questions</h3>
+                                            <h3>@L("A high-stakes journey of survival and liberation between intense action and deep philosophical questions", "رحلة عالية المخاطر بين البقاء والتحرر، تجمع بين الأكشن المكثف والأسئلة الفلسفية العميقة")</h3>
                                             <span class="author">Arkhabil El Molouk</span>
                                         </a>
                                     </li>

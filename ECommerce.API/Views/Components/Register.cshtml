@@ -1,37 +1,40 @@
 @{
-    ViewData["Title"] = "Register";
+    var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    ViewData["Title"] = L("Register", "إنشاء حساب");
 }
 
 <section class="py-5">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-5">
-                <h2 class="text-center mb-4">Register</h2>
+                <h2 class="text-center mb-4">@L("Register", "إنشاء حساب")</h2>
                 <div id="registerError" class="alert alert-danger d-none" role="alert"></div>
                 <form id="registerForm">
                     <div class="mb-3">
-                        <label for="fullName" class="form-label">Full name</label>
+                        <label for="fullName" class="form-label">@L("Full name", "الاسم الكامل")</label>
                         <input type="text" class="form-control" id="fullName" name="fullName" required>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
+                        <label for="email" class="form-label">@L("Email", "البريد الإلكتروني")</label>
                         <input type="email" class="form-control" id="email" name="email" required>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="password" class="form-label">@L("Password", "كلمة المرور")</label>
                         <input type="password" class="form-control" id="password" name="password" required minlength="6">
                     </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input m-1" id="agreeToTerms" name="agreeToTerms" value="true" required>
                         <label class="form-check-label" for="agreeToTerms">
-                            I agree to the
-                            <a asp-controller="Home" asp-action="TermsOfService" target="_blank" rel="noopener noreferrer">Terms of Service</a>
+                            @L("I agree to the", "أوافق على")
+                            <a asp-controller="Home" asp-action="TermsOfService" target="_blank" rel="noopener noreferrer">@L("Terms of Service", "شروط الخدمة")</a>
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                    <button type="submit" class="btn btn-primary w-100">@L("Register", "إنشاء حساب")</button>
                 </form>
                 <p class="mt-3 text-center small">
-                    Already have an account? <a asp-controller="Home" asp-action="Login">Login</a>
+                    @L("Already have an account?", "لديك حساب بالفعل؟") <a asp-controller="Home" asp-action="Login">@L("Login", "تسجيل الدخول")</a>
                 </p>
             </div>
         </div>
@@ -39,9 +42,15 @@
 </section>
 
 <script>
+var i18n = {
+    fallbackError: '@L("Something went wrong. Please try again.", "حدث خطأ ما. حاول مرة أخرى.")',
+    mustAgree: '@L("You must agree to the Terms of Service.", "يجب الموافقة على شروط الخدمة.")',
+    couldNotGetUser: '@L("Could not get user", "تعذر تحميل بيانات المستخدم")',
+    registerFailed: '@L("Register failed", "فشل إنشاء الحساب")'
+};
 function parseApiErrorResponse(res) {
     return res.text().then(function (text) {
-        var fallback = 'Something went wrong. Please try again.';
+        var fallback = i18n.fallbackError;
         var t = (text || '').trim();
         if (!t) return fallback;
         if (t.charAt(0) === '{' || t.charAt(0) === '[') {
@@ -72,7 +81,7 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     var password = document.getElementById('password').value;
     var agreeToTerms = document.getElementById('agreeToTerms').checked;
     if (!agreeToTerms) {
-        errEl.textContent = 'You must agree to the Terms of Service.';
+        errEl.textContent = i18n.mustAgree;
         errEl.classList.remove('d-none');
         return;
     }
@@ -96,7 +105,7 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
         });
     })
     .then(function (res) {
-        if (!res.ok) throw new Error('Could not get user');
+        if (!res.ok) throw new Error(i18n.couldNotGetUser);
         return res.json();
     })
     .then(function (data) {
@@ -104,7 +113,7 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
         window.location.href = '/Home/Shop';
     })
     .catch(function (err) {
-        errEl.textContent = err.message || 'Register failed';
+        errEl.textContent = err.message || i18n.registerFailed;
         errEl.classList.remove('d-none');
     });
 });

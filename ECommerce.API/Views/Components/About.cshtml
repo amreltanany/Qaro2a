@@ -1,12 +1,15 @@
 @{
-    ViewData["Title"] = "About";
+    var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    ViewData["Title"] = L("About", "من نحن");
 }
 <link rel="stylesheet" type="text/css" href="~/Blog.css" asp-append-version="true">
 
 <main class="main">
     <div class="page-title">
       <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">About</h1>
+        <h1 class="mb-2 mb-lg-0">@L("About", "من نحن")</h1>
       </div>
     </div>
 
@@ -16,15 +19,15 @@
         <div class="row gy-4">
 
           <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
-            <p class="who-we-are">Who We Are</p>
-            <h3>The Ultimate Hub for Books, Publishing & Dialogue</h3>
+            <p class="who-we-are">@L("Who We Are", "من نحن")</p>
+            <h3>@L("The Ultimate Hub for Books, Publishing & Dialogue", "المركز الأهم للكتب والنشر والحوار")</h3>
             <p class="fst-italic">
-            At Qaro2a, we are a premier literary hub shaping the future of reading. As a dynamic podcast, insightful book reviewer, and forward thinking publisher, we are dedicated to championing books and empowering the entire literary ecosystem. Through engaging discussions and strategic support, we bridge the gap between creative authors and passionate readers.
+            @L("At Qaro2a, we are a premier literary hub shaping the future of reading. As a dynamic podcast, insightful book reviewer, and forward thinking publisher, we are dedicated to championing books and empowering the entire literary ecosystem. Through engaging discussions and strategic support, we bridge the gap between creative authors and passionate readers.", "في قاروعه نحن منصة أدبية رائدة تسهم في تشكيل مستقبل القراءة. من خلال البودكاست والمراجعات والنشر، نعمل على دعم الكتب وتمكين المنظومة الأدبية بالكامل. وبالحوار البنّاء والدعم الفعّال نربط بين المؤلفين المبدعين والقراء الشغوفين.")
             </p>
             <ul>
-              <li><i class="bi bi-check-circle"></i> <span>Leading Podcast & Reviews: Decoding stories and analyzing books with a modern, engaging approach.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Publishers of Fresh Voices: Bringing impactful contemporary literature to light and supporting authors.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Advocates for the Reading Community: Fostering a powerful, supportive ecosystem for every book lover.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>@L("Leading Podcast & Reviews: Decoding stories and analyzing books with a modern, engaging approach.", "بودكاست ومراجعات رائدة: نفكك الحكايات ونحلل الكتب بأسلوب حديث وجذاب.")</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>@L("Publishers of Fresh Voices: Bringing impactful contemporary literature to light and supporting authors.", "نشر الأصوات الجديدة: نُبرز الأدب المعاصر المؤثر وندعم المؤلفين.")</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>@L("Advocates for the Reading Community: Fostering a powerful, supportive ecosystem for every book lover.", "داعمون لمجتمع القراءة: نبني بيئة قوية وداعمة لكل محب للكتاب.")</span></li>
             </ul>
           </div>
 
@@ -56,7 +59,7 @@
 
       <div class="container section-title" data-aos="fade-up">
         <div class="section-title-container d-flex align-items-center justify-content-between">
-          <h2>Team</h2>
+          <h2>@L("Team", "الفريق")</h2>
         </div>
       </div>
 
@@ -69,8 +72,8 @@
               <div class="pic"><img src="@Url.Content("~/blog_img/blog_members/Alia.jpg")" class="img-fluid" alt="Alia" asp-append-version="true" /></div>
               <div class="member-info">
                 <h4>Alia</h4>
-                <span>Title</span>
-                <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
+                <span>@L("Team Member", "عضو بالفريق")</span>
+                <p>@L("Content creator and literary voice.", "صانعة محتوى وصوت أدبي.")</p>
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -86,8 +89,8 @@
               <div class="pic"><img src="@Url.Content("~/blog_img/team/Aia.png")" class="img-fluid" alt="Aia" asp-append-version="true" /></div>
               <div class="member-info">
                 <h4>Aia</h4>
-                <span>Title</span>
-                <p>Aut maiores voluptates amet et quis praesentium qui senda para</p>
+                <span>@L("Team Member", "عضو بالفريق")</span>
+                <p>@L("Book presenter and community lead.", "مقدمة كتب ومسؤولة المجتمع.")</p>
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -103,8 +106,8 @@
               <div class="pic"><img src="@Url.Content("~/blog_img/team/Mamdouh.png")" class="img-fluid" alt="Mamdouh" asp-append-version="true" /></div>
               <div class="member-info">
                 <h4>Mamdouh</h4>
-                <span>Title</span>
-                <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
+                <span>@L("Team Member", "عضو بالفريق")</span>
+                <p>@L("Editor and publishing coordinator.", "محرر ومنسق نشر.")</p>
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -120,8 +123,8 @@
               <div class="pic"><img src="@Url.Content("~/blog_img/team/Rana.png")" class="img-fluid" alt="Rana" asp-append-version="true" /></div>
               <div class="member-info">
                 <h4>Rana</h4>
-                <span>Title</span>
-                <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
+                <span>@L("Team Member", "عضو بالفريق")</span>
+                <p>@L("Podcast host and reviewer.", "مقدمة بودكاست وناقدة كتب.")</p>
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -136,8 +139,8 @@
               <div class="pic"><img src="@Url.Content("~/blog_img/team/Nouran.png")" class="img-fluid" alt="Rana" asp-append-version="true" /></div>
               <div class="member-info">
                 <h4>Nouran</h4>
-                <span>Title</span>
-                <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
+                <span>@L("Team Member", "عضو بالفريق")</span>
+                <p>@L("Community manager and content support.", "مديرة مجتمع ودعم محتوى.")</p>
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>

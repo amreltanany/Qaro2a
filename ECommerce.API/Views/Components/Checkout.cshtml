@@ -1,24 +1,27 @@
 @model ECommerce.API.ViewModels.CheckoutViewModel
 
 @{
-    ViewData["Title"] = "Checkout";
+    var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    ViewData["Title"] = L("Checkout", "إتمام الطلب");
 }
 
 <section class="py-5">
     <div class="container">
-        <h2 class="mb-4">Checkout</h2>
+        <h2 class="mb-4">@L("Checkout", "إتمام الطلب")</h2>
 
         <div class="row">
             <div class="col-lg-8">
-                <h5 class="mb-3">Order Summary</h5>
+                <h5 class="mb-3">@L("Order Summary", "ملخص الطلب")</h5>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead class="table-light">
                             <tr>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th class="text-end">Subtotal</th>
+                                <th>@L("Product", "المنتج")</th>
+                                <th>@L("Price", "السعر")</th>
+                                <th>@L("Quantity", "الكمية")</th>
+                                <th class="text-end">@L("Subtotal", "الإجمالي الفرعي")</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,29 +37,29 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="text-end fw-bold mb-0">Grand Total: @Model.GrandTotal.ToString("C")</p>
+                <p class="text-end fw-bold mb-0">@L("Grand Total:", "الإجمالي النهائي:") @Model.GrandTotal.ToString("C")</p>
             </div>
 
             <div class="col-lg-4 mt-4 mt-lg-0">
-                <h5 class="mb-3">Shipping details</h5>
+                <h5 class="mb-3">@L("Shipping details", "بيانات الشحن")</h5>
                 <form asp-controller="Cart" asp-action="ConfirmCheckout" method="post" asp-antiforgery="true">
                     <div class="mb-3">
-                        <label for="FullName" class="form-label">Full Name</label>
+                        <label for="FullName" class="form-label">@L("Full Name", "الاسم الكامل")</label>
                         <input type="text" class="form-control" id="FullName" name="FullName" value="@Model.FullName" readonly />
                     </div>
                     <div class="mb-3">
-                        <label for="Email" class="form-label">Email</label>
+                        <label for="Email" class="form-label">@L("Email", "البريد الإلكتروني")</label>
                         <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" readonly />
                     </div>
                     <div class="mb-3">
-                        <label for="Phone" class="form-label">Phone number</label>
-                        <input type="tel" class="form-control" id="Phone" name="Phone" value="@Model.Phone" placeholder="Enter your phone number" required/>
+                        <label for="Phone" class="form-label">@L("Phone number", "رقم الهاتف")</label>
+                        <input type="tel" class="form-control" id="Phone" name="Phone" value="@Model.Phone" placeholder="@L("Enter your phone number", "أدخل رقم هاتفك")" required/>
                     </div>
                     <div class="mb-3">
-                        <label for="Address" class="form-label">Address</label>
-                        <textarea class="form-control" id="Address" name="Address" rows="3" placeholder="Enter your shipping address" required>@Model.Address</textarea>
+                        <label for="Address" class="form-label">@L("Address", "العنوان")</label>
+                        <textarea class="form-control" id="Address" name="Address" rows="3" placeholder="@L("Enter your shipping address", "أدخل عنوان الشحن")" required>@Model.Address</textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Place order</button>
+                    <button type="submit" class="btn btn-primary w-100">@L("Place order", "تأكيد الطلب")</button>
                 </form>
             </div>
         </div>
