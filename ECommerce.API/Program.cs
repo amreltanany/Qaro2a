@@ -214,10 +214,11 @@ app.UseRequestLocalization(new RequestLocalizationOptions
     DefaultRequestCulture = new RequestCulture("ar"),
     SupportedCultures = supportedCultures,
     SupportedUICultures = supportedCultures,
+    // Cookie only: explicit user choice overrides default. No Accept-Language header,
+    // so first-time visitors get Arabic (DefaultRequestCulture) instead of browser locale.
     RequestCultureProviders = new List<IRequestCultureProvider>
     {
-        new CookieRequestCultureProvider(),
-        new AcceptLanguageHeaderRequestCultureProvider()
+        new CookieRequestCultureProvider()
     }
 });
 
