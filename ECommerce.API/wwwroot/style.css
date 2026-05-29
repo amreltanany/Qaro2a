@@ -1844,6 +1844,20 @@ section,
   max-width: 100%;
 }
 
+#billboard .container > .row:last-child {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.main-swiper .swiper-slide {
+  height: auto;
+  box-sizing: border-box;
+}
+
+.main-swiper .banner-item {
+  max-width: 100%;
+}
+
 @media (max-width: 991.98px) {
   h1,
   .h1 {
@@ -1939,7 +1953,16 @@ section,
   }
 
   .footer-section .footer-social {
-    justify-content: center;
+    justify-content: center !important;
+  }
+
+  .footer-social-link {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .footer-social-link i {
+    font-size: 1.5rem;
   }
 
   body:has(.video-overlay-toggle) .footer-copyright {
@@ -1973,13 +1996,76 @@ section,
   }
 }
 
+.footer-section {
+  margin-top: 0;
+}
+
 .footer-bg {
+  position: relative;
   background-color: #1a365d;
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
   background-attachment: scroll;
-  min-height: 280px;
+  min-height: auto;
+  overflow: hidden;
+}
+
+.footer-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(26, 54, 93, 0.94) 0%, rgba(26, 54, 93, 0.97) 100%);
+  pointer-events: none;
+}
+
+.footer-bg > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.footer-social {
+  position: relative;
+  z-index: 2;
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-social-link:hover,
+.footer-social-link:focus-visible {
+  background: rgba(255, 255, 255, 0.32);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.footer-social-link i {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+html[dir="rtl"] .footer-section .footer-social {
+  justify-content: flex-start;
+}
+
+html[dir="ltr"] .footer-section .footer-social {
+  justify-content: flex-start;
+}
+
+@media (max-width: 767.98px) {
+  .footer-section .footer-social {
+    justify-content: center !important;
+  }
 }
 
 @media (min-width: 768px) {

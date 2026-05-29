@@ -1,8 +1,62 @@
 .home-about-section {
-    background-image: var(--about-bg);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), var(--about-bg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    margin-bottom: 0;
+}
+
+.home-about-section .ratio {
+    max-width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.home-about-section p {
+    max-width: 36rem;
+}
+
+html[dir="rtl"] .home-about-section p {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+html[dir="ltr"] .home-about-section p {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.home-publish-banner {
+    margin: 0;
+    line-height: 0;
+}
+
+.home-publish-banner img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+#billboard {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+}
+
+#billboard .main-swiper {
+    margin-bottom: 0;
+}
+
+#billboard + .home-publish-banner {
+    margin-top: 0;
+}
+
+#billboard .section-title {
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+#billboard .row.justify-content-center > .col-md-6 p {
+    margin-bottom: 1rem;
 }
 
 .video-overlay-toggle {
