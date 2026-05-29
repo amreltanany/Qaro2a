@@ -19,7 +19,8 @@ namespace ECommerce.Application.DTOs.Order
         public string? ShippingAddress { get; set; }
         public string? ShippingPhone { get; set; }
 
-        public decimal TotalAmount { get; set; } // The result of your GetTotal() method
+        public decimal DeliveryFee { get; set; }
+        public decimal TotalAmount { get; set; }
         public List<OrderItemDto> Items { get; set; } = new();
     }
 }

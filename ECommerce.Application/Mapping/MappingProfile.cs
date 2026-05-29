@@ -37,6 +37,7 @@ namespace ECommerce.Application.Mapping
             CreateMap<CategoryUpdateDto, Category>();
 
             CreateMap<Order, OrderResponseDto>()
+                .ForMember(dest => dest.DeliveryFee, opt => opt.MapFrom(src => src.DeliveryFee))
                 .ForMember(dest => dest.TotalAmount, opt => opt.MapFrom(src => src.GetTotal()))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
                 .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.User != null ? src.User.Email : null))

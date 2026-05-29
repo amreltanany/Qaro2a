@@ -97,7 +97,7 @@
     <link rel="icon" type="image/png" href="~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png" asp-append-version="true" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="format-detection" content="telephone=no">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="author" content="@seo.SiteName">
@@ -145,7 +145,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Marcellus&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
         rel="stylesheet">
 </head>
 
@@ -316,7 +316,7 @@
         }
         <nav class="navbar navbar-expand-lg navbar-dark text-uppercase fs-6"
             style="background-color: rgb(26, 37, 47); min-height: 85px;">
-            <div class="container-fluid">
+            <div class="container-fluid px-3 px-lg-4">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                     <img src="~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png" alt="Logo"
                         class="logo" style="height: 85px;width:90px" />
@@ -443,21 +443,16 @@
     <!--footer-->
     <footer>
         <section class="footer-section">
-            <div class="footer-bg w-100 py-5" style="
-        background-color: #1a365d;
-        background-image: linear-gradient(180deg, rgba(26, 54, 93, 0.92) 0%, rgba(26, 54, 93, 0.88) 100%), url('@(Url.Content("~/logo/Footer.png"))?width=1920&format=webp&quality=72');
-        background-size: cover;
-        background-attachment: scroll;
-        min-height: 320px;">
-                <div class="container text-white">
-                    <div class="row g-4 py-4">
-                        <div class="col-12 col-sm-6 col-md-3">
+            <div class="footer-bg w-100 py-4 py-md-5" style="background-image: linear-gradient(180deg, rgba(26, 54, 93, 0.92) 0%, rgba(26, 54, 93, 0.88) 100%), url('@(Url.Content("~/logo/Footer.png"))?width=1920&format=webp&quality=72');">
+                <div class="container text-white px-3 px-md-4">
+                    <div class="row g-4 py-2 py-md-4 footer-columns">
+                        <div class="col-12 col-sm-6 col-md-3 footer-col">
                             <h5 class="text-white mb-2">@L("Who We Are", "من نحن")</h5>
                             <p class="mb-0 small opacity-90">@L("We are a multidimensional literary HUB where stories come to life.", "نحن منصة أدبية متعددة الأبعاد حيث تنبض القصص بالحياة.")</p>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-3">
-                            <h5 class="text-white mb-3 text-center">@L("Pages", "الصفحات")</h5>
-                            <div style="display: flex;align-items: center; justify-content: space-around;">
+                        <div class="col-12 col-sm-6 col-md-3 footer-col">
+                            <h5 class="text-white mb-3">@L("Pages", "الصفحات")</h5>
+                            <div class="footer-pages-links d-flex align-items-start justify-content-center justify-content-md-around gap-4 gap-md-0">
                                 <ul class="list-unstyled mb-0 small opacity-90">
                                     <li class="mb-2"><a asp-controller="Home" asp-action="Index"
                                             class="text-white text-decoration-none">@L("Home", "الرئيسية")</a></li>
@@ -478,8 +473,8 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-3 text-center">
-                            <h5 class="text-white mb-3 ">@L("Connect", "تواصل")</h5>
+                        <div class="col-12 col-sm-6 col-md-3 footer-col">
+                            <h5 class="text-white mb-3">@L("Connect", "تواصل")</h5>
                             <ul class="list-unstyled mb-0 small opacity-90">
                                 <li class="mb-2">
                                     <a href="https://wa.me/201555012590" class="text-white text-decoration-none" target="_blank" rel="noopener noreferrer">+201555012590</a>
@@ -489,9 +484,9 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-3">
+                        <div class="col-12 col-sm-6 col-md-3 footer-col">
                             <h5 class="text-white mb-3">@L("Follow Us", "تابعنا")</h5>
-                            <div class="d-flex flex-wrap gap-3">
+                            <div class="d-flex flex-wrap gap-3 footer-social">
                                 <a href="https://tr.ee/5cAPZdijch" class="text-white opacity-75" aria-label="Spotify"><i
                                         class="bi bi-spotify fs-4"></i></a>
                                 <a href="https://tr.ee/c6rOQMxHc_" class="text-white opacity-75" aria-label="YouTube"><i
@@ -502,13 +497,17 @@
                         </div>
                     </div>
                     <hr class="border-light border-opacity-25 my-4" />
-                    <div class="text-center small text-white opacity-90 pb-3">
-                       <p>
-    &copy; @DateTime.Now.Year Qaro2a. @L("All Rights Reserved.", "جميع الحقوق محفوظة.") | 
-    <a asp-controller="Home" asp-action="PrivacyPolicy" class="text-white text-decoration-none">@L("Privacy Policy", "سياسة الخصوصية")</a> | 
-    <a asp-controller="Home" asp-action="TermsOfService" class="text-white text-decoration-none">@L("Terms of Service", "شروط الخدمة")</a> | 
-    @L("Built by", "تم التطوير بواسطة") <a href="https://amreltanany.github.io/portfolio-/" target="_blank" class="text-white text-decoration-none">Amr El Tanany</a>
-</p>
+                    <div class="footer-copyright text-center small text-white opacity-90 pb-3">
+                        <p class="mb-0">
+                            &copy; @DateTime.Now.Year Qaro2a. @L("All Rights Reserved.", "جميع الحقوق محفوظة.")
+                        </p>
+                        <p class="footer-copyright-links mb-0 mt-1">
+                            <a asp-controller="Home" asp-action="PrivacyPolicy" class="text-white text-decoration-none">@L("Privacy Policy", "سياسة الخصوصية")</a>
+                            <span class="footer-copyright-sep" aria-hidden="true">|</span>
+                            <a asp-controller="Home" asp-action="TermsOfService" class="text-white text-decoration-none">@L("Terms of Service", "شروط الخدمة")</a>
+                            <span class="footer-copyright-sep" aria-hidden="true">|</span>
+                            @L("Built by", "تم التطوير بواسطة") <a href="https://amreltanany.github.io/portfolio-/" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none">Amr El Tanany</a>
+                        </p>
                     </div>
                 </div>
             </div>

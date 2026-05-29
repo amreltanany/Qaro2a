@@ -91,7 +91,7 @@
                                     <strong>@L("Order", "طلب") #@order.Id</strong>
                                     <span>@order.OrderDate.ToLocalTime().ToString("g")</span>
                                     <span class="badge bg-secondary">@order.Status</span>
-                                    <span class="ms-auto fw-semibold">@order.TotalAmount.ToString("C")</span>
+                                    <span class="ms-auto fw-semibold">@order.TotalAmount.ToString("N2") EGP</span>
                                 </div>
                                 @if (!string.IsNullOrWhiteSpace(order.ShippingAddress) ||
                                                                 !string.IsNullOrWhiteSpace(order.ShippingPhone))
@@ -122,9 +122,9 @@
                                             {
                                                 <tr>
                                                     <td>@line.ProductName</td>
-                                                    <td class="text-end">@line.Price.ToString("C")</td>
+                                                    <td class="text-end">@line.Price.ToString("N2") EGP</td>
                                                     <td class="text-end">@line.Quantity</td>
-                                                    <td class="text-end">@line.Subtotal.ToString("C")</td>
+                                                    <td class="text-end">@line.Subtotal.ToString("N2") EGP</td>
                                                 </tr>
                                             }
                                         </tbody>

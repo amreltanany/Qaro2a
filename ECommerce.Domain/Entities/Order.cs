@@ -17,6 +17,7 @@ namespace ECommerce.Domain.Entities
         public OrderStatus Status { get; private set; } = OrderStatus.Pending;
         public string? ShippingAddress { get; private set; }
         public string? ShippingPhone { get; private set; }
+        public decimal DeliveryFee { get; private set; }
 
         private readonly List<OrderItem> _items = new();
         public IReadOnlyCollection<OrderItem> Items => _items;
@@ -29,6 +30,7 @@ namespace ECommerce.Domain.Entities
             _items = items;
             OrderDate = DateTime.UtcNow;
             Status = OrderStatus.Pending;
+            DeliveryFee = OrderPricing.DeliveryFee;
         }
 
         public void AddItem(int productId, decimal price, int quantity)
@@ -40,7 +42,10 @@ namespace ECommerce.Domain.Entities
         }
 
         public decimal GetTotal()
-        => _items.Sum(i => i.Price * i.Quantity);
+            => _items.Sum(i => i.Price * i.Quantity) + DeliveryFee;
+
+        public decimal GetItemsSubtotal()
+            => _items.Sum(i => i.Price * i.Quantity);
 
         public void UpdateItemQuantity(int orderItemId, int quantity)
         {

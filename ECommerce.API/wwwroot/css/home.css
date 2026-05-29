@@ -77,3 +77,18 @@
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.12);
 }
+
+@media (max-width: 575.98px) {
+    .video-overlay-toggle {
+        right: 16px;
+        bottom: 5.5rem;
+        width: 54px;
+        height: 54px;
+        font-size: 1.25rem;
+    }
+
+    .home-about-section .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}

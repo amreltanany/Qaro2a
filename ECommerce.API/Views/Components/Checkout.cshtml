@@ -29,15 +29,27 @@
                             {
                                 <tr>
                                     <td>@item.ProductName</td>
-                                    <td>@item.Price.ToString("C")</td>
+                                    <td>@item.Price.ToString("N2") EGP</td>
                                     <td>@item.Quantity</td>
-                                    <td class="text-end">@item.Subtotal.ToString("C")</td>
+                                    <td class="text-end">@item.Subtotal.ToString("N2") EGP</td>
                                 </tr>
                             }
                         </tbody>
                     </table>
                 </div>
-                <p class="text-end fw-bold mb-0">@L("Grand Total:", "الإجمالي النهائي:") @Model.GrandTotal.ToString("C")</p>
+                <div class="text-end mt-3">
+                    <p class="mb-1">
+                        <span class="text-muted">@L("Items subtotal:", "إجمالي المنتجات:")</span>
+                        <span class="fw-semibold ms-2">@Model.ItemsSubtotal.ToString("N2") EGP</span>
+                    </p>
+                    <p class="mb-1">
+                        <span class="text-muted">@L("Delivery fee:", "رسوم التوصيل:")</span>
+                        <span class="fw-semibold ms-2">@Model.DeliveryFee.ToString("N2") EGP</span>
+                    </p>
+                    <p class="mb-0 fs-5 fw-bold">
+                        @L("Grand Total:", "الإجمالي النهائي:") @Model.GrandTotal.ToString("N2") EGP
+                    </p>
+                </div>
             </div>
 
             <div class="col-lg-4 mt-4 mt-lg-0">

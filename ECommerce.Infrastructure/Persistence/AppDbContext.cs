@@ -78,6 +78,10 @@ public class AppDbContext : IdentityDbContext<User>
             .HasForeignKey(o => o.UserId)
             .IsRequired(false);
 
+        modelBuilder.Entity<Order>()
+            .Property(o => o.DeliveryFee)
+            .HasPrecision(18, 2);
+
         modelBuilder.Entity<Publish>()
             .ToTable("Publish");
         modelBuilder.Entity<Contact>()

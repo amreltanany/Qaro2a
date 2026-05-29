@@ -83,7 +83,7 @@ public class PublishController : Controller
         var publish = new Publish(userId, mobileNumber, relativePath);
         await _publishRepository.AddAsync(publish);
 
-        TempData["PublishSuccess"] = "Your submission was received successfully.";
+        TempData["PublishSuccess"] = true;
         return RedirectToAction(nameof(Index));
     }
 }

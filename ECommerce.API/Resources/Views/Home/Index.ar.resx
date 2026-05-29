@@ -5,12 +5,12 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value></resheader>
   <data name="Home" xml:space="preserve"><value>الرئيسية</value></data>
-  <data name="Qaro2a home hero" xml:space="preserve"><value>واجهة قاروعه الرئيسية</value></data>
+  <data name="Qaro2a home hero" xml:space="preserve"><value>واجهة قروءه الرئيسية</value></data>
   <data name="New Collections" xml:space="preserve"><value>إصدارات جديدة</value></data>
-  <data name="Every book in our collection is more than just pages-it is a perspective. At Qaro2a, we believe storytelling is the heartbeat of humanity. From curated bestsellers to hidden gems by independent voices, we provide a platform where every narrative finds its home and every reader finds their next adventure." xml:space="preserve"><value>كل كتاب في مجموعتنا ليس مجرد صفحات، بل منظور مختلف. في قاروعه نؤمن أن السرد هو نبض الإنسانية. من الكتب الأكثر مبيعًا إلى الكنوز المخفية لأصوات مستقلة، نوفر منصة يجد فيها كل سرد موطنه ويجد فيها كل قارئ مغامرته القادمة.</value></data>
-  <data name="Publish with Qaro2a" xml:space="preserve"><value>انشر مع قاروعه</value></data>
+  <data name="Every book in our collection is more than just pages-it is a perspective. At Qaro2a, we believe storytelling is the heartbeat of humanity. From curated bestsellers to hidden gems by independent voices, we provide a platform where every narrative finds its home and every reader finds their next adventure." xml:space="preserve"><value>كل كتاب في مجموعتنا ليس مجرد صفحات، بل منظور مختلف. في قروءه نؤمن أن السرد هو نبض الإنسانية. من الكتب الأكثر مبيعًا إلى الكنوز المخفية لأصوات مستقلة، نوفر منصة يجد فيها كل سرد موطنه ويجد فيها كل قارئ مغامرته القادمة.</value></data>
+  <data name="Publish with Qaro2a" xml:space="preserve"><value>انشر مع قروءه</value></data>
   <data name="About Us" xml:space="preserve"><value>من نحن</value></data>
-  <data name="Qaro2a is a platform for book lovers to discover and share their favorite books. We are a team of book lovers who are passionate about books and we believe that books are the best way to learn and grow." xml:space="preserve"><value>قاروعه منصة لعشاق الكتب لاكتشاف كتبهم المفضلة ومشاركتها. نحن فريق شغوف بالقراءة ونؤمن أن الكتب هي أفضل طريق للتعلم والنمو.</value></data>
+  <data name="Qaro2a is a platform for book lovers to discover and share their favorite books. We are a team of book lovers who are passionate about books and we believe that books are the best way to learn and grow." xml:space="preserve"><value>قروءه منصة لعشاق الكتب لاكتشاف كتبهم المفضلة ومشاركتها. نحن فريق شغوف بالقراءة ونؤمن أن الكتب هي أفضل طريق للتعلم والنمو.</value></data>
   <data name="Read more" xml:space="preserve"><value>اقرأ المزيد</value></data>
   <data name="View more" xml:space="preserve"><value>شاهد المزيد</value></data>
   <data name="Open videos" xml:space="preserve"><value>فتح الفيديوهات</value></data>
