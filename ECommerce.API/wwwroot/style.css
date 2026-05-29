@@ -24,9 +24,12 @@ CSS STRUCTURE:
 --------------------------------------------------------------*/
 html {
   scroll-behavior: smooth;
+  --site-font: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-family: var(--site-font);
 }
+
 body {
-  --heading-font: "Playfair Display", Georgia, "Times New Roman", serif;
+  --heading-font: var(--site-font);
   --heading-font-weight: 400;
   --heading-color: #111;
   --heading-line-height: 1.24;
@@ -34,7 +37,7 @@ body {
   --swiper-theme-color: #8C907E;
 
   /* bootstrap */
-  --bs-body-font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  --bs-body-font-family: var(--site-font);
   --bs-body-font-size: 18px;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
@@ -63,19 +66,36 @@ body {
 }
 
 body {
-  letter-spacing: 0.03rem;
+  letter-spacing: 0.02rem;
   font-family: var(--bs-body-font-family);
 }
 
 html[lang="ar"] body {
-  --heading-font: "Cairo", "Segoe UI", Tahoma, sans-serif;
-  --bs-body-font-family: "Cairo", "Segoe UI", Tahoma, sans-serif;
   letter-spacing: 0;
 }
 
-html[lang="en"] body {
-  --heading-font: "Playfair Display", Georgia, "Times New Roman", serif;
-  --bs-body-font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+.navbar,
+.offcanvas,
+.btn,
+.form-control,
+.form-select,
+input,
+textarea,
+select,
+.dropdown-menu,
+.modal,
+.alert,
+.table,
+.nav-link,
+.card,
+footer,
+section,
+p,
+li,
+a,
+span,
+label {
+  font-family: inherit;
 }
 
 h1,
