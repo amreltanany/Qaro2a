@@ -24,12 +24,10 @@ CSS STRUCTURE:
 --------------------------------------------------------------*/
 html {
   scroll-behavior: smooth;
-  --site-font: "Playfair Display", Georgia, "Times New Roman", serif;
-  font-family: var(--site-font);
 }
 
 body {
-  --heading-font: var(--site-font);
+  --heading-font: var(--site-font, "Playfair Display", Georgia, serif);
   --heading-font-weight: 400;
   --heading-color: #111;
   --heading-line-height: 1.24;
@@ -72,30 +70,6 @@ body {
 
 html[lang="ar"] body {
   letter-spacing: 0;
-}
-
-.navbar,
-.offcanvas,
-.btn,
-.form-control,
-.form-select,
-input,
-textarea,
-select,
-.dropdown-menu,
-.modal,
-.alert,
-.table,
-.nav-link,
-.card,
-footer,
-section,
-p,
-li,
-a,
-span,
-label {
-  font-family: inherit;
 }
 
 h1,

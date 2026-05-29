@@ -1,8 +1,8 @@
 
 :root {
-  --default-font: "Playfair Display", Georgia, "Times New Roman", serif;
-  --heading-font: "Playfair Display", Georgia, "Times New Roman", serif;
-  --nav-font: "Playfair Display", Georgia, "Times New Roman", serif;
+  --default-font: var(--site-font, "Playfair Display", Georgia, serif);
+  --heading-font: var(--site-font, "Playfair Display", Georgia, serif);
+  --nav-font: var(--site-font, "Playfair Display", Georgia, serif);
 }
 
 :root { 
@@ -43,7 +43,7 @@
 body {
   color: var(--default-color);
   background-color: var(--background-color);
-  font-family: var(--default-font);
+  font-family: var(--site-font, var(--default-font));
 }
 
 a {

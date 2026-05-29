@@ -1,0 +1,41 @@
+/* Site typography — requires Google Fonts in _Layout (Cairo + Playfair Display) */
+
+html {
+  --font-english: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-arabic: "Cairo", "Segoe UI", Tahoma, sans-serif;
+}
+
+html[lang="en"] {
+  --site-font: var(--font-english);
+  font-family: var(--font-english);
+}
+
+html[lang="ar"] {
+  --site-font: var(--font-arabic);
+  font-family: var(--font-arabic);
+}
+
+html:not([lang="en"]):not([lang="ar"]) {
+  --site-font: var(--font-english);
+  font-family: var(--font-english);
+}
+
+body {
+  font-family: var(--site-font) !important;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.navbar, .offcanvas, .nav-link,
+.btn, .form-control, .form-select,
+.dropdown-menu, .modal, .alert,
+.table, .card, footer, section,
+p, li, a, span, label {
+  font-family: var(--site-font);
+}
+
+/* Keep Bootstrap Icons font intact */
+[class^="bi-"]::before,
+[class*=" bi-"]::before {
+  font-family: bootstrap-icons !important;
+}
