@@ -1,4 +1,4 @@
-@{
+﻿@{
     var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
     var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
     string L(string en, string ar) => isArabic ? ar : en;
@@ -12,11 +12,11 @@
             <div class="row g-5">
                 <div class="col-lg-4">
                     <div class="post-entry lg">
-                        <span><img src="~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png" alt="" class="img-fluid"></span>
+                        <span><img src="@Url.Content("~/blog/books/حلقه الذنب.png")" alt="حلقه الذنب" class="img-fluid" asp-append-version="true"></span>
                         <div class="post-meta"><span class="date">@L("NEW RELEASE", "إصدار جديد")</span> <span class="mx-1">•</span> <span>@L("Jul 5th '22", "٥ يوليو ٢٠٢٢")</span></div>
-                        <h2><span class="Author_title">@L("The Architects of the Loop: Meet the Authors", "مهندسو الحلقة: تعرف على الكتّاب")</span></h2>
+                        <h2><span class="Author_title">@L("You slip into guilt without realizing.", "ليس بالضرورة أن تدخل حلقة الذنب بقرار واعي.. في الغالب أنت لا تشعر بنفسك الا بعد أن تنزلق قدمك وتجد نفسك أسيرها..")</span></h2>
                         <p class="mb-4 d-block">
-                            @L("The power of \"Halaqat al-Zanb\" lies in its diversity. Four distinct voices came together, each bringing a unique psychological lens to the theme of guilt, creating a rich, multi-dimensional experience for the reader.", "تكمن قوة \"حلقة الذنب\" في تنوعها؛ فقد اجتمعت أربعة أصوات مختلفة، يحمل كل منها منظوراً نفسياً فريداً لمفهوم الذنب، لتقديم تجربة ثرية ومتعددة الأبعاد للقارئ.")
+                            @L("It is not just a collection of stories.. but an interwoven tapestry of drama and fantasy.. A complex journey through five different experiences around the feeling of guilt.. when it transforms from a mere innocent question that reflects the good intentions of its owner and his desire to become a better person into an endless loop of a feeling that slowly consumes him..", "هي ليست مجموعة قصص وحسب.. بل هي نسيج متشابك بين الدراما والفانتازيا.. رحلة معقدة بخمسة خبرات مختلفة حول الشعور بالذنب.. حين يتحول من مجرد سؤال بريء ينم عن حُسن نية صاحبه ورغبته في أن يصبح شخصاً أفضل إلى أن يصل به الأمر دائراً في حلقة مفرغة لا تنتهي من شعور يأكله ببطء..")
                         </p>
                     </div>
                 </div>
@@ -25,39 +25,45 @@
                     <div class="row g-5">
                         <div class="col-lg-4 border-start custom-border">
                             <div class="post-entry">
-                                <a href="blog-details.html"><img src="~/blog/books/بعد الفراق.jpeg" alt="" class="img-fluid"></a>
-                                <div class="post-meta"><span class="date">بعد الفراق.</span><span class="mx-1">•</span><span>رانا رؤف</span></div>
-                                <h2><span class="Author_title">كل مرة بتتعرض فيها للرفض وتقفل على نفسك وتسألها ليه اخترت تكون في المكان ده؟ بتلاقي إجابة واحدة مستنياك في كل مرة!</span></h2>
+                                <span><img src="@Url.Content("~/blog/books/بعد فارق.jpeg")" alt="بُعد فارق" class="img-fluid" asp-append-version="true"></span>
+                                <div class="post-meta"><span class="date">بُعد فارق</span> <span class="mx-1">•</span> <span>رانا رؤف</span></div>
+                                <p class="mb-0 d-block">
+                                    @L("\"Beyond the Gap\" is a fantasy novel with philosophical and psychological dimensions... Between \"Abbār\" and \"Fāriq\" you find yourself on a journey confronting everything you run from with no escape from the truth... Between truth and falsehood, attachment and escape, a journey full of secrets and mysteries in pursuit of nothing but the truth...", "\"بُعد فارق\" هي رواية فانتازيا تحمل ابعاد فلسفية ونفسية... وما بين \"عبّار\" و\"فارق\" رحلة تجد نفسك فيها في مواجهة كل ما تهرب منه دون سبيل للهروب من الحقيقة... وما بين الحقيقة والزيف والتعلُق والهروب رحلة مليئة بالخبايا والأسرار في سبيل الوصول إلى الحقيقة دون سواها...")
+                                </p>
                             </div>
                             <div class="post-entry">
-                                <a href="blog-details.html"><img src="~/blog/books/بعد الفراق.jpeg" alt="" class="img-fluid"></a>
-                                <div class="post-meta"><span class="date">طلبك مرفوض </span> <span class="mx-1">•</span> <span>نوران بسيوني</span></div>
-                                <h2><span class="Author_title">كل مرة بتتعرض فيها للرفض وتقفل على نفسك وتسألها ليه اخترت تكون في المكان ده؟ بتلاقي إجابة واحدة مستنياك في كل مرهنوران بسيوني </span></h2>
+                                <span><img src="@Url.Content("~/blog/books/طلبك مرفوض.jpeg")" alt="طلبك مرفوض" class="img-fluid" asp-append-version="true"></span>
+                                <div class="post-meta"><span class="date">طلبك مرفوض</span> <span class="mx-1">•</span> <span>نوران بسيوني</span></div>
+                                <p class="mb-0 d-block">
+                                    @L("Every time you face rejection and shut down on yourself, asking why you chose to be in this place? You find one answer waiting for you every time!", "كل مرة بتتعرض فيها للرفض وتقفل على نفسك وتسألها ليه اخترت تكون في المكان ده؟ بتلاقي إجابة واحدة مستنياك في كل مرة!")
+                                </p>
                             </div>
                             <div class="post-entry">
-                                <a href="blog-details.html"><img src="~/blog/books/لوحه اخيره.jpeg" alt="" class="img-fluid"></a>
+                                <span><img src="@Url.Content("~/blog/books/لوحه اخيره.jpeg")" alt="لوحة اخيرة" class="img-fluid" asp-append-version="true"></span>
                                 <div class="post-meta">
-                                    <span class="date">لوحة اخيرة </span>
-                                    <span class="mx-1">•</span> <span>علياء المنشاوي</span>
+                                    <span class="date">لوحة اخيرة</span>
+                                    <span class="mx-1">•</span>
+                                    <span>علياء المنشاوي</span>
                                 </div>
-                                <h2><span class="Author_title">كل مرة بتتعرض فيها للرفض وتقفل على نفسك وتسألها ليه اخترت تكون في المكان ده؟ بتلاقي إجابة واحدة مستنياك في كل مرة!</span></h2>
+                                <p class="mb-0 d-block">
+                                    @L("In the novel \"The Last Canvas,\" the life of a successful psychiatrist is turned upside down after the death of his mother, the famous and reclusive painter, when he accidentally discovers old recordings and notebooks that hide secrets he never knew about her.", "في رواية لوحة أخيرة، تنقلب حياة طبيب نفسي ناجح بعد وفاة والدته، الرسامة الشهيرة والمنعزلة، حين يكتشف بالصدفة تسجيلات قديمة ودفاتر تخفي أسرارًا لم يعرفها عنها من قبل.")
+                                </p>
                             </div>
                         </div>
                         <div class="col-lg-4 border-start custom-border">
                             <div class="post-entry">
-                                <a href="blog-details.html"><img src="~/blog/books/ارخبيل الملوك.jpeg" alt="" class="img-fluid"></a>
-                                <div class="post-meta"><span class="date"> ارخبيل الملوك </span> <span class="mx-1">•</span> <span>ممدوح عماد </span></div>
-                                <h2><span class="Author_title">كل مرة بتتعرض فيها للرفض وتقفل على نفسك وتسألها ليه اخترت تكون في المكان ده؟ بتلاقي إجابة واحدة مستنياك في كل مرة! </span></h2>
+                                <span><img src="@Url.Content("~/blog/books/ارخبيل الملوك.jpeg")" alt="ارخبيل الملوك" class="img-fluid" asp-append-version="true"></span>
+                                <div class="post-meta"><span class="date">ارخبيل الملوك</span> <span class="mx-1">•</span> <span>ممدوح عماد</span></div>
+                                <p class="mb-0 d-block">
+                                    @L("A fantasy experience not far from our reality that holds so much, and life will remain full of easy and difficult tests—what seems easy yet carries the essence of difficulty within it. Between choices and knowing the truth, which shifts as awareness and perception grow, our journey takes shape in the mysteries of Arkhabil El Molouk...", "تجربة فانتازيا ليست بعيدة عن واقعنا الذي ينطوي على الكثير و ستظل الحياة مليئة بالاختبارات السهلة والصعبة، و ما يبدو منها سهلاً ولكنه يحمل بين ثناياه جوهر الصعوبة، مابين الاختيارات و معرفة الحقيقة التي تختلف مع زيادة الوعي والإدراك تتشكل رحلتنا في خبايا أرخبيل الملوك...")
+                                </p>
                             </div>
                             <div class="post-entry">
-                                <span><img src="~/blog/books/طيف نجاه.jpeg" alt="" class="img-fluid"></span>
-                                <div class="post-meta"><span class="date"> طيف نجاه.</span> <span class="mx-1">•</span> <span> ايه المنشاوي</span></div>
-                                <h2><span class="Author_title">كل مرة بتتعرض فيها للرفض وتقفل على نفسك وتسألها ليه اخترت تكون في المكان ده؟ بتلاقي إجابة واحدة مستنياك في كل مرة! </span></h2>
-                            </div>
-                            <div class="post-entry">
-                                <span><img src="~/blog/books/بعد الفراق.jpeg" alt="" class="img-fluid"></span>
-                                <div class="post-meta"><span class="date">بعد الفراق.</span> <span class="mx-1">•</span> <span>نوران بسيوني</span></div>
-                                <h2><span class="Author_title">كل مرة بتتعرض فيها للرفض وتقفل على نفسك وتسألها ليه اخترت تكون في المكان ده؟ بتلاقي إجابة واحدة مستنياك في كل مرة! </span></h2>
+                                <span><img src="@Url.Content("~/blog/books/طيف نجاه.jpeg")" alt="طيف نجاه" class="img-fluid" asp-append-version="true"></span>
+                                <div class="post-meta"><span class="date">طيف نجاه</span> <span class="mx-1">•</span> <span>آية المنشاوي</span></div>
+                                <p class="mb-0 d-block">
+                                    @L("Between the burdens of life and its continuous slumber that suppresses our entitlement to who we truly are, and delving into others' dreams, we lose a part of our soul and become the living dead. But what if you decided to break this cycle? What if you chose to start your own journey according to your rules and dreams? A journey where you are the hero, seeking to discover the meaning of your life, and searching for your true self along the way.", "بين أعباء الحياة وسباتها المستمر لانبات استحقاقنا لما نكن عليه، والتوغل في أحلام الآخرين، نفقد جزءا من روحنا ونغدو أحياء بأجساد هامدة. ولكن، ماذا لو قررت أن تخرق هذه الدائرة؟ ماذا لو اخترت أن تبدأ رحلتك الخاصة وفقا لقواعدك وأحلامك؟ رحلة تكون فيها بطلا، تسعى فيها لاكتشاف معنى لحياتك، وتبحث خلالها عن ذاتك الحقيقه")
+                                </p>
                             </div>
                         </div>
 
@@ -66,34 +72,6 @@
                             <div class="trending">
                                 <h3>@L("Trending", "الأكثر رواجاً")</h3>
                                 <ul class="trending-post">
-                                    <li>
-                                        <a href="#">
-                                            <span class="number">1</span>
-                                            <h3>@L("A high-stakes journey of survival and liberation between intense action and deep philosophical questions", "رحلة عالية المخاطر بين البقاء والتحرر، تجمع بين الأكشن المكثف والأسئلة الفلسفية العميقة")</h3>
-                                            <span class="author">Arkhabil El Molouk</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="number">1</span>
-                                            <h3>@L("A high-stakes journey of survival and liberation between intense action and deep philosophical questions", "رحلة عالية المخاطر بين البقاء والتحرر، تجمع بين الأكشن المكثف والأسئلة الفلسفية العميقة")</h3>
-                                            <span class="author">Arkhabil El Molouk</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="number">1</span>
-                                            <h3>@L("A high-stakes journey of survival and liberation between intense action and deep philosophical questions", "رحلة عالية المخاطر بين البقاء والتحرر، تجمع بين الأكشن المكثف والأسئلة الفلسفية العميقة")</h3>
-                                            <span class="author">Arkhabil El Molouk</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="number">1</span>
-                                            <h3>@L("A high-stakes journey of survival and liberation between intense action and deep philosophical questions", "رحلة عالية المخاطر بين البقاء والتحرر، تجمع بين الأكشن المكثف والأسئلة الفلسفية العميقة")</h3>
-                                            <span class="author">Arkhabil El Molouk</span>
-                                        </a>
-                                    </li>
                                     <li>
                                         <a href="#">
                                             <span class="number">1</span>
@@ -112,4 +90,3 @@
         </div>
     </div>
 </section>
-
