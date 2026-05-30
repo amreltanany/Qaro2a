@@ -87,6 +87,7 @@
     var switchToCulture = isArabic ? "en" : "ar";
     var offcanvasPlacement = isArabic ? "offcanvas-start" : "offcanvas-end";
     var returnUrl = $"{Context.Request.PathBase}{Context.Request.Path}{Context.Request.QueryString}";
+    var footerImageUrl = Url.Content("~/logo/Footer.png");
 }
 <!DOCTYPE html>
 <html lang="@htmlLang" dir="@htmlDir">
@@ -147,6 +148,7 @@
     <link rel="stylesheet" type="text/css" href="~/style.css" asp-append-version="true">
     <link rel="stylesheet" type="text/css" href="~/css/layout-nav.css" asp-append-version="true">
     <link rel="stylesheet" type="text/css" href="~/css/fonts.css" asp-append-version="true">
+    <link rel="stylesheet" type="text/css" href="~/css/layout-sections.css" asp-append-version="true">
 </head>
 
 <body class="homepage">
@@ -441,52 +443,46 @@
     </main>
 
     <!--footer-->
-    <footer>
+    <footer class="site-footer">
         <section class="footer-section">
-            <div class="footer-bg w-100 py-4 py-md-5" style="background-image: linear-gradient(180deg, rgba(26, 54, 93, 0.92) 0%, rgba(26, 54, 93, 0.88) 100%), url('@(Url.Content("~/logo/Footer.png"))?width=1920&format=webp&quality=72');">
-                <div class="container text-white px-3 px-md-4">
-                    <div class="row g-4 py-2 py-md-4 footer-columns">
-                        <div class="col-12 col-sm-6 col-md-3 footer-col">
-                            <h5 class="text-white mb-2">@L("Who We Are", "من نحن")</h5>
+            <div class="footer-bg w-100" style="--footer-bg-url: url('@footerImageUrl');">
+                <div class="container site-container text-white py-4 py-md-5">
+                    <div class="footer-columns">
+                        <div class="footer-col">
+                            <h5 class="text-white footer-heading">@L("Who We Are", "من نحن")</h5>
                             <p class="mb-0 small opacity-90">@L("We are a multidimensional literary HUB where stories come to life.", "نحن منصة أدبية متعددة الأبعاد حيث تنبض القصص بالحياة.")</p>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-3 footer-col">
-                            <h5 class="text-white mb-3">@L("Pages", "الصفحات")</h5>
-                            <div class="footer-pages-links d-flex align-items-start justify-content-center justify-content-md-around gap-4 gap-md-0">
-                                <ul class="list-unstyled mb-0 small opacity-90">
-                                    <li class="mb-2"><a asp-controller="Home" asp-action="Index"
-                                            class="text-white text-decoration-none">@L("Home", "الرئيسية")</a></li>
-                                    <li class="mb-2"><a asp-controller="Home" asp-action="Shop"
-                                            class="text-white text-decoration-none">@L("Shop", "المتجر")</a></li>
-
-                                    <li class="mb-2"><a asp-controller="Home" asp-action="Blog"
-                                            class="text-white text-decoration-none">@L("Blog", "مقالات")</a></li>
-                                </ul>
-
-                                <ul class="list-unstyled mb-0 small opacity-90">
-                                    <li class="mb-2"><a asp-controller="Home" asp-action="About"
-                                            class="text-white text-decoration-none">@L("About Us", "من نحن")</a></li>
-                                    <li class="mb-2"><a asp-controller="Cart" asp-action="Index"
-                                            class="text-white text-decoration-none">@L("Cart", "السلة")</a></li>
-                                    <li class="mb-2"><a asp-controller="Home" asp-action="Publish"
-                                            class="text-white text-decoration-none">@L("Publish", "انشر كتابك")</a></li>
-                                </ul>
-                            </div>
+                        <div class="footer-col footer-col--pages">
+                            <h5 class="text-white footer-heading">@L("Pages", "الصفحات")</h5>
+                            <ul class="footer-pages-grid list-unstyled mb-0 small opacity-90">
+                                <li><a asp-controller="Home" asp-action="Index"
+                                        class="text-white text-decoration-none">@L("Home", "الرئيسية")</a></li>
+                                <li><a asp-controller="Home" asp-action="About"
+                                        class="text-white text-decoration-none">@L("About", "عنا")</a></li>
+                                <li><a asp-controller="Home" asp-action="Shop"
+                                        class="text-white text-decoration-none">@L("Shop", "المتجر")</a></li>
+                                <li><a asp-controller="Cart" asp-action="Index"
+                                        class="text-white text-decoration-none">@L("Cart", "السلة")</a></li>
+                                <li><a asp-controller="Home" asp-action="Blog"
+                                        class="text-white text-decoration-none">@L("Blog", "مقالات")</a></li>
+                                <li><a asp-controller="Home" asp-action="Publish"
+                                        class="text-white text-decoration-none">@L("Publish", "انشر كتابك")</a></li>
+                            </ul>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-3 footer-col">
-                            <h5 class="text-white mb-3">@L("Connect", "تواصل")</h5>
-                            <ul class="list-unstyled mb-0 small opacity-90">
-                                <li class="mb-2">
-                                    <a href="https://wa.me/201555012590" class="text-white text-decoration-none" target="_blank" rel="noopener noreferrer">+201555012590</a>
+                        <div class="footer-col footer-col--connect">
+                            <h5 class="text-white footer-heading">@L("Connect", "تواصل")</h5>
+                            <ul class="footer-contact-list list-unstyled mb-0 small opacity-90">
+                                <li>
+                                    <a href="https://wa.me/201555012590" class="text-white text-decoration-none footer-contact-phone" target="_blank" rel="noopener noreferrer">+201555012590</a>
                                 </li>
-                                <li class="mb-2">
-                                    <a href="mailto:qaro2a.official@gmail.com" class="text-white text-decoration-none">qaro2a.official@gmail.com</a>
+                                <li>
+                                    <a href="mailto:qaro2a.official@gmail.com" class="text-white text-decoration-none footer-contact-email">qaro2a.official@gmail.com</a>
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-3 footer-col">
-                            <h5 class="text-white mb-3">@L("Follow Us", "تابعنا")</h5>
-                            <div class="footer-social d-flex flex-wrap align-items-center gap-2">
+                        <div class="footer-col footer-col--social">
+                            <h5 class="text-white footer-heading">@L("Follow Us", "تابعنا")</h5>
+                            <div class="footer-social">
                                 <a href="https://tr.ee/3ngKpA6ON8" class="footer-social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                                     <i class="bi bi-instagram" aria-hidden="true"></i>
                                 </a>
@@ -501,14 +497,14 @@
                     </div>
                     <hr class="border-light border-opacity-25 my-4" />
                     <div class="footer-copyright text-center small text-white opacity-90 pb-3">
-                        <p class="mb-0">
+                        <p class="footer-copyright-text mb-0">
                             &copy; @DateTime.Now.Year Qaro2a. @L("All Rights Reserved.", "جميع الحقوق محفوظة.")
-                        </p>
-                        <p class="footer-copyright-links mb-0 mt-1">
+                            <br class="footer-copyright-break d-lg-none" aria-hidden="true" />
                             <a asp-controller="Home" asp-action="PrivacyPolicy" class="text-white text-decoration-none">@L("Privacy Policy", "سياسة الخصوصية")</a>
-                            <span class="footer-copyright-sep" aria-hidden="true">|</span>
+                            <span class="footer-copyright-sep" aria-hidden="true"> | </span>
                             <a asp-controller="Home" asp-action="TermsOfService" class="text-white text-decoration-none">@L("Terms of Service", "شروط الخدمة")</a>
-                            <span class="footer-copyright-sep" aria-hidden="true">|</span>
+                            <span class="footer-copyright-sep d-none d-lg-inline" aria-hidden="true"> | </span>
+                            <br class="footer-copyright-break d-lg-none" aria-hidden="true" />
                             @L("Built by", "تم التطوير بواسطة") <a href="https://amreltanany.github.io/portfolio-/" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none">Amr El Tanany</a>
                         </p>
                     </div>

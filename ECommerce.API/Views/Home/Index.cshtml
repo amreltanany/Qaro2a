@@ -23,7 +23,7 @@
     <div class="w-100">
         <picture>
             <source type="image/webp" srcset="@heroWebp" />
-            <img src="@heroJpeg" alt="@L("Qaro2a home hero", "واجهة قروءه الرئيسية")" class="img-fluid mb-4" data-aos="fade-up"
+            <img src="@heroJpeg" alt="@L("Qaro2a home hero", "واجهة قروءه الرئيسية")" class="img-fluid" data-aos="fade-up"
                 width="1920" height="1080" decoding="async" fetchpriority="high"
                 style="width:100%;height:auto">
         </picture>
@@ -33,7 +33,7 @@
 
 <!--New Arrivals-->
 <section id="billboard" class="overflow-hidden">
-    <div class="container">
+    <div class="container site-container">
         <div class="row justify-content-center">
             <h1 class="section-title text-center mt-4" data-aos="fade-up">@L("New Collections", "إصدارات جديدة")</h1>
             <div class="col-md-6 text-center" data-aos="fade-up" data-aos-delay="300">
@@ -47,7 +47,7 @@
                 <div class="swiper-wrapper border-animation-left">
                     @foreach (var product in Model)
                     {
-                        var rawImg = product.ImageUrl ?? "~/logo/Untitled_design-removebg-preview.png";
+                        var rawImg = product.ImageUrl ?? "~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png";
                         var productSrc = Url.Content(rawImg);
                         if (!productSrc.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                         {
@@ -93,27 +93,28 @@
 <!--publish-->
 
 <!--broadcast-aboutUs-->
-<section class="home-about-section py-4 py-md-5 overflow-hidden" style="--about-bg: url('@aboutBackgroundUrl');">
-    <div class="container px-3 px-md-4">
-        <div class="row align-items-center g-3 g-lg-4">
-            <div class="col-12 col-md-6 order-2 order-md-1">
-                <h2 class="mb-3">@L("About Us", "من نحن")</h2>
-                <p class="mb-0">@L("Qaro2a is a platform for book lovers to discover and share their favorite books. We are a team of book lovers who are passionate about books and we believe that books are the best way to learn and grow.", "قروءه منصة لعشاق الكتب لاكتشاف كتبهم المفضلة ومشاركتها. نحن فريق شغوف بالقراءة ونؤمن أن الكتب هي أفضل طريق للتعلم والنمو.") <a asp-controller="Home" asp-action="About">@L("Read more", "اقرأ المزيد")</a></p>
+<section class="home-about-section home-page-end" style="--about-bg: url('@aboutBackgroundUrl');">
+    <div class="container site-container">
+        <div class="row align-items-center g-4">
+            <div class="col-12 col-lg-6 order-2 order-lg-1 home-about-text">
+                <h2 class="home-about-title">@L("About Us", "من نحن")</h2>
+                <p class="home-about-copy">@L("Qaro2a is a platform for book lovers to discover and share their favorite books. We are a team of book lovers who are passionate about books and we believe that books are the best way to learn and grow.", "قروءه منصة لعشاق الكتب لاكتشاف كتبهم المفضلة ومشاركتها. نحن فريق شغوف بالقراءة ونؤمن أن الكتب هي أفضل طريق للتعلم والنمو.")</p>
+                <a asp-controller="Home" asp-action="About" class="home-about-link">@L("Read more", "اقرأ المزيد")</a>
             </div>
-            <div class="col-12 col-md-6 order-1 order-md-2">
-                <div class="ratio ratio-16x9">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/sVBZDAQQGCk?si=JrTsT0-V4xXo5RfA"
+            <div class="col-12 col-lg-6 order-1 order-lg-2 home-about-media">
+                <div class="ratio ratio-16x9 home-about-video shadow-sm">
+                    <iframe src="https://www.youtube.com/embed/sVBZDAQQGCk?si=JrTsT0-V4xXo5RfA"
                         title="YouTube video player" loading="lazy"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
-
-                <div class="view_more">
+                <p class="home-about-view-more mb-0">
                     <a href="https://www.youtube.com/@@Qaro2a/" target="_blank" rel="noopener noreferrer">@L("View more", "شاهد المزيد")</a>
-                </div>
+                </p>
             </div>
         </div>
     </div>
+    <div class="home-footer-bridge" aria-hidden="true"></div>
 </section>
 <!--broadcast-aboutUs-->
 

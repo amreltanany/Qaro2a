@@ -1,0 +1,81 @@
+/* Shared page rhythm — containers, sections, footer connection */
+
+:root {
+  --qaro-footer-blue: #1a365d;
+  --site-gutter: 1rem;
+  --site-gutter-md: 1.5rem;
+  --section-gap: 0;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --site-gutter: 1.25rem;
+    --site-gutter-md: 2rem;
+  }
+}
+
+.site-container {
+  padding-left: var(--site-gutter);
+  padding-right: var(--site-gutter);
+}
+
+@media (min-width: 1200px) {
+  .site-container {
+    padding-left: var(--site-gutter-md);
+    padding-right: var(--site-gutter-md);
+  }
+}
+
+main.site-main {
+  padding-bottom: 0;
+}
+
+main.site-main > section:not(.video-overlay-screen) {
+  margin-bottom: 0;
+}
+
+body.homepage main.site-main > section:not(.video-overlay-screen):not(.home-page-end) {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+body.homepage #billboard {
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.site-footer .site-container,
+main.site-main .site-container,
+main.site-main section > .container:not(.container-fluid) {
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--site-gutter);
+  padding-right: var(--site-gutter);
+}
+
+@media (min-width: 1200px) {
+  main.site-main section > .container:not(.container-fluid) {
+    padding-left: var(--site-gutter-md);
+    padding-right: var(--site-gutter-md);
+  }
+}
+
+main.site-main section.py-5 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
+
+.site-footer {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.footer-heading {
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.footer-section .footer-col {
+  min-width: 0;
+}

@@ -1,148 +1,228 @@
 .home-about-section {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), var(--about-bg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin-bottom: 0;
+  position: relative;
+  padding: 3rem 0 0;
+  margin-bottom: 0;
+  background-color: #f8f9fb;
+  background-image:
+    linear-gradient(180deg, rgba(248, 249, 251, 0.97) 0%, rgba(248, 249, 251, 0.88) 70%, rgba(26, 54, 93, 0.15) 100%),
+    var(--about-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 
-.home-about-section .ratio {
-    max-width: 100%;
-    border-radius: 0.5rem;
-    overflow: hidden;
+.home-about-title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  line-height: 1.2;
+  color: #111;
 }
 
-.home-about-section p {
-    max-width: 36rem;
+.home-about-copy {
+  margin: 0 0 1rem;
+  max-width: none;
+  line-height: 1.65;
+  color: #5c5c5c;
 }
 
-html[dir="rtl"] .home-about-section p {
-    margin-right: 0;
-    margin-left: auto;
+.home-about-link {
+  display: inline-block;
+  font-weight: 600;
+  color: #1a365d;
+  text-decoration: none;
 }
 
-html[dir="ltr"] .home-about-section p {
-    margin-left: 0;
-    margin-right: auto;
+.home-about-link:hover {
+  color: #2f5b92;
+  text-decoration: underline;
+}
+
+.home-about-media {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.home-about-video {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: #000;
+}
+
+.home-about-view-more {
+  text-align: center;
+}
+
+html[dir="rtl"] .home-about-view-more {
+  text-align: center;
+}
+
+.home-about-view-more a {
+  color: #1a365d;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.home-about-view-more a:hover {
+  text-decoration: underline;
+}
+
+.home-footer-bridge {
+  position: relative;
+  z-index: 1;
+  height: 5rem;
+  margin-top: 2.5rem;
+  background: linear-gradient(
+    180deg,
+    rgba(248, 249, 251, 0) 0%,
+    rgba(26, 54, 93, 0.35) 45%,
+    var(--qaro-footer-blue, #1a365d) 100%
+  );
 }
 
 .home-publish-banner {
-    margin: 0;
-    line-height: 0;
+  margin: 0;
+  line-height: 0;
+  display: block;
 }
 
 .home-publish-banner img {
-    display: block;
-    width: 100%;
-    height: auto;
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
 }
 
 #billboard {
-    padding-bottom: 0.5rem;
-    margin-bottom: 0;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0;
 }
 
 #billboard .main-swiper {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 #billboard + .home-publish-banner {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 #billboard .section-title {
-    margin-top: 1rem;
-    margin-bottom: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 #billboard .row.justify-content-center > .col-md-6 p {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 992px) {
+  .home-about-section {
+    padding-top: 4rem;
+  }
+
+  .home-about-text,
+  .home-about-media {
+    padding-inline: 0.5rem;
+  }
+
+  html[dir="ltr"] .home-about-view-more {
+    text-align: end;
+  }
+
+  html[dir="rtl"] .home-about-view-more {
+    text-align: start;
+  }
 }
 
 .video-overlay-toggle {
-    position: fixed;
-    right: 24px;
-    bottom: 24px;
-    width: 62px;
-    height: 62px;
-    border: 0;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #1a365d 0%, #2f5b92 100%);
-    color: #fff;
-    font-size: 1.4rem;
-    font-weight: 600;
-    z-index: 1050;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
-    transition: transform 0.2s ease, filter 0.2s ease;
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 62px;
+  height: 62px;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a365d 0%, #2f5b92 100%);
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 600;
+  z-index: 1050;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .video-overlay-toggle:hover {
-    transform: scale(1.04);
-    filter: brightness(1.08);
+  transform: scale(1.04);
+  filter: brightness(1.08);
 }
 
 .video-overlay-toggle i {
-    display: inline-block;
-    transform: translateY(1px);
+  display: inline-block;
+  transform: translateY(1px);
 }
 
 .video-overlay-screen {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    background: rgba(12, 17, 25, 0.97);
-    display: none;
-    padding: 24px;
-    overflow-y: auto;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(12, 17, 25, 0.97);
+  display: none;
+  padding: 24px;
+  overflow-y: auto;
 }
 
 .video-overlay-screen.is-open {
-    display: block;
+  display: block;
 }
 
 .video-overlay-close {
-    position: sticky;
-    top: 0;
-    margin-left: auto;
-    display: block;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 0;
-    background: #ffffff;
-    color: #111;
-    font-size: 1.5rem;
-    line-height: 1;
-    font-weight: 700;
-    z-index: 1;
+  position: sticky;
+  top: 0;
+  margin-left: auto;
+  display: block;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 0;
+  background: #ffffff;
+  color: #111;
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 700;
+  z-index: 1;
 }
 
 .video-overlay-grid {
-    max-width: 1100px;
-    margin: 16px auto 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+  max-width: 1100px;
+  margin: 16px auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
 }
 
 .video-overlay-card {
-    background: #0b1220;
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0b1220;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 @media (max-width: 575.98px) {
-    .video-overlay-toggle {
-        right: 16px;
-        bottom: 5.5rem;
-        width: 54px;
-        height: 54px;
-        font-size: 1.25rem;
-    }
+  .video-overlay-toggle {
+    right: 16px;
+    bottom: 5.5rem;
+    width: 54px;
+    height: 54px;
+    font-size: 1.25rem;
+  }
 
-    .home-about-section .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
+  .home-about-section {
+    padding-top: 2rem;
+  }
+
+  .home-footer-bridge {
+    height: 3.5rem;
+    margin-top: 2rem;
+  }
 }
