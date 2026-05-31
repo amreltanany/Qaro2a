@@ -37,13 +37,13 @@ document.addEventListener('DOMContentLoaded', function () {
                             var msg = (body && (body.message || (body.Errors && body.Errors.Message)))
                                 ? (body.message || body.Errors.Message)
                                 : 'Failed to add to cart.';
-                            alert(msg);
-                        }).catch(function () { alert('Failed to add to cart.'); });
+                            showError(msg);
+                        }).catch(function () { showError('Failed to add to cart.'); });
                     }
                 })
                 .catch(function (err) {
                     console.error(err);
-                    alert('Failed to add to cart.');
+                    showError('Failed to add to cart.');
                 });
         });
     });

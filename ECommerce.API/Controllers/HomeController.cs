@@ -125,6 +125,17 @@ public class HomeController : Controller
         return View("/Views/Components/Register.cshtml");
     }
 
+    public IActionResult ForgotPassword()
+    {
+        return View("/Views/Components/ForgotPassword.cshtml");
+    }
+
+    public IActionResult ResetPassword(string? email)
+    {
+        ViewBag.Email = email ?? string.Empty;
+        return View("/Views/Components/ResetPassword.cshtml");
+    }
+
     [HttpGet]
     public async Task<IActionResult> MyAccount()
     {

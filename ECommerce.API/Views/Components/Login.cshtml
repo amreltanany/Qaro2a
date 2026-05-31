@@ -28,14 +28,17 @@
                 <form id="loginForm">
                     <div class="mb-3">
                         <label for="email" class="form-label">@L("Email", "البريد الإلكتروني")</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <input type="email" class="form-control" id="email" name="email" autocomplete="username" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">@L("Password", "كلمة المرور")</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <input type="password" class="form-control" id="password" name="password" autocomplete="current-password" required>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">@L("Login", "تسجيل الدخول")</button>
                 </form>
+                <p class="mt-2 text-center small">
+                    <a asp-controller="Home" asp-action="ForgotPassword">@L("Forgot your password?", "نسيت كلمة المرور؟")</a>
+                </p>
                 <p class="mt-3 text-center small">
                     @L("Don't have an account?", "ليس لديك حساب؟") <a asp-controller="Home" asp-action="Register">@L("Register", "إنشاء حساب")</a>
                 </p>
@@ -79,13 +82,13 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
     e.preventDefault();
     var errEl = document.getElementById('loginError');
     errEl.classList.add('d-none');
-    var email = document.getElementById('email').value;
+    var email = document.getElementById('email').value.trim();
     var password = document.getElementById('password').value;
 
     fetch('/api/Account/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, password: password })
+        body: JSON.stringify({ Email: email, Password: password })
     })
     .then(function (res) {
         if (!res.ok) return parseApiErrorResponse(res).then(function (msg) { throw new Error(msg); });

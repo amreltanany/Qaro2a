@@ -23,4 +23,20 @@ namespace ECommerce.Application.DTOs.Account
         bool AgreeToTerms);
 
     public record AuthResponseDto(string Email, string Token, string FullName);
+
+    public record ForgotPasswordDto(
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email format.")]
+        string Email);
+
+    public record ResetPasswordDto(
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email format.")]
+        string Email,
+        [Required(ErrorMessage = "Verification code is required.")]
+        [StringLength(6, MinimumLength = 6, ErrorMessage = "Verification code must be 6 digits.")]
+        string Code,
+        [Required(ErrorMessage = "Password is required.")]
+        [MinLength(6, ErrorMessage = "Password must be at least 6 characters.")]
+        string NewPassword);
 }

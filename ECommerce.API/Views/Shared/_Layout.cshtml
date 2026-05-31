@@ -99,6 +99,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="swal-ok" content="@L("OK", "حسنًا")">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
@@ -455,8 +456,6 @@
                         <div class="footer-col footer-col--pages">
                             <h5 class="text-white footer-heading">@L("Pages", "الصفحات")</h5>
                             <ul class="footer-pages-grid list-unstyled mb-0 small opacity-90">
-                                <li><a asp-controller="Home" asp-action="Index"
-                                        class="text-white text-decoration-none">@L("Home", "الرئيسية")</a></li>
                                 <li><a asp-controller="Home" asp-action="About"
                                         class="text-white text-decoration-none">@L("About", "عنا")</a></li>
                                 <li><a asp-controller="Home" asp-action="Shop"
@@ -465,6 +464,8 @@
                                         class="text-white text-decoration-none">@L("Cart", "السلة")</a></li>
                                 <li><a asp-controller="Home" asp-action="Blog"
                                         class="text-white text-decoration-none">@L("Blog", "مقالات")</a></li>
+                                <li><a asp-controller="Contact" asp-action="Index"
+                                        class="text-white text-decoration-none">@L("Contact", "تواصل معنا")</a></li>
                                 <li><a asp-controller="Home" asp-action="Publish"
                                         class="text-white text-decoration-none">@L("Publish", "انشر كتابك")</a></li>
                             </ul>
@@ -561,6 +562,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js" defer></script>
     <script src="~/js/script.min.js" defer asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="~/js/swal-helper.js" defer asp-append-version="true"></script>
     @if (TempData["OrderPlaced"] != null)
     {
         <script>

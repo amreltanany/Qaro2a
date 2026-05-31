@@ -10,7 +10,7 @@
     document.querySelectorAll('.cart-qty-plus, .cart-qty-minus').forEach(function (btn) {
         btn.addEventListener('click', function () {
             if (this.disabled) return;
-            var row = this.closest('tr');
+            var row = this.closest('.cart-card') || this.closest('tr');
             var itemId = row.getAttribute('data-item-id');
             var maxStock = parseInt(row.getAttribute('data-max-stock'), 10);
             var qtyEl = row.querySelector('.cart-qty-value');
@@ -19,7 +19,7 @@
             var newQty = isPlus ? currentQty + 1 : Math.max(1, currentQty - 1);
             if (newQty === currentQty) return;
             if (isPlus && !isNaN(maxStock) && newQty > maxStock) {
-                alert('Insufficient stock. Available: ' + maxStock);
+                showError('Insufficient stock. Available: ' + maxStock);
                 return;
             }
 
@@ -37,7 +37,7 @@
                     if (!res.ok) {
                         return res.json().then(function (body) {
                             var msg = (body && body.message) ? body.message : 'Failed to update quantity.';
-                            alert(msg);
+                            showError(msg);
                             window.location.reload();
                         }).catch(function () {
                             window.location.reload();
@@ -47,7 +47,7 @@
                 })
                 .catch(function (err) {
                     console.error(err);
-                    alert('Failed to update quantity.');
+                    showError('Failed to update quantity.');
                     window.location.reload();
                 });
         });
@@ -55,7 +55,7 @@
 
     document.querySelectorAll('.cart-remove-item').forEach(function (btn) {
         btn.addEventListener('click', function () {
-            var row = this.closest('tr');
+            var row = this.closest('.cart-card') || this.closest('tr');
             var itemId = row.getAttribute('data-item-id');
             if (!token) {
                 window.location.href = '/Home/Login';
@@ -69,7 +69,7 @@
                     if (!res.ok)
                         return res.json().then(function (body) {
                             var msg = (body && body.message) ? body.message : 'Failed to remove item.';
-                            alert(msg);
+                            showError(msg);
                             window.location.reload();
                         }).catch(function () { window.location.reload(); });
                     window.location.reload();

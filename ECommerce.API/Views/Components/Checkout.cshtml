@@ -7,53 +7,46 @@
     ViewData["Title"] = L("Checkout", "إتمام الطلب");
 }
 
-<section class="py-5">
-    <div class="container site-container">
-        <h2 class="mb-4">@L("Checkout", "إتمام الطلب")</h2>
+<link rel="stylesheet" href="~/css/cart.css" asp-append-version="true" />
 
-        <div class="row">
-            <div class="col-lg-8">
-                <h5 class="mb-3">@L("Order Summary", "ملخص الطلب")</h5>
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>@L("Product", "المنتج")</th>
-                                <th>@L("Price", "السعر")</th>
-                                <th>@L("Quantity", "الكمية")</th>
-                                <th class="text-end">@L("Subtotal", "الإجمالي الفرعي")</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.CartItems)
-                            {
-                                <tr>
-                                    <td>@item.ProductName</td>
-                                    <td>@item.Price.ToString("N2") EGP</td>
-                                    <td>@item.Quantity</td>
-                                    <td class="text-end">@item.Subtotal.ToString("N2") EGP</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+<section class="checkout-page-section">
+    <div class="container checkout-page-container">
+        <h2 class="checkout-page-title">@L("Checkout", "إتمام الطلب")</h2>
+
+        <div class="checkout-layout">
+            <div class="checkout-layout__summary">
+                <h5 class="checkout-section-title">@L("Order Summary", "ملخص الطلب")</h5>
+                <div class="checkout-items">
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <article class="checkout-card">
+                            <h3 class="checkout-card__name">@item.ProductName</h3>
+                            <div class="cart-card__row">
+                                <span class="checkout-card__price">@item.Price.ToString("N2") EGP</span>
+                                <span class="text-muted small">@L("Qty", "الكمية"): @item.Quantity</span>
+                                <span class="checkout-card__subtotal">@item.Subtotal.ToString("N2") EGP</span>
+                            </div>
+                        </article>
+                    }
                 </div>
-                <div class="text-end mt-3">
-                    <p class="mb-1">
+                <div class="checkout-summary">
+                    <p>
                         <span class="text-muted">@L("Items subtotal:", "إجمالي المنتجات:")</span>
                         <span class="fw-semibold ms-2">@Model.ItemsSubtotal.ToString("N2") EGP</span>
                     </p>
-                    <p class="mb-1">
+                    <p>
                         <span class="text-muted">@L("Delivery fee:", "رسوم التوصيل:")</span>
                         <span class="fw-semibold ms-2">@Model.DeliveryFee.ToString("N2") EGP</span>
                     </p>
-                    <p class="mb-0 fs-5 fw-bold">
-                        @L("Grand Total:", "الإجمالي النهائي:") @Model.GrandTotal.ToString("N2") EGP
+                    <p class="fs-5 fw-bold">
+                        <span class="text-muted">@L("Total:", "الإجمالي:")</span>
+                        <span class="ms-2">@Model.GrandTotal.ToString("N2") EGP</span>
                     </p>
                 </div>
             </div>
 
-            <div class="col-lg-4 mt-4 mt-lg-0">
-                <h5 class="mb-3">@L("Shipping details", "بيانات الشحن")</h5>
+            <div class="checkout-layout__shipping checkout-shipping">
+                <h5 class="checkout-section-title">@L("Shipping details", "بيانات الشحن")</h5>
                 <form asp-controller="Cart" asp-action="ConfirmCheckout" method="post" asp-antiforgery="true">
                     <div class="mb-3">
                         <label for="FullName" class="form-label">@L("Full Name", "الاسم الكامل")</label>
@@ -65,7 +58,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="Phone" class="form-label">@L("Phone number", "رقم الهاتف")</label>
-                        <input type="tel" class="form-control" id="Phone" name="Phone" value="@Model.Phone" placeholder="@L("Enter your phone number", "أدخل رقم هاتفك")" required/>
+                        <input type="tel" class="form-control" id="Phone" name="Phone" value="@Model.Phone" placeholder="@L("Enter your phone number", "أدخل رقم هاتفك")" required />
                     </div>
                     <div class="mb-3">
                         <label for="Address" class="form-label">@L("Address", "العنوان")</label>

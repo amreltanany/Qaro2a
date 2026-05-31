@@ -70,14 +70,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(function (res) {
                         if (!res.ok) {
                             return readErrorMessage(res, 'Failed to remove from wishlist.').then(function (msg) {
-                                alert(msg);
+                                showError(msg);
                             });
                         }
                         setButtonState(btn, false);
                     })
                     .catch(function (err) {
                         console.error(err);
-                        alert('Failed to remove from wishlist.');
+                        showError('Failed to remove from wishlist.');
                     });
                 return;
             }
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             return;
                         }
                         return readErrorMessage(res, 'Failed to add to wishlist.').then(function (msg) {
-                            alert(msg);
+                            showError(msg);
                         });
                     }
 
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .catch(function (err) {
                     console.error(err);
-                    alert('Failed to add to wishlist.');
+                    showError('Failed to add to wishlist.');
                 });
         });
     }

@@ -10,8 +10,8 @@
 <link rel="stylesheet" href="~/css/wishlist.css" asp-append-version="true" />
 
 <section class="wishlist-section">
-    <div class="container">
-        <h2 class="mb-4">@L("My Wishlist", "مفضلتي")</h2>
+    <div class="container wishlist-container">
+        <h2 class="wishlist-title">@L("My Wishlist", "مفضلتي")</h2>
 
         @if (Model == null || !Model.Any())
         {
@@ -21,50 +21,49 @@
         }
         else
         {
-            <div class="table-responsive">
-                <table class="table table-hover align-middle wishlist-table">
-                    <thead>
-                        <tr>
-                            <th>@L("Item", "المنتج")</th>
-                            <th>@L("Price", "السعر")</th>
-                            <th>@L("Stock", "المخزون")</th>
-                            <th class="text-end">@L("Action", "الإجراء")</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr data-item-id="@item.Id">
-                                <td>
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img src="@Url.Content(item.ImageUrl ?? "~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png")"
-                                             alt="@item.ProductName" class="wishlist-thumb" />
-                                        <div>
-                                            <div class="fw-semibold">@item.ProductName</div>
-                                            <div class="small text-muted">@item.Description</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>@item.Price.ToString("N2") EGP</td>
-                                <td>
-                                    @if (item.AvailableStock > 0)
-                                    {
-                                        <span class="badge bg-success">@L("In stock", "متوفر")</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-secondary" style="background-color: #dc3545 !important;" >@L("Out of stock", "غير متوفر")</span>
-                                    }
-                                </td>
-                                <td class="text-end">
-                                    <button type="button" class="wishlist-remove btn-remove-wishlist" title="@L("Remove", "حذف")">×</button>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+            <div class="wishlist-items">
+                @foreach (var item in Model)
+                {
+                    var inStock = item.AvailableStock > 0;
+                    <article class="wishlist-card" data-item-id="@item.Id" data-product-id="@item.ProductId">
+                        <div class="wishlist-card__media">
+                            <img src="@Url.Content(item.ImageUrl ?? "~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png")"
+                                 alt="@item.ProductName" class="wishlist-thumb" />
+                        </div>
+                        <div class="wishlist-card__body">
+                            <h3 class="wishlist-card__name">@item.ProductName</h3>
+                            @if (!string.IsNullOrWhiteSpace(item.Description))
+                            {
+                                <p class="wishlist-card__desc">@item.Description</p>
+                            }
+                            <div class="wishlist-card__meta">
+                                <span class="wishlist-card__price">@item.Price.ToString("N2") EGP</span>
+                                @if (inStock)
+                                {
+                                    <span class="badge bg-success">@L("In stock", "متوفر")</span>
+                                }
+                                else
+                                {
+                                    <span class="badge wishlist-badge-out">@L("Out of stock", "غير متوفر")</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="wishlist-card__actions">
+                            <button type="button"
+                                    class="btn btn-primary btn-sm btn-add-to-cart-wishlist"
+                                    data-product-id="@item.ProductId"
+                                    @(inStock ? null : "disabled")>
+                                @L("Add to cart", "أضف للسلة")
+                            </button>
+                            <button type="button"
+                                    class="btn btn-outline-danger btn-sm btn-remove-wishlist">
+                                @L("Remove", "حذف")
+                            </button>
+                        </div>
+                    </article>
+                }
             </div>
-            <a asp-controller="Home" asp-action="Shop" class="btn btn-outline-primary mt-2">@L("Continue shopping", "متابعة التسوق")</a>
+            <a asp-controller="Home" asp-action="Shop" class="btn btn-outline-primary wishlist-continue">@L("Continue shopping", "متابعة التسوق")</a>
         }
     </div>
 </section>
@@ -74,8 +73,12 @@
         (function () {
             var token = typeof localStorage !== 'undefined' && localStorage.getItem('token');
             var i18n = {
-                failedRemove: '@L("Failed to remove item.", "فشل حذف المنتج.")'
+                failedRemove: '@L("Failed to remove item.", "فشل حذف المنتج.")',
+                failedAddCart: '@L("Failed to add to cart.", "فشلت الإضافة للسلة.")',
+                addedToCart: '@L("Added to cart.", "تمت الإضافة للسلة.")',
+                outOfStock: '@L("This item is out of stock.", "هذا المنتج غير متوفر.")'
             };
+
             function authHeaders() {
                 return {
                     'Content-Type': 'application/json',
@@ -83,14 +86,19 @@
                 };
             }
 
+            function requireLogin() {
+                window.location.href = '/Home/Login';
+            }
+
             document.querySelectorAll('.btn-remove-wishlist').forEach(function (btn) {
                 btn.addEventListener('click', function () {
-                    var row = this.closest('tr');
-                    var itemId = row.getAttribute('data-item-id');
                     if (!token) {
-                        window.location.href = '/Home/Login';
+                        requireLogin();
                         return;
                     }
+
+                    var card = this.closest('.wishlist-card');
+                    var itemId = card.getAttribute('data-item-id');
 
                     fetch('/api/Wishlist/items/' + itemId, {
                         method: 'DELETE',
@@ -99,15 +107,52 @@
                         .then(function (res) {
                             if (!res.ok) {
                                 return res.json().then(function (body) {
-                                    var msg = (body && body.message) ? body.message : i18n.failedRemove;
-                                    alert(msg);
-                                }).catch(function () { alert(i18n.failedRemove); });
+                                    showError((body && body.message) ? body.message : i18n.failedRemove);
+                                }).catch(function () { showError(i18n.failedRemove); });
+                                return;
                             }
-                            window.location.reload();
+                            card.remove();
+                            if (!document.querySelector('.wishlist-card')) {
+                                window.location.reload();
+                            }
                         })
-                        .catch(function (err) {
-                            console.error(err);
-                            alert(i18n.failedRemove);
+                        .catch(function () { showError(i18n.failedRemove); });
+                });
+            });
+
+            document.querySelectorAll('.btn-add-to-cart-wishlist').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    if (this.disabled) {
+                        showError(i18n.outOfStock);
+                        return;
+                    }
+                    if (!token) {
+                        requireLogin();
+                        return;
+                    }
+
+                    var productId = parseInt(this.getAttribute('data-product-id'), 10);
+                    var button = this;
+                    button.disabled = true;
+
+                    fetch('/api/Cart', {
+                        method: 'POST',
+                        headers: authHeaders(),
+                        body: JSON.stringify({ productId: productId, quantity: 1 })
+                    })
+                        .then(function (res) {
+                            if (!res.ok) {
+                                return res.json().then(function (body) {
+                                    showError((body && body.message) ? body.message : i18n.failedAddCart);
+                                }).catch(function () { showError(i18n.failedAddCart); });
+                            }
+                            showSuccess(i18n.addedToCart);
+                        })
+                        .catch(function () { showError(i18n.failedAddCart); })
+                        .finally(function () {
+                            if (!button.closest('.wishlist-card').querySelector('.wishlist-badge-out')) {
+                                button.disabled = false;
+                            }
                         });
                 });
             });

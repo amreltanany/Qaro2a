@@ -1,3 +1,4 @@
+using ECommerce.API.Helpers;
 using ECommerce.Application.DTOs.Product;
 using ECommerce.Application.Interfaces;
 using ECommerce.Application.Mapping; 
@@ -37,6 +38,7 @@ builder.Services
 builder.Services.AddLocalization();
 
 builder.Services.Configure<SeoOptions>(builder.Configuration.GetSection(SeoOptions.SectionName));
+builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.SectionName));
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -175,6 +177,8 @@ builder.Services.AddScoped<IWishlistItemRepository, WishlistItemRepository>();
 builder.Services.AddScoped<IWishlistService, WishlistService>();
 builder.Services.AddScoped<IPublishRepository, PublishRepository>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<IEmailService, ECommerce.API.Services.SmtpEmailService>();
+builder.Services.AddSingleton<IPasswordResetCodeService, ECommerce.API.Services.PasswordResetCodeService>();
 
 // Cleaned up Validators & AutoMapper
 builder.Services.AddValidatorsFromAssemblyContaining<ProductCreateDto>();
@@ -186,6 +190,9 @@ builder.Services.AddHostedService<ECommerce.API.BackgroundServices.CartExpiryHos
 #endregion
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+    await DevAdminPasswordSync.ApplyIfConfiguredAsync(app.Configuration, app.Services, app.Logger);
 
 var supportedCultures = new[]
 {

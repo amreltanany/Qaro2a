@@ -14,22 +14,35 @@ public class AccountController : ControllerBase
 {
     private readonly UserManager<User> _userManager;
     private readonly ITokenService _tokenService;
+    private readonly IEmailService _emailService;
+    private readonly IPasswordResetCodeService _passwordResetCodeService;
 
-    public AccountController(UserManager<User> userManager, ITokenService tokenService)
+    public AccountController(
+        UserManager<User> userManager,
+        ITokenService tokenService,
+        IEmailService emailService,
+        IPasswordResetCodeService passwordResetCodeService)
     {
         _userManager = userManager;
         _tokenService = tokenService;
+        _emailService = emailService;
+        _passwordResetCodeService = passwordResetCodeService;
     }
 
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<ActionResult<AuthResponseDto>> Login(LoginDto dto)
+    public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginDto dto)
     {
-        var user = await _userManager.FindByEmailAsync(dto.Email);
+        if (dto is null)
+            return BadRequest(new { message = "Invalid login request." });
+
+        var email = dto.Email?.Trim();
+        var password = dto.Password ?? string.Empty;
+        var user = await _userManager.FindByEmailAsync(email ?? string.Empty);
         if (user == null)
             return StatusCode(StatusCodes.Status401Unauthorized, new { message = "Invalid email or password." });
 
-        var result = await _userManager.CheckPasswordAsync(user, dto.Password);
+        var result = await _userManager.CheckPasswordAsync(user, password);
         if (!result)
             return StatusCode(StatusCodes.Status401Unauthorized, new { message = "Invalid email or password." });
 
@@ -38,6 +51,58 @@ public class AccountController : ControllerBase
             _tokenService.CreateToken(user),
             user.FullName ?? string.Empty);
         return Ok(response);
+    }
+
+    [AllowAnonymous]
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto)
+    {
+        var email = dto.Email?.Trim();
+        if (string.IsNullOrWhiteSpace(email))
+            return BadRequest(new { message = "Email is required." });
+
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user is not null)
+        {
+            var code = _passwordResetCodeService.GenerateAndStore(email, user.Id);
+            var subject = "Qaro2a — Password reset code";
+            var body = $"""
+                <p>Hello{(string.IsNullOrWhiteSpace(user.FullName) ? "" : $", {System.Net.WebUtility.HtmlEncode(user.FullName)}")},</p>
+                <p>Your password reset code is:</p>
+                <p style="font-size:24px;font-weight:bold;letter-spacing:4px;">{code}</p>
+                <p>This code expires in 15 minutes. If you did not request a reset, you can ignore this email.</p>
+                """;
+            await _emailService.SendAsync(email, subject, body);
+        }
+
+        return Ok(new { message = "If an account exists for that email, a reset code has been sent." });
+    }
+
+    [AllowAnonymous]
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
+    {
+        var email = dto.Email?.Trim();
+        if (string.IsNullOrWhiteSpace(email))
+            return BadRequest(new { message = "Email is required." });
+
+        if (!_passwordResetCodeService.TryValidate(email, dto.Code, out var userId) || string.IsNullOrEmpty(userId))
+            return BadRequest(new { message = "Invalid or expired verification code." });
+
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user is null)
+            return BadRequest(new { message = "Invalid or expired verification code." });
+
+        var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var result = await _userManager.ResetPasswordAsync(user, resetToken, dto.NewPassword);
+        if (!result.Succeeded)
+        {
+            var msg = string.Join(" ", result.Errors.Select(e => e.Description));
+            return BadRequest(new { message = string.IsNullOrWhiteSpace(msg) ? "Could not reset password." : msg });
+        }
+
+        _passwordResetCodeService.Remove(email);
+        return Ok(new { message = "Password updated successfully. You can now log in." });
     }
 
     [AllowAnonymous]
