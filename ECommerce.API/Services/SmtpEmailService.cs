@@ -41,16 +41,31 @@ public sealed class SmtpEmailService : IEmailService
         message.Subject = subject;
         message.Body = new TextPart("html") { Text = htmlBody };
 
-        using var client = new SmtpClient();
-        await client.ConnectAsync(_options.SmtpHost, _options.SmtpPort, _options.UseSsl ? SecureSocketOptions.StartTls : SecureSocketOptions.Auto, cancellationToken);
+        var socketOptions = _options.SmtpPort == 465
+            ? SecureSocketOptions.SslOnConnect
+            : (_options.UseSsl ? SecureSocketOptions.StartTls : SecureSocketOptions.Auto);
 
-        if (!string.IsNullOrWhiteSpace(_options.SmtpUser))
-            await client.AuthenticateAsync(_options.SmtpUser, _options.SmtpPassword, cancellationToken);
+        try
+        {
+            using var client = new SmtpClient();
+            await client.ConnectAsync(_options.SmtpHost, _options.SmtpPort, socketOptions, cancellationToken);
 
-        await client.SendAsync(message, cancellationToken);
-        await client.DisconnectAsync(true, cancellationToken);
+            if (!string.IsNullOrWhiteSpace(_options.SmtpUser))
+                await client.AuthenticateAsync(_options.SmtpUser, _options.SmtpPassword, cancellationToken);
 
-        if (_environment.IsDevelopment())
+            await client.SendAsync(message, cancellationToken);
+            await client.DisconnectAsync(true, cancellationToken);
+
             _logger.LogInformation("Email sent to {Email}", toEmail);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex,
+                "SMTP failed. Host={Host}, Port={Port}, User={User}. Personal @outlook.com accounts often need smtp-mail.outlook.com instead of smtp.office365.com.",
+                _options.SmtpHost,
+                _options.SmtpPort,
+                _options.SmtpUser);
+            throw;
+        }
     }
 }

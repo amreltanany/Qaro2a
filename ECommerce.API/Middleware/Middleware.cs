@@ -57,18 +57,18 @@ namespace ECommerce.API.Middleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
 
+            const string genericMessage = "An unexpected error occurred. Please try again later.";
+            var errorPayload = errors ?? (object)new { Message = genericMessage };
+            var message = exception is KeyNotFoundException knf && !string.IsNullOrWhiteSpace(knf.Message)
+                ? knf.Message
+                : genericMessage;
+
             var result = JsonSerializer.Serialize(new
             {
+                message,
                 Fail = true,
                 StatusCode = (int)code,
-                Errors = errors ?? (object)new
-                {
-                    //develop stage 
-                    //Message = exception.Message,
-                    //Detail = exception.StackTrace
-                    // user stage: only show generic error message for unhandled errors
-                    Message = "An unexpected error occurred. Please try again later."
-                }
+                Errors = errorPayload
             });
 
             return context.Response.WriteAsync(result);

@@ -6,6 +6,7 @@ using ECommerce.Domain.Entities;
 using ECommerce.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
 public class HomeController : Controller
@@ -17,6 +18,7 @@ public class HomeController : Controller
     private readonly UserManager<User> _userManager;
     private readonly ICartItemRepository _cartItemRepository;
     private readonly IWishlistItemRepository _wishlistItemRepository;
+    private readonly ILogger<HomeController> _logger;
 
     public HomeController(
         IProductService productService,
@@ -25,7 +27,8 @@ public class HomeController : Controller
         IWishlistService wishlistService,
         UserManager<User> userManager,
         ICartItemRepository cartItemRepository,
-        IWishlistItemRepository wishlistItemRepository)
+        IWishlistItemRepository wishlistItemRepository,
+        ILogger<HomeController> logger)
     {
         _productService = productService;
         _categoryService = categoryService;
@@ -34,6 +37,7 @@ public class HomeController : Controller
         _userManager = userManager;
         _cartItemRepository = cartItemRepository;
         _wishlistItemRepository = wishlistItemRepository;
+        _logger = logger;
     }
 
     private string? GetUserId() =>
@@ -147,14 +151,25 @@ public class HomeController : Controller
         if (user == null)
             return RedirectToAction("Login", new { sessionExpired = true });
 
-        var orders = (await _orderService.GetOrdersByUserIdAsync(userId)).ToList();
+        var orders = new List<ECommerce.Application.DTOs.Order.OrderResponseDto>();
+        string? ordersError = null;
+        try
+        {
+            orders = (await _orderService.GetOrdersByUserIdAsync(userId)).ToList();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to load orders for user {UserId}", userId);
+            ordersError = "Order history could not be loaded. The site database may need a pending update—please try again later.";
+        }
+
         var model = new MyAccountViewModel
         {
             Email = user.Email ?? string.Empty,
             FullName = user.FullName ?? string.Empty,
             Orders = orders,
             StatusMessage = TempData["StatusMessage"] as string,
-            ErrorMessage = TempData["ErrorMessage"] as string
+            ErrorMessage = TempData["ErrorMessage"] as string ?? ordersError
         };
         return View("/Views/Components/MyAccount.cshtml", model);
     }

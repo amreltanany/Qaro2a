@@ -7,6 +7,7 @@ using ECommerce.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -16,17 +17,20 @@ public class AccountController : ControllerBase
     private readonly ITokenService _tokenService;
     private readonly IEmailService _emailService;
     private readonly IPasswordResetCodeService _passwordResetCodeService;
+    private readonly ILogger<AccountController> _logger;
 
     public AccountController(
         UserManager<User> userManager,
         ITokenService tokenService,
         IEmailService emailService,
-        IPasswordResetCodeService passwordResetCodeService)
+        IPasswordResetCodeService passwordResetCodeService,
+        ILogger<AccountController> logger)
     {
         _userManager = userManager;
         _tokenService = tokenService;
         _emailService = emailService;
         _passwordResetCodeService = passwordResetCodeService;
+        _logger = logger;
     }
 
     [AllowAnonymous]
@@ -72,7 +76,18 @@ public class AccountController : ControllerBase
                 <p style="font-size:24px;font-weight:bold;letter-spacing:4px;">{code}</p>
                 <p>This code expires in 15 minutes. If you did not request a reset, you can ignore this email.</p>
                 """;
-            await _emailService.SendAsync(email, subject, body);
+            try
+            {
+                await _emailService.SendAsync(email, subject, body);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Password reset email failed for {Email}", email);
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, new
+                {
+                    message = "We could not send the reset email right now. Please try again later or contact support."
+                });
+            }
         }
 
         return Ok(new { message = "If an account exists for that email, a reset code has been sent." });

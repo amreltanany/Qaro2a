@@ -191,6 +191,18 @@ builder.Services.AddHostedService<ECommerce.API.BackgroundServices.CartExpiryHos
 
 var app = builder.Build();
 
+try
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await db.Database.MigrateAsync();
+    app.Logger.LogInformation("Database migrations applied.");
+}
+catch (Exception ex)
+{
+    app.Logger.LogError(ex, "Database migration failed on startup.");
+}
+
 if (app.Environment.IsDevelopment())
     await DevAdminPasswordSync.ApplyIfConfiguredAsync(app.Configuration, app.Services, app.Logger);
 
