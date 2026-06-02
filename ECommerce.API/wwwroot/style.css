@@ -505,6 +505,33 @@ a {
 .preloader-animation {
   width: min(260px, 45vw);
   height: min(260px, 45vw);
+  display: none; /* enabled only when Lottie is loaded */
+}
+
+.preloader-animation.is-ready {
+  display: block;
+}
+
+.preloader-spinner {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  border-top-color: rgba(255, 255, 255, 0.95);
+  animation: preloader-spin 0.9s linear infinite;
+}
+
+@keyframes preloader-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.preloader.loaded .preloader-spinner {
+  animation: none;
 }
 
 /* navbar */

@@ -285,14 +285,14 @@
         </svg>
 
         <div class="preloader text-white fs-6 text-uppercase overflow-hidden">
+            <div class="preloader-spinner" aria-hidden="true"></div>
             <lottie-player id="preloaderLottie"
-                           class="preloader-animation"
+                           class="preloader-animation preloader-lottie"
                            src="@Url.Content("~/loader/Bibo Loader.json")"
                            background="transparent"
                            speed="2.5"
                            intermission="0"
-                           loop
-                           autoplay>
+                           loop>
             </lottie-player>
         </div>
         <div class="search-popup">
@@ -564,7 +564,6 @@
         })();
     </script>
     <script src="~/js/jquery.min.js" defer asp-append-version="true"></script>
-    <script src="https://unpkg.com/@@lottiefiles/lottie-player@latest/dist/lottie-player.js" defer></script>
     <script src="~/js/preloader-lottie.js" defer asp-append-version="true"></script>
     <script src="~/js/plugins.js" defer asp-append-version="true"></script>
     <script src="~/js/SmoothScroll.js" defer asp-append-version="true"></script>
