@@ -294,16 +294,32 @@
         </svg>
 
         <div class="preloader text-white fs-6 text-uppercase overflow-hidden">
-            <div class="preloader-spinner" aria-hidden="true"></div>
-            <lottie-player id="preloaderLottie"
-                           class="preloader-animation preloader-lottie"
-                           src="@Url.Content("~/loader/Bibo Loader.json")"
-                           background="transparent"
-                           speed="2.5"
-                           intermission="0"
-                           loop>
-            </lottie-player>
+            <div id="preloaderLottie"
+                 class="preloader-animation"
+                 data-src="@Url.Content("~/loader/Bibo Loader.json")"
+                 aria-hidden="true"></div>
         </div>
+        <script>
+            (function () {
+                function hidePreloaderNow() {
+                    var preloaderEl = document.querySelector('.preloader');
+                    if (preloaderEl) preloaderEl.classList.add('loaded');
+                }
+
+                window.__hidePreloaderNow = hidePreloaderNow;
+                setTimeout(hidePreloaderNow, 4500);
+
+                if (document.readyState === 'interactive' || document.readyState === 'complete') {
+                    setTimeout(hidePreloaderNow, 1800);
+                } else {
+                    document.addEventListener('DOMContentLoaded', function () {
+                        setTimeout(hidePreloaderNow, 1800);
+                    }, { once: true });
+                }
+
+                window.addEventListener('load', hidePreloaderNow, { once: true });
+            })();
+        </script>
         <div class="search-popup">
             <div class="search-popup-container">
 
@@ -574,6 +590,7 @@
         })();
     </script>
     <script src="~/js/jquery.min.js" defer asp-append-version="true"></script>
+    <script src="~/vendor/lottie/lottie.min.js" defer asp-append-version="true"></script>
     <script src="~/js/preloader-lottie.js" defer asp-append-version="true"></script>
     <script src="~/js/plugins.js" defer asp-append-version="true"></script>
     @if (!isHomeIndex)
