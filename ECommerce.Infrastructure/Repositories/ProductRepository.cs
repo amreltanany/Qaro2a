@@ -97,9 +97,11 @@ namespace ECommerce.Infrastructure.Repositories
 
         public async Task DeleteAsync(Product product)
         {
-            // Remove cart items that reference this product (FK is Restrict, so we must delete them first)
+            // Remove dependent rows first because both FK constraints are Restrict.
             var cartItems = await _context.CartItems.Where(c => c.ProductId == product.Id).ToListAsync();
+            var wishlistItems = await _context.WishlistItems.Where(w => w.ProductId == product.Id).ToListAsync();
             _context.CartItems.RemoveRange(cartItems);
+            _context.WishlistItems.RemoveRange(wishlistItems);
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
         }

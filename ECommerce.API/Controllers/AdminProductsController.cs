@@ -136,8 +136,9 @@ namespace ECommerce.API.Controllers
             }
         }
 
+        // Action name "Remove" avoids IIS WebDAV blocking URLs that contain "Delete".
         [HttpGet]
-        public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Remove(int id, CancellationToken cancellationToken = default)
         {
             var product = await _productService.GetByIdAsync(id);
             if (product == null) return NotFound();
@@ -146,8 +147,8 @@ namespace ECommerce.API.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id, CancellationToken cancellationToken = default)
+        [ActionName("Remove")]
+        public async Task<IActionResult> RemoveConfirmed(int id, CancellationToken cancellationToken = default)
         {
             await _productService.DeleteAsync(id);
             TempData["Success"] = "Product deleted successfully.";
