@@ -490,13 +490,15 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: height 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);
+  pointer-events: none;
+  transition: height 0.25s ease, width 0.25s ease, opacity 0.25s ease;
 }
 
 .preloader.loaded {
   height: 0;
   width: 0;
   overflow: hidden;
+  opacity: 0;
   visibility: hidden;
 }
 

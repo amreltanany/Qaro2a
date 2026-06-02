@@ -565,6 +565,10 @@ section,
   margin-top: 40px;
 }
 
+.contact .info-item {
+  align-items: center;
+}
+
 .contact .info-item i {
   color: var(--contrast-color);
   background: var(--accent-color);
@@ -576,7 +580,7 @@ section,
   align-items: center;
   border-radius: 4px;
   transition: all 0.3s ease-in-out;
-  margin-right: 15px;
+  margin-inline-end: 15px;
 }
 
 .contact .info-item h3 {
