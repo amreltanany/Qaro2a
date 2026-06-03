@@ -10,17 +10,20 @@ namespace ECommerce.Application.Services.Implementations
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
+        private readonly IProductImageFileService _productImageFileService;
         private readonly IMapper _mapper;
         private readonly IValidator<ProductCreateDto> _createValidator;
         private readonly IValidator<ProductUpdateDto> _updateValidator;
 
         public ProductService(
             IProductRepository productRepository,
+            IProductImageFileService productImageFileService,
             IMapper mapper,
             IValidator<ProductCreateDto> createValidator, 
             IValidator<ProductUpdateDto> updateValidator)
         {
             _productRepository = productRepository;
+            _productImageFileService = productImageFileService;
             _mapper = mapper;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
@@ -95,7 +98,9 @@ namespace ECommerce.Application.Services.Implementations
                 throw new KeyNotFoundException($"Product with ID {id} not found.");
             }
 
+            var imageUrl = product.ImageUrl;
             await _productRepository.DeleteAsync(product);
+            _productImageFileService.TryDelete(imageUrl);
         }
     }
 }

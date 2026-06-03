@@ -15,6 +15,12 @@
     var minPriceValue = ViewBag.MinPrice;
     var maxPriceValue = ViewBag.MaxPrice;
     var selectedCategoryId = ViewBag.CategoryId as int?;
+    var hasActiveFilters = !string.IsNullOrWhiteSpace(publishDateValue)
+        || !string.IsNullOrWhiteSpace(authorValue)
+        || minPriceValue != null
+        || maxPriceValue != null
+        || selectedCategoryId.HasValue
+        || !string.IsNullOrWhiteSpace(sortBy);
 }
 
 <link href="https://cdn.jsdelivr.net/npm/inter-ui@3.11.0/inter.min.css" rel="stylesheet" />
@@ -48,8 +54,18 @@
         <div class="row g-4 py-3 align-items-start">
             <aside class="col-12 col-lg-3 col-xl-2">
                 <div class="card p-3 sticky-top shop-filter-sidebar" style="top: 90px;">
-                    <h5 class="mb-3">@L("Filters", "الفلاتر")</h5>
-                    <form method="get" action="/Home/Shop" class="d-grid gap-3">
+                    <button class="shop-filter-toggle d-lg-none w-100 d-flex align-items-center justify-content-between border-0 bg-transparent p-0 mb-0"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#shopFilterCollapse"
+                            aria-expanded="@(hasActiveFilters ? "true" : "false")"
+                            aria-controls="shopFilterCollapse">
+                        <h5 class="mb-0">@L("Filters", "الفلاتر")</h5>
+                        <i class="bi bi-chevron-down shop-filter-chevron" aria-hidden="true"></i>
+                    </button>
+                    <h5 class="mb-3 shop-filter-title-desktop d-none d-lg-block">@L("Filters", "الفلاتر")</h5>
+                    <div class="collapse shop-filter-collapse @(hasActiveFilters ? "show" : "")" id="shopFilterCollapse">
+                    <form method="get" action="/Home/Shop" class="d-grid gap-3 shop-filter-form">
                         <input type="hidden" name="s" value="@searchTerm" />
 
                         <div>
@@ -108,6 +124,7 @@
                             <a href="/Home/Shop" class="btn btn-outline-secondary w-100">@L("Reset", "إعادة تعيين")</a>
                         </div>
                     </form>
+                    </div>
                 </div>
             </aside>
 

@@ -2,9 +2,45 @@
     max-width: 320px;
 }
 
+.shop-filter-toggle {
+    color: inherit;
+    cursor: pointer;
+}
+
+.shop-filter-toggle:focus-visible {
+    outline: 2px solid #465367;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.shop-filter-chevron {
+    font-size: 1.25rem;
+    transition: transform 0.25s ease;
+}
+
+.shop-filter-toggle[aria-expanded="true"] .shop-filter-chevron {
+    transform: rotate(180deg);
+}
+
 @media (max-width: 991.98px) {
     .shop-filter-sidebar {
         position: static !important;
         max-width: 100%;
+    }
+
+    .shop-filter-collapse.show {
+        margin-top: 0.75rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .shop-filter-collapse.collapse {
+        display: block;
+        visibility: visible;
+        height: auto !important;
+    }
+
+    .shop-filter-form {
+        margin-top: 0;
     }
 }

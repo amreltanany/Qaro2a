@@ -176,8 +176,10 @@ a {
 
 /* Ensure the logo doesn't overflow */
 .logo {
-    max-height: 100px;
-    width: auto;
+    max-height: 85px;
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
 }
 /* Keep icons in a single row and white */
 .icon-menu-mobile {
@@ -2058,11 +2060,27 @@ body.homepage .footer-bg {
 
 .footer-pages-grid li {
   margin: 0;
+  display: flex;
+  justify-content: center;
 }
 
-.footer-pages-grid a {
-  display: inline-block;
+.footer-page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
   line-height: 1.35;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-page-link:hover,
+.footer-page-link:focus-visible {
+  background: rgba(255, 255, 255, 0.32);
+  color: #fff;
+  transform: translateY(-2px);
+  text-decoration: none !important;
+  opacity: 1;
 }
 
 .footer-col--connect {
@@ -2111,7 +2129,7 @@ body.homepage .footer-bg {
   justify-content: center;
 }
 
-.footer-section a.text-white:hover {
+.footer-section a.text-white:hover:not(.footer-page-link):not(.footer-social-link) {
   opacity: 1;
   text-decoration: underline !important;
 }

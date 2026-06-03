@@ -4,7 +4,9 @@
     string L(string en, string ar) => isArabic ? ar : en;
     ViewData["Title"] = L("About", "من نحن");
 }
-<link rel="stylesheet" type="text/css" href="~/css/blog.css" asp-append-version="true">
+@section Head {
+    <link rel="stylesheet" type="text/css" href="~/css/blog.css" asp-append-version="true">
+}
 
 <main class="main">
     <div class="page-title">
@@ -20,7 +22,7 @@
 
           <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
             <p class="who-we-are">@L("Who We Are", "من نحن")</p>
-            <h3>@L("The Ultimate Hub for Books, Publishing & Dialogue", "المركز الأهم للكتب والنشر والحوار")</h3>
+            <h2>@L("The Ultimate Hub for Books, Publishing & Dialogue", "المركز الأهم للكتب والنشر والحوار")</h2>
             <p class="fst-italic">
             @L("At Qaro2a, we are a premier literary hub shaping the future of reading. As a dynamic podcast, insightful book reviewer, and forward thinking publisher, we are dedicated to championing books and empowering the entire literary ecosystem. Through engaging discussions and strategic support, we bridge the gap between creative authors and passionate readers.", "في قروءه نحن منصة أدبية رائدة تسهم في تشكيل مستقبل القراءة. من خلال البودكاست والمراجعات والنشر، نعمل على دعم الكتب وتمكين المنظومة الأدبية بالكامل. وبالحوار البنّاء والدعم الفعّال نربط بين المؤلفين المبدعين والقراء الشغوفين.")
             </p>
@@ -34,15 +36,15 @@
           <div class="col-lg-6 about-images" data-aos="fade-up" data-aos-delay="200">
             <div class="row gy-4">
               <div class="col-lg-6">
-                <img src="@Url.Content("~/blog/gallery/about-hero.jpeg")" class="img-fluid" alt="Qaro2a team" asp-append-version="true" />
+                <img src="@Url.Content("~/blog/gallery/about-hero.jpeg")" class="img-fluid" alt="Qaro2a team" loading="lazy" decoding="async" asp-append-version="true" />
               </div>
               <div class="col-lg-6">
                 <div class="row gy-4">
                   <div class="col-lg-12">
-                    <img src="@Url.Content("~/blog/gallery/about-gallery-1.png")" class="img-fluid" alt="Qaro2a event" asp-append-version="true" />
+                    <img src="@Url.Content("~/blog/gallery/about-gallery-1.png")" class="img-fluid" alt="Qaro2a event" loading="lazy" decoding="async" asp-append-version="true" />
                   </div>
                   <div class="col-lg-12">
-                    <img src="@Url.Content("~/blog/gallery/about-gallery-2.png")" class="img-fluid" alt="Qaro2a community" asp-append-version="true" />
+                    <img src="@Url.Content("~/blog/gallery/about-gallery-2.png")" class="img-fluid" alt="Qaro2a community" loading="lazy" decoding="async" asp-append-version="true" />
                   </div>
                 </div>
               </div>
@@ -69,10 +71,10 @@
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="@Url.Content("~/blog/team/Aliaa.png")" class="img-fluid" alt="Aliaa El Menshawy" asp-append-version="true" /></div>
+              <div class="pic m-2"><img src="@Url.Content("~/blog/team/Aliaa.png")" class="img-fluid" alt="@L("Aliaa El Menshawy", "علياء المنشاوي")" loading="lazy" decoding="async" asp-append-version="true" /></div>
               <div class="member-info">
-                <h4>Aliaa El Menshawy</h4>
-                <span>@L("Co-Founder of Qaro2a | Podcaster | Writer", "شريك مؤسس لقروءة | بودكاسترة | كاتبة")</span>
+                <h3>@L("Aliaa El Menshawy", "علياء المنشاوي")</h3>
+                <span>@L("Co-Founder of Qaro2a | Podcaster | Writer", "شريك مؤسس لقروءة | بودكاستر | كاتبة")</span>
                 <p>@L("Bringing fresh, strategic perspectives to Qaro2a, ensuring every literary review resonates with the modern reader.", "تقدم رؤى استراتيجية جديدة لقروءة، لتضمن أن كل مراجعة أدبية تلامس القارئ المعاصر.")</p>
                 <div class="social">
                   <a href="https://www.instagram.com/menshawyaliaa/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
@@ -85,10 +87,10 @@
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="@Url.Content("~/blog/team/Aia.png")" class="img-fluid" alt="Aia El Menshawy" asp-append-version="true" /></div>
+              <div class="pic m-2"><img src="@Url.Content("~/blog/team/Aia.png")" class="img-fluid" alt="@L("Aia El Menshawy", "آية المنشاوي")" loading="lazy" decoding="async" asp-append-version="true" /></div>
               <div class="member-info">
-                <h4>Aia El Menshawy</h4>
-                <span>@L("Co-Founder of Qaro2a | Podcaster | Writer", "شريك مؤسس لقروءة | بودكاسترة | كاتبة")</span>
+                <h3>@L("Aia El Menshawy", "آية المنشاوي")</h3>
+                <span>@L("Co-Founder of Qaro2a | Podcaster | Writer", "شريك مؤسس لقروءة | بودكاستر | كاتبة")</span>
                 <p>@L("A creative force at Qaro2a, decoding contemporary narratives and adding depth to every book discussion.", "قوة إبداعية في قروءة، تفك شفرات السرد المعاصر وتضيف عمقاً لكل حوار حول الكتب.")</p>
                 <div class="social">
                   <a href="https://www.instagram.com/aia_elmenshawy/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
@@ -100,9 +102,9 @@
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="@Url.Content("~/blog/team/Mamdouh.png")" class="img-fluid" alt="Mamdouh" asp-append-version="true" /></div>
+              <div class="pic m-2"><img src="@Url.Content("~/blog/team/Mamdouh.png")" class="img-fluid" alt="@L("Mamdouh", "ممدوح عماد")" loading="lazy" decoding="async" asp-append-version="true" /></div>
               <div class="member-info">
-                <h4>Mamdouh</h4>
+                <h3>@L("Mamdouh", "ممدوح عماد")</h3>
                 <span>@L("Founder of Qaro2a | Podcaster | Writer", "مؤسس قروءة | بودكاستر | كاتب")</span>
                 <p>@L("The driving voice of Qaro2a, blending literary critique with passion to make books accessible and engaging for all.", "الصوت القيادي لقروءة، يمزج النقد الأدبي بالشغف لجعل الكتب في متناول الجميع وممتعة.")</p>
                 <div class="social">
@@ -117,10 +119,10 @@
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="@Url.Content("~/blog/team/Rana.png")" class="img-fluid" alt="Rana Raouf" asp-append-version="true" /></div>
+              <div class="pic m-2"><img src="@Url.Content("~/blog/team/Rana.png")" class="img-fluid" alt="@L("Rana Raouf", "رانا رؤف")" loading="lazy" decoding="async" asp-append-version="true" /></div>
               <div class="member-info">
-                <h4>Rana Raouf</h4>
-                <span>@L("Co-Founder of Qaro2a | Podcaster | Writer", "شريك مؤسس لقروءة | بودكاسترة | كاتبة")</span>
+                <h3>@L("Rana Raouf", "رانا رؤف")</h3>
+                <span>@L("Co-Founder of Qaro2a | Podcaster | Writer", "شريك مؤسس لقروءة | بودكاستر | كاتبة")</span>
                 <p>@L("Connecting books with real world insights, focusing on the social and human impact behind every story.", "تربط الكتب برؤى العالم الحقيقي، مع التركيز على الأثر الاجتماعي والإنساني وراء كل قصة.")</p>
                 <div class="social">
                   <a href="https://www.instagram.com/_rana.raouf/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
@@ -132,10 +134,10 @@
           </div>
  <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="@Url.Content("~/blog/team/Nouran.png")" class="img-fluid" alt="Nouran Bassiony" asp-append-version="true" /></div>
+              <div class="pic m-2"><img src="@Url.Content("~/blog/team/Nouran.png")" class="img-fluid" alt="@L("Nouran Bassiony", "نوران بسيوني")" loading="lazy" decoding="async" asp-append-version="true" /></div>
               <div class="member-info">
-                <h4>Nouran Bassiony</h4>
-                <span>@L("Co-Founder of Qaro2a | Podcaster | Writer", "شريك مؤسس لقروءة | بودكاسترة | كاتبة")</span>
+                <h3>@L("Nouran Bassiony", "نوران بسيوني")</h3>
+                <span>@L("Co-Founder of Qaro2a | Podcaster | Writer", "شريك مؤسس لقروءة | بودكاستر | كاتبة")</span>
                 <p>@L("The analytical mind of the team, dedicated to uncovering hidden meanings and guiding readers through rich literary worlds.", "العقل التحليلي للفريق، مكرسة لكشف المعاني الخفية وإرشاد القراء عبر عوالم أدبية غنية.")</p>
                 <div class="social">
                   <a href="https://www.instagram.com/nouran_bassiony9999/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="bi bi-instagram"></i></a>

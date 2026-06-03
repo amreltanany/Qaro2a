@@ -291,10 +291,20 @@ section,
   border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
-.trending-category .trending>h3 {
+.trending-category .trending > .trending-section-title {
   color: var(--default-color);
   padding: 10px;
+  margin-bottom: 0;
   border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  cursor: default;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.trending-category .trending > .trending-section-title:hover {
+  background: color-mix(in srgb, var(--default-color), transparent 94%);
+  color: var(--default-color);
+  text-decoration: none;
 }
 
 .trending-category .trending .trending-post {
@@ -309,16 +319,22 @@ section,
   display: block;
 }
 
-.trending-category .trending .trending-post li a {
+.trending-category .trending .trending-post li .trending-post-item {
   display: block;
   padding: 20px;
   border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
   position: relative;
   overflow: hidden;
   z-index: 2;
+  cursor: default;
+  transition: background-color 0.2s ease;
 }
 
-.trending-category .trending .trending-post li a .number {
+.trending-category .trending .trending-post li .trending-post-item:hover {
+  background: color-mix(in srgb, var(--default-color), transparent 94%);
+}
+
+.trending-category .trending .trending-post li .trending-post-item .number {
   position: absolute;
   z-index: 1;
   font-size: 5rem;
@@ -329,23 +345,18 @@ section,
   color: color-mix(in srgb, var(--default-color), transparent 95%);
 }
 
-.trending-category .trending .trending-post li a h3 {
+.trending-category .trending .trending-post li .trending-post-item h3 {
   font-size: 18px;
   color: var(--default-color);
-  transition: 0.3s;
+  transition: color 0.2s ease;
 }
 
-.trending-category .trending .trending-post li a .author {
+.trending-category .trending .trending-post li .trending-post-item .author {
   color: color-mix(in srgb, var(--default-color), transparent 50%);
   font-weight: 500;
 }
 
-.trending-category .trending .trending-post li a:hover h3 {
-  color: var(--default-color);
-  text-decoration: underline;
-}
-
-.trending-category .trending .trending-post li:last-child a {
+.trending-category .trending .trending-post li:last-child .trending-post-item {
   border-bottom: none;
 }
 
@@ -358,7 +369,7 @@ section,
   color: color-mix(in srgb, var(--default-color), transparent 40%);
 }
 
-.about .content h3 {
+.about .content h2 {
   font-size: 2rem;
   font-weight: 700;
 }
@@ -372,7 +383,7 @@ section,
     font-size: 1.65rem;
   }
 
-  .about .content h3 {
+  .about .content h2 {
     font-size: 1.35rem;
     line-height: 1.3;
   }
@@ -479,7 +490,7 @@ section,
   }
 }
 
-.team .team-member h4 {
+.team .team-member h3 {
   font-weight: 700;
   margin-bottom: 5px;
   font-size: 20px;
@@ -583,7 +594,7 @@ section,
   margin-inline-end: 15px;
 }
 
-.contact .info-item h3 {
+.contact .info-item h2 {
   padding: 0;
   font-size: 18px;
   font-weight: 700;

@@ -4,7 +4,9 @@
     string L(string en, string ar) => isArabic ? ar : en;
     ViewData["Title"] = L("Blog", "الأخبار");
 }
-<link rel="stylesheet" type="text/css" href="~/css/blog.css" asp-append-version="true">
+@section Head {
+    <link rel="stylesheet" type="text/css" href="~/css/blog.css" asp-append-version="true">
+}
 
 <section id="trending-category" class="trending-category section py-5">
     <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -13,10 +15,10 @@
                 <div class="col-lg-4">
                     <div class="post-entry lg">
                         <span><img src="@Url.Content("~/blog/books/حلقه الذنب.png")" alt="حلقه الذنب" class="img-fluid" asp-append-version="true"></span>
-                        <div class="post-meta"><span class="date">@L("NEW RELEASE", "إصدار جديد")</span> <span class="mx-1">•</span> <span>@L("Jul 5th '22", "٥ يوليو ٢٠٢٢")</span></div>
-                        <h2><span class="Author_title">@L("You slip into guilt without realizing.", "ليس بالضرورة أن تدخل حلقة الذنب بقرار واعي.. في الغالب أنت لا تشعر بنفسك الا بعد أن تنزلق قدمك وتجد نفسك أسيرها..")</span></h2>
+                        <div class="post-meta"><span class="date">@L("NEW RELEASE", "إصدار جديد")</span> <span class="mx-1">•</span> <span>@L("Jul 5th '22", " يناير ٢٠٢٦   ")</span></div>
+                        <h2><span class="Author_title">@L("You slip into guilt without realizing.", "ليس بالضرورة أن تدخل حلقة الذنب بقرار واعي...")</span></h2>
                         <p class="mb-4 d-block">
-                            @L("It is not just a collection of stories.. but an interwoven tapestry of drama and fantasy.. A complex journey through five different experiences around the feeling of guilt.. when it transforms from a mere innocent question that reflects the good intentions of its owner and his desire to become a better person into an endless loop of a feeling that slowly consumes him..", "هي ليست مجموعة قصص وحسب.. بل هي نسيج متشابك بين الدراما والفانتازيا.. رحلة معقدة بخمسة خبرات مختلفة حول الشعور بالذنب.. حين يتحول من مجرد سؤال بريء ينم عن حُسن نية صاحبه ورغبته في أن يصبح شخصاً أفضل إلى أن يصل به الأمر دائراً في حلقة مفرغة لا تنتهي من شعور يأكله ببطء..")
+                            @L("It is not just a collection of stories.. but an interwoven tapestry of drama and fantasy.. A complex journey through five different experiences around the feeling of guilt.. when it transforms from a mere innocent question that reflects the good intentions of its owner and his desire to become a better person into an endless loop of a feeling that slowly consumes him..", "هي ليست مجموعة قصص وحسب.. بل هي نسيج متشابك بين الدراما والفانتازيا.. رحلة معقدة بخمسة خبرات مختلفة حول الشعور بالذنب.. حين يتحول من مجرد سؤال بريء ينم عن حُسن نية صاحبه ورغبته في أن يصبح شخصاً أفضل إلى أن يصل به الأمر دائراً في حلقة مفرغة لا تنتهي من شعور يأكله ببطء  ..")
                         </p>
                     </div>
                 </div>
@@ -26,14 +28,14 @@
                         <div class="col-lg-4 border-start custom-border">
                             <div class="post-entry">
                                 <span><img src="@Url.Content("~/blog/books/بعد فارق.jpeg")" alt="بُعد فارق" class="img-fluid" asp-append-version="true"></span>
-                                <div class="post-meta"><span class="date">بُعد فارق</span> <span class="mx-1">•</span> <span>رانا رؤف</span></div>
+                                <div class="post-meta"><span class="date">بُعد فارق</span> <span class="mx-1">•</span> <span>نوران بسيوني</span></div>
                                 <p class="mb-0 d-block">
                                     @L("\"Beyond the Gap\" is a fantasy novel with philosophical and psychological dimensions... Between \"Abbār\" and \"Fāriq\" you find yourself on a journey confronting everything you run from with no escape from the truth... Between truth and falsehood, attachment and escape, a journey full of secrets and mysteries in pursuit of nothing but the truth...", "\"بُعد فارق\" هي رواية فانتازيا تحمل ابعاد فلسفية ونفسية... وما بين \"عبّار\" و\"فارق\" رحلة تجد نفسك فيها في مواجهة كل ما تهرب منه دون سبيل للهروب من الحقيقة... وما بين الحقيقة والزيف والتعلُق والهروب رحلة مليئة بالخبايا والأسرار في سبيل الوصول إلى الحقيقة دون سواها...")
                                 </p>
                             </div>
                             <div class="post-entry">
                                 <span><img src="@Url.Content("~/blog/books/طلبك مرفوض.jpeg")" alt="طلبك مرفوض" class="img-fluid" asp-append-version="true"></span>
-                                <div class="post-meta"><span class="date">طلبك مرفوض</span> <span class="mx-1">•</span> <span>نوران بسيوني</span></div>
+                                <div class="post-meta"><span class="date">طلبك مرفوض</span> <span class="mx-1">•</span> <span>رانا رؤف</span></div>
                                 <p class="mb-0 d-block">
                                     @L("Every time you face rejection and shut down on yourself, asking why you chose to be in this place? You find one answer waiting for you every time!", "كل مرة بتتعرض فيها للرفض وتقفل على نفسك وتسألها ليه اخترت تكون في المكان ده؟ بتلاقي إجابة واحدة مستنياك في كل مرة!")
                                 </p>
@@ -70,14 +72,14 @@
                         <!-- Trending Section -->
                         <div class="col-lg-4">
                             <div class="trending">
-                                <h3>@L("Trending", "الأكثر رواجاً")</h3>
+                                <h3 class="trending-section-title mb-0">@L("Trending", "الأكثر رواجاً")</h3>
                                 <ul class="trending-post">
                                     <li>
-                                        <a href="#">
+                                        <div class="trending-post-item">
                                             <span class="number">1</span>
                                             <h3>@L("A high-stakes journey of survival and liberation between intense action and deep philosophical questions", "رحلة عالية المخاطر بين البقاء والتحرر، تجمع بين الأكشن المكثف والأسئلة الفلسفية العميقة")</h3>
                                             <span class="author">Arkhabil El Molouk</span>
-                                        </a>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>

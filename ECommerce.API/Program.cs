@@ -75,6 +75,8 @@ builder.Services.AddResponseCompression(options =>
     options.EnableForHttps = true;
     options.Providers.Add<BrotliCompressionProvider>();
     options.Providers.Add<GzipCompressionProvider>();
+    options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "image/svg+xml", "application/javascript", "text/css", "application/json" });
 });
 builder.Services.Configure<BrotliCompressionProviderOptions>(o => o.Level = CompressionLevel.Optimal);
 builder.Services.Configure<GzipCompressionProviderOptions>(o => o.Level = CompressionLevel.Optimal);
@@ -164,6 +166,7 @@ builder.Services.AddAuthorization(options =>
 
 #region Custom Business Services
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductImageFileService, ECommerce.API.Services.ProductImageFileService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();

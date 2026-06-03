@@ -10,6 +10,7 @@ using Xunit;
 public class ProductServiceTests
 {
     private readonly Mock<IProductRepository> _productRepoMock;
+    private readonly Mock<IProductImageFileService> _productImageFileServiceMock;
     private readonly Mock<IMapper> _mapperMock;
     private readonly ProductService _service;
     private readonly Mock<IValidator<ProductUpdateDto>> _updateValidatorMock; // Add this
@@ -18,6 +19,7 @@ public class ProductServiceTests
     public ProductServiceTests()
     {
         _productRepoMock = new Mock<IProductRepository>();
+        _productImageFileServiceMock = new Mock<IProductImageFileService>();
         _mapperMock = new Mock<IMapper>();
         _createValidatorMock = new Mock<IValidator<ProductCreateDto>>();
         _updateValidatorMock = new Mock<IValidator<ProductUpdateDto>>();
@@ -32,6 +34,7 @@ public class ProductServiceTests
         // 3. Pass the .Object of all mocks
         _service = new ProductService(
             _productRepoMock.Object,
+            _productImageFileServiceMock.Object,
             _mapperMock.Object,
             _createValidatorMock.Object,
             _updateValidatorMock.Object);

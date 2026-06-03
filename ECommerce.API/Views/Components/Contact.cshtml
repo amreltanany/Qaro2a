@@ -5,7 +5,9 @@
     string L(string en, string ar) => isArabic ? ar : en;
     ViewData["Title"] = L("Contact", "تواصل معنا");
 }
-         <link rel="stylesheet" type="text/css" href="~/css/blog.css" asp-append-version="true">
+@section Head {
+    <link rel="stylesheet" type="text/css" href="~/css/blog.css" asp-append-version="true">
+}
 
   <main class="main">
 
@@ -30,7 +32,7 @@
             <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
               <i class="bi bi-telephone flex-shrink-0"></i>
               <div>
-                <h3>@L("Call Us", "اتصل بنا")</h3>
+                <h2>@L("Call Us", "اتصل بنا")</h2>
                 <p>+201555012590</p>
               </div>
             </div><!-- End Info Item -->
