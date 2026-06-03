@@ -43,6 +43,20 @@
     white-space: nowrap;
 }
 
+/* English uses Playfair site-wide; keep price/actions readable sans-serif */
+html[lang="en"] .product-card .shop-card-price,
+html[lang="en"] .product-card .shop-card-actions .button.shop-cart-animate span.shop-cart-label,
+html[lang="en"] .product-card .shop-card-actions .button.shop-out-of-stock-btn span {
+    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0;
+}
+
+html[lang="en"] .product-card .shop-card-actions .shop-cart-plus-icon {
+    font-family: bootstrap-icons !important;
+}
+
 .product-card .shop-card-actions .wishlist-btn {
     display: inline-flex;
     align-items: center;
