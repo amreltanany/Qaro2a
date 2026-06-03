@@ -66,7 +66,7 @@ html[lang="en"] .product-card .shop-card-actions .shop-cart-plus-icon {
     padding: 0 !important;
     margin: 0 !important;
     border: 2px solid #111;
-    border-radius: 10px;
+    border-radius: 10px !important;
     flex: 0 0 auto;
     line-height: 1;
     background: #fff;
@@ -82,20 +82,18 @@ html[lang="en"] .product-card .shop-card-actions .shop-cart-plus-icon {
 }
 
 .product-card .shop-card-actions .wishlist-btn:hover,
-.product-card .shop-card-actions .wishlist-btn:focus-visible {
+.product-card .shop-card-actions .wishlist-btn:focus-visible,
+.product-card .shop-card-actions .wishlist-btn.active,
+.product-card .shop-card-actions .wishlist-btn.active:hover {
     background: #111;
     color: #fff;
     border-color: #111;
+    border-radius: 10px !important;
 }
 
 .product-card .shop-card-actions .wishlist-btn:active {
     transform: scale(0.96);
-}
-
-.product-card .shop-card-actions .wishlist-btn.active {
-    background: #111;
-    color: #fff;
-    border-color: #111;
+    border-radius: 10px !important;
 }
 
 /* Animated add-to-cart — bigger on shop cards */
