@@ -1,3 +1,104 @@
+/* Shop product card — price, wishlist, add to cart */
+.product-card .shop-card-body {
+    width: 100%;
+    padding: 0.75rem 0 0;
+    margin: 0;
+}
+
+.product-card .shop-card-author {
+    margin-bottom: 0.75rem;
+}
+
+.product-card .shop-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+    padding-top: 0.75rem;
+    width: 100%;
+}
+
+.product-card .shop-card-price {
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.25;
+    margin: 0;
+    padding-block: 0.35rem;
+    padding-inline: 0 0.5rem;
+    flex: 0 1 auto;
+    min-width: 0;
+    color: #111;
+    align-self: center;
+}
+
+.product-card .shop-card-actions__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0;
+}
+
+.product-card .shop-card-actions .wishlist-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    margin: 0;
+    border: 2px solid #111;
+    border-radius: 10px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.product-card .shop-card-actions .wishlist-btn i {
+    font-size: 1.05rem;
+    line-height: 1;
+}
+
+.product-card .shop-card-actions .button.btn-add-cart,
+.product-card .shop-card-actions .button.btn-out-of-stock {
+    padding: 0.4rem 0.75rem 0.4rem 0.6rem;
+    min-width: 0;
+    margin: 0;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.product-card .shop-card-actions .button.btn-add-cart span,
+.product-card .shop-card-actions .button.btn-out-of-stock span {
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    padding-inline-start: 1.15rem;
+    margin-inline-start: -0.15rem;
+}
+
+.product-card .shop-card-actions .button.btn-out-of-stock span {
+    padding-inline-start: 0;
+    margin-inline-start: 0;
+}
+
+@media (max-width: 1399.98px) {
+    .product-card .shop-card-actions .button.btn-add-cart span {
+        font-size: 0.75rem;
+        padding-inline-start: 1rem;
+    }
+
+    .product-card .shop-card-actions .button.btn-add-cart {
+        padding: 0.4rem 0.55rem 0.4rem 0.5rem;
+    }
+}
+
+[dir="rtl"] .product-card .shop-card-price {
+    padding-inline-start: 0;
+    padding-inline-end: 0.5rem;
+}
+
 .shop-filter-sidebar {
     max-width: 320px;
 }
