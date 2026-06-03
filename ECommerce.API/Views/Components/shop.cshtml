@@ -174,7 +174,10 @@
                                             @if (product.Stock > 0)
                                             {
                                                 <button type="button" class="button btn-add-cart shop-cart-animate" data-product-id="@product.Id" data-product-name="@product.Name">
-                                                    <span>@L("Add to cart", "أضف إلى السلة")</span>
+                                                    <span class="shop-cart-label">
+                                                        <i class="bi bi-plus-lg shop-cart-plus-icon" aria-hidden="true"></i>
+                                                        @L("Add to cart", "أضف إلى السلة")
+                                                    </span>
                                                     <div class="cart">
                                                         <svg viewBox="0 0 36 26">
                                                             <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
