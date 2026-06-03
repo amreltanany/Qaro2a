@@ -46,7 +46,7 @@
 /* English uses Playfair site-wide; keep price/actions readable sans-serif */
 html[lang="en"] .product-card .shop-card-price,
 html[lang="en"] .product-card .shop-card-actions .button.shop-cart-animate span.shop-cart-label,
-html[lang="en"] .product-card .shop-card-actions .button.shop-out-of-stock-btn span {
+html[lang="en"] .product-card .shop-card-actions--out-of-stock .shop-out-of-stock-btn {
     font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
     font-size: 0.9375rem;
     font-weight: 600;
@@ -105,8 +105,7 @@ html[lang="en"] .product-card .shop-card-actions .shop-cart-plus-icon {
 }
 
 /* Animated add-to-cart — bigger on shop cards */
-.product-card .shop-card-actions .button.shop-cart-animate,
-.product-card .shop-card-actions .button.shop-out-of-stock-btn {
+.product-card .shop-card-actions .button.shop-cart-animate {
     padding: 0.75rem 1.5rem 0.75rem 1.25rem !important;
     min-width: 9.5rem !important;
     min-height: 3rem;
@@ -181,9 +180,6 @@ html[lang="en"] .product-card .shop-card-actions .shop-cart-plus-icon {
     margin: 0;
 }
 
-html[lang="en"] .product-card .shop-card-actions--out-of-stock .shop-out-of-stock-btn {
-    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
-}
 
 @media (max-width: 1399.98px) {
     .product-card .shop-card-actions {
