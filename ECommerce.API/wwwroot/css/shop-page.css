@@ -11,9 +11,11 @@
 
 .product-card .shop-card-actions {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 1.25rem;
     margin-top: 0.25rem;
     padding-top: 0.75rem;
     width: 100%;
@@ -24,50 +26,39 @@
     font-size: 0.95rem;
     line-height: 1.25;
     margin: 0;
-    padding-block: 0.35rem;
-    padding-inline: 0 0.5rem;
-    flex: 0 1 auto;
+    padding: 0.35rem 0;
+    flex: 0 0 auto;
     min-width: 0;
     color: #111;
     align-self: center;
-}
-
-.product-card .shop-card-actions__buttons {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 0.5rem;
-    flex: 0 0 auto;
-    margin: 0;
-    padding: 0;
 }
 
 .product-card .shop-card-actions .wishlist-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: 0;
-    margin: 0;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0 !important;
+    margin: 0 !important;
     border: 2px solid #111;
     border-radius: 10px;
-    flex-shrink: 0;
+    flex: 0 0 auto;
     line-height: 1;
 }
 
 .product-card .shop-card-actions .wishlist-btn i {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     line-height: 1;
 }
 
 .product-card .shop-card-actions .button.btn-add-cart,
 .product-card .shop-card-actions .button.btn-out-of-stock {
-    padding: 0.4rem 0.75rem 0.4rem 0.6rem;
-    min-width: 0;
-    margin: 0;
+    padding: 0.45rem 0.85rem 0.45rem 0.7rem !important;
+    min-width: 0 !important;
+    margin: 0 !important;
     border-radius: 10px;
-    flex-shrink: 0;
+    flex: 0 0 auto;
 }
 
 .product-card .shop-card-actions .button.btn-add-cart span,
@@ -84,19 +75,32 @@
 }
 
 @media (max-width: 1399.98px) {
+    .product-card .shop-card-actions {
+        gap: 1rem;
+    }
+
     .product-card .shop-card-actions .button.btn-add-cart span {
         font-size: 0.75rem;
         padding-inline-start: 1rem;
     }
 
     .product-card .shop-card-actions .button.btn-add-cart {
-        padding: 0.4rem 0.55rem 0.4rem 0.5rem;
+        padding: 0.4rem 0.65rem 0.4rem 0.55rem !important;
     }
 }
 
-[dir="rtl"] .product-card .shop-card-price {
-    padding-inline-start: 0;
-    padding-inline-end: 0.5rem;
+@media (max-width: 575.98px) {
+    .product-card .shop-card-actions {
+        gap: 0.875rem;
+    }
+
+    .product-card .shop-card-price {
+        font-size: 0.875rem;
+    }
+}
+
+[dir="rtl"] .product-card .shop-card-actions {
+    justify-content: flex-start;
 }
 
 .shop-filter-sidebar {

@@ -167,30 +167,28 @@
                                         </p>
                                         <div class="shop-card-actions">
                                             <p class="shop-card-price mb-0">@product.Price.ToString("N2") EGP</p>
-                                            <div class="shop-card-actions__buttons">
-                                                <button type="button" class="wishlist-btn btn-add-wishlist" title="@L("Add to wishlist", "إضافة للمفضلة")"
-                                                        data-product-id="@product.Id" data-product-name="@product.Name">
-                                                    <i class="bi bi-heart"></i>
+                                            <button type="button" class="wishlist-btn btn-add-wishlist" title="@L("Add to wishlist", "إضافة للمفضلة")"
+                                                    data-product-id="@product.Id" data-product-name="@product.Name">
+                                                <i class="bi bi-heart"></i>
+                                            </button>
+                                            @if (product.Stock > 0)
+                                            {
+                                                <button type="button" class="button btn-add-cart" data-product-id="@product.Id" data-product-name="@product.Name">
+                                                    <span>@L("Add to cart", "أضف إلى السلة")</span>
+                                                    <div class="cart">
+                                                        <svg viewBox="0 0 36 26">
+                                                            <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
+                                                            <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
+                                                        </svg>
+                                                    </div>
                                                 </button>
-                                                @if (product.Stock > 0)
-                                                {
-                                                    <button type="button" class="button btn-add-cart" data-product-id="@product.Id" data-product-name="@product.Name">
-                                                        <span>@L("Add to cart", "أضف إلى السلة")</span>
-                                                        <div class="cart">
-                                                            <svg viewBox="0 0 36 26">
-                                                                <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
-                                                                <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
-                                                            </svg>
-                                                        </div>
-                                                    </button>
-                                                }
-                                                else
-                                                {
-                                                    <button type="button" class="button btn-out-of-stock" disabled>
-                                                        <span>@L("Out of stock", "غير متوفر")</span>
-                                                    </button>
-                                                }
-                                            </div>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="button btn-out-of-stock" disabled>
+                                                    <span>@L("Out of stock", "غير متوفر")</span>
+                                                </button>
+                                            }
                                         </div>
                                     </div>
                                 </div>
