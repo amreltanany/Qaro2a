@@ -166,7 +166,7 @@
                                             <a href="/Home/Shop?author=@Uri.EscapeDataString(product.Author)" class="text-decoration-none">@L("By", "بواسطة") @product.Author</a>
                                         </p>
                                         <div class="shop-card-actions">
-                                            <p class="shop-card-price mb-0">@product.Price.ToString("N2") EGP</p>
+                                            <p class="shop-card-price mb-0" dir="ltr">@product.Price.ToString("N0") EGP</p>
                                             <button type="button" class="wishlist-btn btn-add-wishlist" title="@L("Add to wishlist", "إضافة للمفضلة")"
                                                     data-product-id="@product.Id" data-product-name="@product.Name">
                                                 <i class="bi bi-heart"></i>

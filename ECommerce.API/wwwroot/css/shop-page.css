@@ -31,6 +31,7 @@
     min-width: 0;
     color: #111;
     align-self: center;
+    white-space: nowrap;
 }
 
 .product-card .shop-card-actions .wishlist-btn {
