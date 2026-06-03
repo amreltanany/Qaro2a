@@ -57,43 +57,51 @@ html[lang="en"] .product-card .shop-card-actions .shop-cart-plus-icon {
     font-family: bootstrap-icons !important;
 }
 
-.product-card .shop-card-actions .wishlist-btn {
+.product-card .shop-card-actions .shop-wishlist-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 3rem;
     height: 3rem;
-    padding: 0 !important;
-    margin: 0 !important;
+    padding: 0;
+    margin: 0;
     border: 2px solid #111;
-    border-radius: 10px !important;
+    border-radius: 10px;
     flex: 0 0 auto;
     line-height: 1;
     background: #fff;
     color: #111;
     cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease,
+        border-radius 0.25s ease, transform 0.15s ease;
 }
 
-.product-card .shop-card-actions .wishlist-btn i {
+.product-card .shop-card-actions .shop-wishlist-btn i {
     font-size: 1.2rem;
     line-height: 1;
     pointer-events: none;
 }
 
-.product-card .shop-card-actions .wishlist-btn:hover,
-.product-card .shop-card-actions .wishlist-btn:focus-visible,
-.product-card .shop-card-actions .wishlist-btn.active,
-.product-card .shop-card-actions .wishlist-btn.active:hover {
+.product-card .shop-card-actions .shop-wishlist-btn:hover,
+.product-card .shop-card-actions .shop-wishlist-btn:focus-visible {
     background: #111;
     color: #fff;
     border-color: #111;
-    border-radius: 10px !important;
+    border-radius: 10px;
 }
 
-.product-card .shop-card-actions .wishlist-btn:active {
+.product-card .shop-card-actions .shop-wishlist-btn:active {
     transform: scale(0.96);
-    border-radius: 10px !important;
+}
+
+/* Checked / in wishlist — circle like before */
+.product-card .shop-card-actions .shop-wishlist-btn.active,
+.product-card .shop-card-actions .shop-wishlist-btn.active:hover,
+.product-card .shop-card-actions .shop-wishlist-btn.active:focus-visible {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+    border-radius: 50%;
 }
 
 /* Animated add-to-cart — bigger on shop cards */
