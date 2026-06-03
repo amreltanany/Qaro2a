@@ -9,6 +9,14 @@
     margin-bottom: 0.75rem;
 }
 
+.product-card .shop-card-description {
+    width: 100%;
+    margin: 0 0 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .product-card .shop-card-actions {
     display: flex;
     flex-direction: row;
