@@ -165,7 +165,7 @@
                                         <p class="shop-card-author">
                                             <a href="/Home/Shop?author=@Uri.EscapeDataString(product.Author)" class="text-decoration-none">@L("By", "بواسطة") @product.Author</a>
                                         </p>
-                                        <div class="shop-card-actions">
+                                        <div class="shop-card-actions @(product.Stock > 0 ? null : "shop-card-actions--out-of-stock")">
                                             <p class="shop-card-price mb-0" dir="ltr">@product.Price.ToString("N0") EGP</p>
                                             <button type="button" class="shop-wishlist-btn btn-add-wishlist" title="@L("Add to wishlist", "إضافة للمفضلة")"
                                                     data-product-id="@product.Id" data-product-name="@product.Name">
@@ -188,7 +188,7 @@
                                             }
                                             else
                                             {
-                                                <button type="button" class="button btn-out-of-stock shop-out-of-stock-btn" disabled>
+                                                <button type="button" class="shop-out-of-stock-btn" disabled>
                                                     <span>@L("Out of stock", "غير متوفر")</span>
                                                 </button>
                                             }

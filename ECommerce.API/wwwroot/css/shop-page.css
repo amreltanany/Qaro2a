@@ -149,14 +149,40 @@ html[lang="en"] .product-card .shop-card-actions .shop-cart-plus-icon {
     --text: #fff;
 }
 
-.product-card .shop-card-actions .button.shop-out-of-stock-btn {
-    min-width: 7rem !important;
-    padding: 0.55rem 1rem !important;
+.product-card .shop-card-actions--out-of-stock {
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.product-card .shop-card-actions .button.shop-out-of-stock-btn span {
-    padding-inline-start: 0;
-    margin-inline-start: 0;
+.product-card .shop-card-actions--out-of-stock .shop-out-of-stock-btn {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 11rem;
+    margin: 0.35rem auto 0;
+    min-height: 3rem;
+    padding: 0.75rem 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: #fff;
+    background: #dc3545;
+    border: 2px solid #dc3545;
+    border-radius: 10px;
+    cursor: not-allowed;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.product-card .shop-card-actions--out-of-stock .shop-out-of-stock-btn span {
+    padding: 0;
+    margin: 0;
+}
+
+html[lang="en"] .product-card .shop-card-actions--out-of-stock .shop-out-of-stock-btn {
+    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 
 @media (max-width: 1399.98px) {
