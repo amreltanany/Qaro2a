@@ -99,8 +99,32 @@
 .product-card .shop-card-actions .button.shop-cart-animate span {
     font-size: 0.875rem;
     line-height: 1.5;
-    padding-inline-start: 1.35rem;
+    padding-inline-start: 1.75rem;
     margin-inline-start: 0;
+}
+
+/* Fix + icon (vertical and horizontal bars) for RTL/LTR */
+.product-card .shop-card-actions .button.shop-cart-animate span::before,
+.product-card .shop-card-actions .button.shop-cart-animate span::after {
+    left: auto !important;
+    right: auto !important;
+    transform: scale(0.8);
+}
+
+.product-card .shop-card-actions .button.shop-cart-animate span::before {
+    width: 2px;
+    height: 14px;
+    top: 50%;
+    inset-inline-start: 0.55rem;
+    margin-top: -7px;
+}
+
+.product-card .shop-card-actions .button.shop-cart-animate span::after {
+    width: 14px;
+    height: 2px;
+    top: 50%;
+    inset-inline-start: 0.2rem;
+    margin-top: -1px;
 }
 
 .product-card .shop-card-actions .button.shop-cart-animate:hover:not(.loading) {
@@ -118,12 +142,6 @@
 .product-card .shop-card-actions .button.shop-out-of-stock-btn span {
     padding-inline-start: 0;
     margin-inline-start: 0;
-}
-
-[dir="rtl"] .product-card .shop-card-actions .button.shop-cart-animate span::before,
-[dir="rtl"] .product-card .shop-card-actions .button.shop-cart-animate span::after {
-    left: auto;
-    right: 0.5rem;
 }
 
 @media (max-width: 1399.98px) {
@@ -157,7 +175,7 @@
 
     .product-card .shop-card-actions .button.shop-cart-animate span {
         font-size: 0.75rem;
-        padding-inline-start: 1.15rem;
+        padding-inline-start: 1.6rem;
     }
 }
 
