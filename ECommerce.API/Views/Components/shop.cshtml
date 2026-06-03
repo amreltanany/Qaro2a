@@ -24,6 +24,7 @@
 }
 
 <link href="https://cdn.jsdelivr.net/npm/inter-ui@3.11.0/inter.min.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="~/css/button.css" asp-append-version="true" />
 <link rel="stylesheet" type="text/css" href="~/css/shop-page.css" asp-append-version="true" />
 
 <section id="billboard">
@@ -172,14 +173,19 @@
                                             </button>
                                             @if (product.Stock > 0)
                                             {
-                                                <button type="button" class="shop-add-cart-btn btn-add-cart" data-product-id="@product.Id" data-product-name="@product.Name">
-                                                    <i class="bi bi-cart-plus" aria-hidden="true"></i>
+                                                <button type="button" class="button btn-add-cart shop-cart-animate" data-product-id="@product.Id" data-product-name="@product.Name">
                                                     <span>@L("Add to cart", "أضف إلى السلة")</span>
+                                                    <div class="cart">
+                                                        <svg viewBox="0 0 36 26">
+                                                            <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
+                                                            <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
+                                                        </svg>
+                                                    </div>
                                                 </button>
                                             }
                                             else
                                             {
-                                                <button type="button" class="shop-out-of-stock-btn" disabled>
+                                                <button type="button" class="button btn-out-of-stock shop-out-of-stock-btn" disabled>
                                                     <span>@L("Out of stock", "غير متوفر")</span>
                                                 </button>
                                             }

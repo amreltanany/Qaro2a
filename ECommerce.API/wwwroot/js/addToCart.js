@@ -5,13 +5,10 @@ document.addEventListener('DOMContentLoaded', function () {
         btn.addEventListener('click', function (e) {
             e.preventDefault();
 
-            // 1. Button Animation Logic (legacy animated buttons only)
+            // 1. Button Animation Logic
             if (btn.classList.contains('button') && !btn.classList.contains('loading')) {
                 btn.classList.add('loading');
                 setTimeout(() => btn.classList.remove('loading'), 3700);
-            } else if (btn.classList.contains('shop-add-cart-btn') && !btn.classList.contains('is-adding')) {
-                btn.classList.add('is-adding');
-                setTimeout(() => btn.classList.remove('is-adding'), 600);
             }
 
             // 2. Add to Cart Logic
