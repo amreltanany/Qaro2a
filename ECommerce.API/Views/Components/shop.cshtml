@@ -65,6 +65,7 @@
                     </button>
                     <h5 class="mb-3 shop-filter-title-desktop d-none d-lg-block">@L("Filters", "الفلاتر")</h5>
                     <div class="collapse shop-filter-collapse @(hasActiveFilters ? "show" : "")" id="shopFilterCollapse">
+                    <div class="shop-filter-collapse-inner">
                     <form method="get" action="/Home/Shop" class="d-grid gap-3 shop-filter-form">
                         <input type="hidden" name="s" value="@searchTerm" />
 
@@ -124,6 +125,7 @@
                             <a href="/Home/Shop" class="btn btn-outline-secondary w-100">@L("Reset", "إعادة تعيين")</a>
                         </div>
                     </form>
+                    </div>
                     </div>
                 </div>
             </aside>

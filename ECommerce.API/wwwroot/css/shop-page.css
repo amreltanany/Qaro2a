@@ -260,8 +260,52 @@ html[lang="en"] .product-card .shop-card-actions .shop-cart-plus-icon {
         max-width: 100%;
     }
 
-    .shop-filter-collapse.show {
+    .shop-filter-collapse {
+        margin-top: 0;
+        overflow: hidden;
+        transition: margin-top 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .shop-filter-collapse.show,
+    .shop-filter-collapse.collapsing {
         margin-top: 0.75rem;
+    }
+
+    .shop-filter-collapse.collapsing {
+        transition: height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+            margin-top 0.45s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    .shop-filter-collapse-inner {
+        transform: translateY(-0.5rem);
+        opacity: 0;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+            opacity 0.35s ease;
+    }
+
+    .shop-filter-collapse.show:not(.collapsing) .shop-filter-collapse-inner,
+    .shop-filter-collapse.collapsing:not(.show) .shop-filter-collapse-inner {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .shop-filter-collapse.collapsing.show .shop-filter-collapse-inner {
+        transform: translateY(-0.35rem);
+        opacity: 0;
+        transition-duration: 0.3s;
+    }
+}
+
+@media (max-width: 991.98px) and (prefers-reduced-motion: reduce) {
+    .shop-filter-collapse,
+    .shop-filter-collapse.collapsing,
+    .shop-filter-collapse-inner {
+        transition: none !important;
+    }
+
+    .shop-filter-collapse-inner {
+        transform: none;
+        opacity: 1;
     }
 }
 
