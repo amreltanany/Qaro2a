@@ -35,7 +35,7 @@
 <section id="billboard" class="overflow-hidden">
     <div class="container site-container">
         <div class="row justify-content-center">
-            <h1 class="section-title text-center mt-4" data-aos="fade-up">@L("New Collections", "إصدارات جديدة")</h1>
+            <h1 class="section-title text-center mt-4" data-aos="fade-up">@L("Top Rated Books", "كتب الأعلى تقييماً")</h1>
             <div class="col-md-6 text-center" data-aos="fade-up" data-aos-delay="300">
                 <p>
                     @L("Every book in our collection is more than just pages-it is a perspective. At Qaro2a, we believe storytelling is the heartbeat of humanity. From curated bestsellers to hidden gems by independent voices, we provide a platform where every narrative finds its home and every reader finds their next adventure.", "كل كتاب في مجموعتنا ليس مجرد صفحات، بل منظور مختلف. في قروءه نؤمن أن السرد هو نبض الإنسانية. من الكتب الأكثر مبيعًا إلى الكنوز المخفية لأصوات مستقلة، نوفر منصة يجد فيها كل سرد موطنه ويجد فيها كل قارئ مغامرته القادمة.")
@@ -186,10 +186,11 @@
             if (!swiperEl || !swiperEl.swiper) return;
             var swiper = swiperEl.swiper;
             swiper.params.spaceBetween = 24;
+            swiper.params.loop = swiper.slides.length > 3;
             swiper.params.breakpoints = {
                 0: { slidesPerView: 1, spaceBetween: 16 },
                 768: { slidesPerView: 2, spaceBetween: 20 },
-                1200: { slidesPerView: 3, spaceBetween: 24 }
+                992: { slidesPerView: 3, spaceBetween: 24 }
             };
             swiper.update();
         });

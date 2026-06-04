@@ -46,7 +46,13 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var products = await _productService.GetAllAsync(new QueryParameters());
+        var products = await _productService.GetAllAsync(new QueryParameters
+        {
+            PageNumber = 1,
+            PageSize = 3,
+            TopRatedOnly = true,
+            SortBy = "publishdate_desc"
+        });
         return View(products);
     }
     public async Task<IActionResult> Shop(

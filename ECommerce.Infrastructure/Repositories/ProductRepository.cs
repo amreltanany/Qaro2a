@@ -62,6 +62,9 @@ namespace ECommerce.Infrastructure.Repositories
             if (queryParameters.CategoryId.HasValue)
                 query = query.Where(p => p.CategoryId == queryParameters.CategoryId.Value);
 
+            if (queryParameters.TopRatedOnly)
+                query = query.Where(p => p.TopRated);
+
             query = queryParameters.SortBy?.ToLowerInvariant() switch
             {
                 "publishdate_asc" => query.OrderBy(p => p.PublishDate),

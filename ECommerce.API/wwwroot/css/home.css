@@ -103,6 +103,12 @@ html[dir="rtl"] .home-about-view-more {
   margin-bottom: 0;
 }
 
+@media (min-width: 992px) {
+  #billboard .main-swiper .swiper-slide {
+    max-width: calc((100% - 48px) / 3);
+  }
+}
+
 #billboard + .home-publish-banner {
   margin-top: 0;
 }
