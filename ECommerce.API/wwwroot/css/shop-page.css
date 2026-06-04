@@ -5,6 +5,20 @@
     margin: 0;
 }
 
+.product-card .shop-card-text {
+    direction: rtl;
+    text-align: right;
+    width: 100%;
+    unicode-bidi: plaintext;
+}
+
+.product-card .shop-card-text .element-title,
+.product-card .shop-card-text .shop-card-description,
+.product-card .shop-card-text .shop-card-author {
+    direction: rtl;
+    text-align: right;
+}
+
 .product-card .shop-card-author {
     margin-bottom: 0.75rem;
 }

@@ -122,6 +122,29 @@ html[dir="rtl"] .home-about-view-more {
   margin-bottom: 1rem;
 }
 
+#billboard .home-book-caption {
+  direction: rtl;
+  text-align: right;
+  width: 100%;
+}
+
+#billboard .home-book-caption .element-title,
+#billboard .home-book-caption .home-book-description {
+  direction: rtl;
+  text-align: right;
+  unicode-bidi: plaintext;
+}
+
+#billboard .home-book-caption .item-anchor {
+  display: inline-block;
+  max-width: 100%;
+}
+
+#billboard .border-animation-left .home-book-caption .item-anchor::after {
+  left: auto;
+  right: 0;
+}
+
 @media (min-width: 992px) {
   .home-about-section {
     padding-top: 4rem;
