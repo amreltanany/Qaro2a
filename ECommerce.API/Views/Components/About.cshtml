@@ -3,6 +3,15 @@
     var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
     string L(string en, string ar) => isArabic ? ar : en;
     ViewData["Title"] = L("About", "من نحن");
+    ViewData["SeoTitle"] = L(
+        "About Qaro2a — Literary Hub for Books & Publishing",
+        "عن قروءه — منصة أدبية للكتب والنشر والبودكاست");
+    ViewData["MetaDescription"] = L(
+        "Learn about Qaro2a, a literary hub for Arabic books, podcasting, publishing, and book reviews. Meet our team and mission.",
+        "تعرّف على قروءه، المنصة الأدبية للكتب العربية والبودكاست والنشر ومراجعات الكتب. تعرف على فريقنا ورسالتنا.");
+    ViewData["MetaKeywords"] = L(
+        "About Qaro2a, literary hub, publishing, book podcast",
+        "عن قروءه, منصة أدبية, نشر, بودكاست كتب");
 }
 @section Head {
     <link rel="stylesheet" type="text/css" href="~/css/blog.css" asp-append-version="true">

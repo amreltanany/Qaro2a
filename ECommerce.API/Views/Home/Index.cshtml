@@ -4,6 +4,15 @@
     var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
     string L(string en, string ar) => isArabic ? ar : en;
     ViewData["Title"] = L("Home", "الرئيسية");
+    ViewData["SeoTitle"] = L(
+        "Qaro2a — Arabic Books Podcast, Bookstore & Publishing",
+        "قروءه — بودكاست كتب، متجر كتب ونشر أدبي");
+    ViewData["MetaDescription"] = L(
+        "Qaro2a is a literary hub for Arabic books, podcast episodes, book reviews, and publishing. Shop curated titles and join our reading community.",
+        "قروءه منصة أدبية للبودكاست ومراجعات الكتب والنشر. تسوق كتباً مختارة بالعربية واستمع إلى حلقات بودكاست قروءه عن الكتب والقراءة.");
+    ViewData["MetaKeywords"] = L(
+        "Qaro2a, Arabic books, book podcast, bookstore, publishing, literature",
+        "قروءه, قروءة, بودكاست كتب, كتب عربية, متجر كتب, نشر, مراجعات كتب, بودكاست");
     string Q(string virtualPath, int width, string format, int quality = 82)
         => $"{Url.Content(virtualPath)}?width={width}&format={format}&quality={quality}";
 

@@ -4,6 +4,15 @@
     var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
     string L(string en, string ar) => isArabic ? ar : en;
     ViewData["Title"] = L("Contact", "تواصل معنا");
+    ViewData["SeoTitle"] = L(
+        "Contact Qaro2a",
+        "تواصل مع قروءه");
+    ViewData["MetaDescription"] = L(
+        "Contact Qaro2a for book orders, publishing inquiries, and general questions.",
+        "تواصل مع قروءه للاستفسار عن الكتب والنشر والأسئلة العامة.");
+    ViewData["MetaKeywords"] = L(
+        "contact Qaro2a, book inquiries, publishing",
+        "تواصل قروءه, استفسارات كتب, نشر");
 }
 @section Head {
     <link rel="stylesheet" type="text/css" href="~/css/blog.css" asp-append-version="true">

@@ -3,6 +3,15 @@
     var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
     string L(string en, string ar) => isArabic ? ar : en;
     ViewData["Title"] = L("Publish", "انشر كتابك");
+    ViewData["SeoTitle"] = L(
+        "Publish Your Book with Qaro2a",
+        "انشر كتابك مع قروءه");
+    ViewData["MetaDescription"] = L(
+        "Submit your manuscript to Qaro2a for publishing. Upload your PDF and our team will review your submission.",
+        "قدّم مخطوطتك للنشر مع قروءه. ارفع ملف PDF وسيراجع فريقنا طلبك.");
+    ViewData["MetaKeywords"] = L(
+        "publish with Qaro2a, manuscript submission, Arabic publishing",
+        "النشر مع قروءه, تقديم مخطوطة, نشر كتب, قروءه");
     var mobile = ViewBag.MobileNumber as string ?? string.Empty;
 }
 

@@ -3,6 +3,29 @@
     var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
     string L(string en, string ar) => isArabic ? ar : en;
     ViewData["Title"] = L("Podcast", "بودكاست");
+    ViewData["SeoTitle"] = L(
+        "Qaro2a Podcast — Arabic Book Discussions & Reviews",
+        "بودكاست قروءه — حلقات كتب ومراجعات أدبية");
+    ViewData["MetaDescription"] = L(
+        "Watch and listen to Qaro2a podcast episodes about Arabic books, stories, and literature. Book summaries, reviews, and deep discussions.",
+        "شاهد واستمع إلى حلقات بودكاست قروءه عن الكتب العربية والقصص والأدب. ملخصات ومراجعات ومناقشات تفصيلية للكتب.");
+    ViewData["MetaKeywords"] = L(
+        "Qaro2a podcast, Arabic book podcast, book reviews, literature",
+        "بودكاست قروءه, بودكاست كتب, مراجعات كتب, أدب, قراءة");
+}
+@section Head {
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "PodcastSeries",
+      "name": "@(isArabic ? "بودكاست قروءه" : "Qaro2a Podcast")",
+      "alternateName": ["Qaro2a", "قروءه", "قروءة"],
+      "description": "@(isArabic ? "بودكاست عربي عن الكتب والقراءة والأدب." : "An Arabic podcast about books, reading, and literature.")",
+      "url": "@($"{Context.Request.Scheme}://{Context.Request.Host}/Home/Podcast?culture={currentCulture}")",
+      "inLanguage": "ar",
+      "webFeed": "https://www.youtube.com/@@Qaro2a/"
+    }
+    </script>
 }
 
 <section class="podcast-page py-4 py-md-5" style="background: #0b1220; min-height: 100vh;">

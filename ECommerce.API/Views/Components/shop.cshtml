@@ -5,6 +5,15 @@
     var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
     string L(string en, string ar) => isArabic ? ar : en;
     ViewData["Title"] = L("Shop", "المتجر");
+    ViewData["SeoTitle"] = L(
+        "Shop Arabic Books Online | Qaro2a Bookstore",
+        "متجر كتب قروءه — تسوق كتب عربية أونلاين");
+    ViewData["MetaDescription"] = L(
+        "Browse and buy Arabic books at Qaro2a. Filter by author, category, and price. Discover new releases and top-rated titles.",
+        "تسوق كتباً عربية في متجر قروءه. تصفّح حسب المؤلف والفئة والسعر واكتشف إصدارات جديدة وكتباً الأعلى تقييماً.");
+    ViewData["MetaKeywords"] = L(
+        "Qaro2a shop, Arabic books online, bookstore, buy books",
+        "متجر قروءه, كتب عربية, شراء كتب, متجر كتب, قروءه");
     var searchTerm = ViewBag.Search as string;
     var isSearch = !string.IsNullOrWhiteSpace(searchTerm);
     var categories = ViewBag.Categories as IEnumerable<ECommerce.Application.DTOs.Category.CategoryResponseDto>

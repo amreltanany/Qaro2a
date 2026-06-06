@@ -2,6 +2,7 @@
 @using System.Globalization
 @using Microsoft.Extensions.Options
 @using ECommerce.API.Options
+@using ECommerce.API.Helpers
 @inject IOptions<SeoOptions> SeoOptions
 @{
     var rawTitle = ViewData["Title"] as string;
@@ -43,12 +44,21 @@
 
     var seo = SeoOptions.Value;
     var req = Context.Request;
-    var baseUrl = string.IsNullOrWhiteSpace(seo.BaseUrl)
-        ? $"{req.Scheme}://{req.Host}"
-        : seo.BaseUrl.TrimEnd('/');
-    var canonicalUrl = $"{baseUrl}{req.PathBase}{req.Path}";
-    var metaDescription = ViewData["MetaDescription"] as string ?? seo.DefaultDescription;
-    var ogTitle = $"{pageTitle} | {seo.SiteName}";
+    var baseUrl = SeoHelper.GetBaseUrl(req, seo);
+    var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    var htmlLang = isArabic ? "ar" : "en";
+    var htmlDir = isArabic ? "rtl" : "ltr";
+    var brandName = SeoHelper.GetBrandName(seo, isArabic);
+    var seoTitle = ViewData["SeoTitle"] as string;
+    var ogTitle = !string.IsNullOrWhiteSpace(seoTitle) ? seoTitle : $"{pageTitle} | {brandName}";
+    var canonicalUrl = SeoHelper.BuildLocalizedUrl(req, seo, htmlLang);
+    var hreflangAr = SeoHelper.BuildLocalizedUrl(req, seo, "ar");
+    var hreflangEn = SeoHelper.BuildLocalizedUrl(req, seo, "en");
+    var hreflangDefault = SeoHelper.BuildLocalizedUrl(req, seo, "ar");
+    var metaDescription = ViewData["MetaDescription"] as string ?? SeoHelper.GetDefaultDescription(seo, isArabic);
+    var metaKeywords = ViewData["MetaKeywords"] as string ?? SeoHelper.GetDefaultKeywords(seo, isArabic);
     var ogImageRaw = ViewData["OgImage"] as string ?? seo.DefaultOgImage;
     string? ogImagePath = null;
     if (!string.IsNullOrWhiteSpace(ogImageRaw))
@@ -59,19 +69,47 @@
             : (trimmed.StartsWith('/') ? trimmed : "/" + trimmed);
     }
     var ogImageAbsolute = string.IsNullOrEmpty(ogImagePath) ? null : $"{baseUrl}{ogImagePath}";
-    var metaKeywords = ViewData["MetaKeywords"] as string ?? seo.DefaultKeywords;
+    var ogLocale = isArabic ? seo.OgLocaleAr : seo.OgLocale;
+    var ogLocaleAlternate = isArabic ? seo.OgLocale : seo.OgLocaleAr;
+
+    var sameAs = new List<string>();
+    if (seo.SameAs is { Length: > 0 })
+        sameAs.AddRange(seo.SameAs.Where(u => !string.IsNullOrWhiteSpace(u)).Select(u => u.Trim()));
+    if (!string.IsNullOrWhiteSpace(seo.YouTubeUrl) && !sameAs.Contains(seo.YouTubeUrl.Trim(), StringComparer.OrdinalIgnoreCase))
+        sameAs.Add(seo.YouTubeUrl.Trim());
 
     var orgLd = new Dictionary<string, object?>
     {
         ["@context"] = "https://schema.org",
         ["@type"] = "Organization",
-        ["name"] = seo.SiteName,
+        ["name"] = brandName,
         ["url"] = baseUrl,
         ["logo"] = ogImageAbsolute
     };
-    if (seo.SameAs is { Length: > 0 } sameAs)
+    if (seo.AlternateNames is { Length: > 0 })
+        orgLd["alternateName"] = seo.AlternateNames;
+    if (sameAs.Count > 0)
         orgLd["sameAs"] = sameAs;
+
+    var websiteLd = new Dictionary<string, object?>
+    {
+        ["@context"] = "https://schema.org",
+        ["@type"] = "WebSite",
+        ["name"] = brandName,
+        ["url"] = baseUrl,
+        ["inLanguage"] = new[] { "ar", "en" },
+        ["potentialAction"] = new Dictionary<string, object?>
+        {
+            ["@type"] = "SearchAction",
+            ["target"] = $"{baseUrl}/Home/Shop?s={{search_term_string}}&culture={htmlLang}",
+            ["query-input"] = "required name=search_term_string"
+        }
+    };
+    if (seo.AlternateNames is { Length: > 0 })
+        websiteLd["alternateName"] = seo.AlternateNames;
+
     var orgJsonLd = JsonSerializer.Serialize(orgLd);
+    var websiteJsonLd = JsonSerializer.Serialize(websiteLd);
     string? twitterSite = null;
     if (!string.IsNullOrWhiteSpace(seo.TwitterHandle))
     {
@@ -79,11 +117,6 @@
         twitterSite = h.StartsWith('@') ? h : "@" + h;
     }
 
-    var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-    var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
-    string L(string en, string ar) => isArabic ? ar : en;
-    var htmlLang = isArabic ? "ar" : "en";
-    var htmlDir = isArabic ? "rtl" : "ltr";
     var switchToCulture = isArabic ? "en" : "ar";
     var offcanvasPlacement = isArabic ? "offcanvas-start" : "offcanvas-end";
     var routeController = (ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty).ToLowerInvariant();
@@ -102,6 +135,10 @@
 <head>
     <title>@ogTitle</title>
     <link rel="canonical" href="@canonicalUrl" />
+    <link rel="alternate" hreflang="ar" href="@hreflangAr" />
+    <link rel="alternate" hreflang="en" href="@hreflangEn" />
+    <link rel="alternate" hreflang="x-default" href="@hreflangDefault" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="@($"{baseUrl}/sitemap.xml")" />
     <link rel="icon" type="image/png" href="~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png" asp-append-version="true" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -124,12 +161,17 @@
         <meta name="keywords" content="@metaKeywords" />
     }
     <meta name="description" content="@metaDescription" />
+    @if (!string.IsNullOrWhiteSpace(seo.GoogleSiteVerification))
+    {
+        <meta name="google-site-verification" content="@seo.GoogleSiteVerification" />
+    }
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="@seo.SiteName" />
+    <meta property="og:site_name" content="@brandName" />
     <meta property="og:title" content="@ogTitle" />
     <meta property="og:description" content="@metaDescription" />
     <meta property="og:url" content="@canonicalUrl" />
-    <meta property="og:locale" content="@seo.OgLocale" />
+    <meta property="og:locale" content="@ogLocale" />
+    <meta property="og:locale:alternate" content="@ogLocaleAlternate" />
     @if (!string.IsNullOrEmpty(ogImageAbsolute))
     {
         <meta property="og:image" content="@ogImageAbsolute" />
@@ -147,6 +189,7 @@
     }
     <meta name="user-id" content="guest">
     <script type="application/ld+json">@Html.Raw(orgJsonLd)</script>
+    <script type="application/ld+json">@Html.Raw(websiteJsonLd)</script>
     @await RenderSectionAsync("Head", required: false)
     <link rel="preload" as="style" href="~/vendor/bootstrap/bootstrap.min.css" asp-append-version="true"
         onload="this.onload=null;this.rel='stylesheet'">
