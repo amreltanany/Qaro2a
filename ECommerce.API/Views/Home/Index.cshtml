@@ -25,6 +25,22 @@
 @section Head {
     <link rel="preload" as="image" href="@heroWebp" type="image/webp" fetchpriority="high" />
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "WebPage",
+      "name": "@(isArabic ? "قروءه — بودكاست وكتب ونشر أدبي" : "Qaro2a — Books, Podcast & Publishing")",
+      "alternateName": ["Qaro2a", "قروءه", "قروءة"],
+      "description": "@(isArabic ? "قروءه منصة عربية للبودكاست ومتجر الكتب والنشر الأدبي." : "Qaro2a is an Arabic literary platform for podcasts, books, and publishing.")",
+      "url": "@($"{Context.Request.Scheme}://{Context.Request.Host}/?culture={currentCulture}")",
+      "inLanguage": "@currentCulture",
+      "isPartOf": {
+        "@@type": "WebSite",
+        "name": "@(isArabic ? "قروءه" : "Qaro2a")",
+        "url": "https://qaro2a.com"
+      }
+    }
+    </script>
 }
 
 <!--Hero-->
@@ -32,7 +48,7 @@
     <div class="w-100">
         <picture>
             <source type="image/webp" srcset="@heroWebp" />
-            <img src="@heroJpeg" alt="@L("Qaro2a home hero", "واجهة قروءه الرئيسية")" class="img-fluid" data-aos="fade-up"
+            <img src="@heroJpeg" alt="@L("Qaro2a — books, podcast and publishing", "قروءه — بودكاست وكتب ونشر أدبي")" class="img-fluid" data-aos="fade-up"
                 width="1920" height="1080" decoding="async" fetchpriority="high"
                 style="width:100%;height:auto">
         </picture>
@@ -40,11 +56,22 @@
 </section>
 <!--Hero-->
 
+<section class="home-brand-intro" dir="@(isArabic ? "rtl" : "ltr")" aria-label="@L("Qaro2a brand", "قروءه")">
+    <div class="container site-container text-center py-4 py-md-5">
+        <h1 class="home-brand-title mb-2" data-aos="fade-up">
+            @L("Qaro2a — Books, Podcast & Publishing", "قروءه — بودكاست وكتب ونشر أدبي")
+        </h1>
+        <p class="home-brand-tagline mb-0" data-aos="fade-up" data-aos-delay="150">
+            @L("Your literary hub for Arabic books, podcast episodes, and publishing.", "منصتك الأدبية للكتب العربية وحلقات البودكاست والنشر — قروءه وقروءة في مكان واحد.")
+        </p>
+    </div>
+</section>
+
 <!--New Arrivals-->
 <section id="billboard" class="overflow-hidden">
     <div class="container site-container">
         <div class="row justify-content-center">
-            <h1 class="section-title text-center mt-4" data-aos="fade-up">@L("Top Rated Books", "كتب الأعلى تقييماً")</h1>
+            <h2 class="section-title text-center mt-2" data-aos="fade-up">@L("Top Rated Books", "كتب الأعلى تقييماً")</h2>
             <div class="col-md-6 text-center" data-aos="fade-up" data-aos-delay="300">
                 <p>
                     @L("Every book in our collection is more than just pages-it is a perspective. At Qaro2a, we believe storytelling is the heartbeat of humanity. From curated bestsellers to hidden gems by independent voices, we provide a platform where every narrative finds its home and every reader finds their next adventure.", "كل كتاب في مجموعتنا ليس مجرد صفحات، بل منظور مختلف. في قروءه نؤمن أن السرد هو نبض الإنسانية. من الكتب الأكثر مبيعًا إلى الكنوز المخفية لأصوات مستقلة، نوفر منصة يجد فيها كل سرد موطنه ويجد فيها كل قارئ مغامرته القادمة.")

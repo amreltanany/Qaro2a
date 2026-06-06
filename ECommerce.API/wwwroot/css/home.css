@@ -94,6 +94,31 @@ html[dir="rtl"] .home-about-view-more {
   vertical-align: middle;
 }
 
+.home-brand-intro {
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.home-brand-title {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  line-height: 1.25;
+  font-weight: 700;
+  color: #111;
+}
+
+.home-brand-tagline {
+  max-width: 42rem;
+  margin-inline: auto;
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
+  line-height: 1.65;
+  color: #5c5c5c;
+}
+
+html[dir="rtl"] .home-brand-intro {
+  text-align: center;
+}
+
 #billboard {
   padding-bottom: 0.5rem;
   margin-bottom: 0;
