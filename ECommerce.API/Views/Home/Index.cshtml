@@ -1,4 +1,5 @@
 @model IList<ECommerce.Application.DTOs.Product.ProductResponseDto>
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment Env
 @{
     var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
     var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
@@ -16,14 +17,18 @@
     string Q(string virtualPath, int width, string format, int quality = 82)
         => $"{Url.Content(virtualPath)}?width={width}&format={format}&quality={quality}";
 
-    var heroWebp = Q("~/logo/Gemini_Generated_Image_g5fo4og5fo4og5fo.png", 1920, "webp", 80);
-    var heroJpeg = Q("~/logo/Gemini_Generated_Image_g5fo4og5fo4og5fo.png", 1920, "jpeg", 82);
+    // Hero layers (scroll-3d). Drop hero-bg-ar.webp next to hero-bg.webp to serve an Arabic background.
+    var heroBgPath = "~/images/hero/hero-bg.webp";
+    if (isArabic && System.IO.File.Exists(System.IO.Path.Combine(Env.WebRootPath, "images", "hero", "hero-bg-ar.webp")))
+        heroBgPath = "~/images/hero/hero-bg-ar.webp";
+    var heroBg = Url.Content(heroBgPath);
+    var heroProduct = Url.Content("~/images/hero/hero-product.webp");
     var publishBannerUrl = Q("~/logo/test24.jpg", 1920, "jpeg", 82);
     var aboutBackgroundUrl = Q("~/logo/aboutUsBackgrpound.png", 1600, "jpeg", 78);
 }
 
 @section Head {
-    <link rel="preload" as="image" href="@heroWebp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="@heroBg" type="image/webp" fetchpriority="high" />
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
     <script type="application/ld+json">
     {
@@ -44,14 +49,12 @@
 }
 
 <!--Hero-->
-<section class="overflow-hidden home-hero">
-    <div class="w-100">
-        <picture>
-            <source type="image/webp" srcset="@heroWebp" />
-            <img src="@heroJpeg" alt="@L("Qaro2a — books, podcast and publishing", "قروءه — بودكاست وكتب ونشر أدبي")" class="img-fluid" data-aos="fade-up"
-                width="1920" height="1080" decoding="async" fetchpriority="high"
-                style="width:100%;height:auto">
-        </picture>
+<section class="overflow-hidden home-hero hero3d">
+    <div class="hero3d__stage" id="hero3d">
+        <img class="hero3d__bg" src="@heroBg" alt="@L("Qaro2a — books, podcast and publishing", "قروءه — بودكاست وكتب ونشر أدبي")"
+            width="1897" height="995" decoding="async" fetchpriority="high">
+        <img class="hero3d__product" src="@heroProduct" alt="" aria-hidden="true"
+            width="980" height="430" decoding="async">
     </div>
 </section>
 <!--Hero-->
@@ -224,6 +227,7 @@
 
 @section Scripts {
     <script src="~/js/arrow-divider.js" defer asp-append-version="true"></script>
+    <script src="~/js/hero-3d.js" defer asp-append-version="true"></script>
     <script>
         window.addEventListener('load', function () {
             var swiperEl = document.querySelector('.main-swiper');

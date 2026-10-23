@@ -36,15 +36,5 @@
               scrollTrigger: { trigger: el, start: 'top 85%', once: true } });
     });
 
-    // Gentle scrubbed parallax on the hero image.
-    // Animate the wrapper, not the <img>: the image already carries AOS (data-aos) transforms.
-    var heroImg = document.querySelector('.home-hero > .w-100');
-    if (heroImg) {
-        gsap.fromTo(heroImg,
-            { scale: 1.06, yPercent: 0 },
-            { scale: 1.06, yPercent: 2.8, ease: 'none',
-              scrollTrigger: { trigger: '.home-hero', start: 'top top', end: 'bottom top', scrub: true } });
-    }
-
     window.addEventListener('load', function () { ScrollTrigger.refresh(); });
 })();
