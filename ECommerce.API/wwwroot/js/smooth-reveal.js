@@ -13,16 +13,16 @@
         requestAnimationFrame(raf);
     }
 
-    // Keep scroll locked while the home preloader is on screen.
-    var preloader = document.querySelector('.preloader');
-    if (lenis && preloader && !preloader.classList.contains('loaded')) {
+    // Keep smooth scroll stopped while the home intro loader (html.loading) is on screen.
+    var root = document.documentElement;
+    if (lenis && root.classList.contains('loading')) {
         lenis.stop();
         new MutationObserver(function (_, obs) {
-            if (preloader.classList.contains('loaded')) {
-                if (!document.documentElement.classList.contains('sh-lock')) lenis.start();
+            if (!root.classList.contains('loading')) {
+                if (!root.classList.contains('sh-lock')) lenis.start();
                 obs.disconnect();
             }
-        }).observe(preloader, { attributes: true, attributeFilter: ['class'] });
+        }).observe(root, { attributes: true, attributeFilter: ['class'] });
     }
 
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
