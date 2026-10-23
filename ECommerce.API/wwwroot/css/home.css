@@ -351,6 +351,6 @@ html.reduce-motion .arrow path {
   top: 32.57%;
   width: 51.66%;
   height: auto;
-  transform-origin: 50% 100%;
+  transform-origin: 50% 69.37%; /* floor contact line, above the baked reflection */
   transform: translate3d(0, var(--y, 0px), 0) scale(var(--s, 1));
 }
