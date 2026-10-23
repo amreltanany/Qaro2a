@@ -128,6 +128,13 @@
 </section>
 <!--publish-->
 
+<div class="arrow" aria-hidden="true">
+  <svg viewBox="0 0 357 268" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path class="tip" pathLength="1000" d="M4.10686 244.355C6.01943 245.128 7.40235 246.589 8.85801 247.978C13.6383 252.54 17.313 258.941 17.6124 265.599C19.6026 258.667 24.5722 250.344 32.0167 248.371"/>
+    <path class="line" pathLength="1000" d="M355.377 2.00001C355.377 102.685 321.875 149.594 226.369 161.434C185.004 166.562 18.6108 161.434 18.6108 262"/>
+  </svg>
+</div>
+
 <!--broadcast-aboutUs-->
 <section class="home-about-section home-page-end" style="--about-bg: url('@aboutBackgroundUrl');">
     <div class="container site-container">
@@ -139,7 +146,7 @@
             </div>
             <div class="col-12 col-lg-6 order-1 order-lg-2 home-about-media">
                 <div class="ratio ratio-16x9 home-about-video shadow-sm">
-                    <iframe src="https://www.youtube-nocookie.com/embed/p-fTWfd85cU?rel=0"
+                    <iframe src="https://www.youtube-nocookie.com/embed/RHT52TyjWWI?rel=0&amp;controls=0"
                         title="YouTube video player" loading="lazy"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -216,6 +223,7 @@
 </section>
 
 @section Scripts {
+    <script src="~/js/arrow-divider.js" defer asp-append-version="true"></script>
     <script>
         window.addEventListener('load', function () {
             var swiperEl = document.querySelector('.main-swiper');
