@@ -1,8 +1,10 @@
-/* Site typography — requires Google Fonts in _Layout (Cairo + Playfair Display) */
+/* Site typography — requires Google Fonts in _Layout (Cairo + Noto Serif Arabic + Playfair Display) */
 
 html {
   --font-english: "Playfair Display", Georgia, "Times New Roman", serif;
   --font-arabic: "Cairo", "Segoe UI", Tahoma, sans-serif;
+  /* Display face for Arabic headings (free serif display; the licensed Thmanyah files must not be hosted) */
+  --font-arabic-display: "Noto Serif Arabic", "Cairo", "Segoe UI", Tahoma, serif;
 }
 
 html[lang="en"] {
@@ -38,4 +40,11 @@ p, li, a, span, label {
 [class^="bi-"]::before,
 [class*=" bi-"]::before {
   font-family: bootstrap-icons !important;
+}
+
+/* Arabic display headings */
+html[lang="ar"] :is(h1, h2, h3, .h1, .h2, .h3, .section-title, .home-brand-title, .home-about-title, .footer-heading) {
+  font-family: var(--font-arabic-display);
+  font-weight: 700;
+  letter-spacing: 0;
 }
