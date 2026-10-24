@@ -12,7 +12,8 @@ public class CategoryRepository : ICategoryRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Category>> GetAllAsync() => await _context.Categories.Include(c => c.Products).ToListAsync();
+    // List only: categories without their products (a catalogue of thousands of products must not be loaded here).
+    public async Task<IEnumerable<Category>> GetAllAsync() => await _context.Categories.AsNoTracking().ToListAsync();
 
     public async Task<Category?> GetByIdAsync(int id) => await _context.Categories.Include(c => c.Products).FirstOrDefaultAsync(c => c.Id == id);
 

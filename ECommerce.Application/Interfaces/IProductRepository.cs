@@ -1,4 +1,5 @@
 using ECommerce.Domain.Entities;
+using ECommerce.Application.DTOs.Product;
 using ECommerce.Application.DTOs.Query;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace ECommerce.Application.Interfaces
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> GetAllAsync(QueryParameters queryParameters);
+        Task<IReadOnlyList<ProductResponseDto>> GetListAsync(QueryParameters queryParameters);
         Task<Product?> GetByIdAsync(int id);
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);

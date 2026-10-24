@@ -1,4 +1,5 @@
 using ECommerce.Application.Interfaces; // inherit interface
+using ECommerce.Application.DTOs.Product;
 using ECommerce.Application.DTOs.Query;
 using ECommerce.Domain.Entities;        // uses the entity product
 using ECommerce.Infrastructure.Persistence; // inject the DbContext
@@ -19,11 +20,12 @@ namespace ECommerce.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Product>> GetAllAsync(QueryParameters queryParameters)
+        // Paged, filtered and sorted list, projected straight to the response DTO: only the columns
+        // the pages need are read, and no entities are materialised or tracked.
+        public async Task<IReadOnlyList<ProductResponseDto>> GetListAsync(QueryParameters queryParameters)
         {
             var query = _context.Products
                 .AsNoTracking()
-                .Include(p => p.Category)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(queryParameters.Search))
@@ -35,7 +37,7 @@ namespace ECommerce.Infrastructure.Repositories
                     ? query.Where(p =>
                         p.Name.Contains(search) ||
                         p.Author.Contains(search) ||
-                        p.PublishDate.Date == searchDate.Value)
+                        (p.PublishDate >= searchDate.Value && p.PublishDate < searchDate.Value.AddDays(1)))
                     : query.Where(p =>
                         p.Name.Contains(search) ||
                         p.Author.Contains(search));
@@ -44,7 +46,7 @@ namespace ECommerce.Infrastructure.Repositories
             if (queryParameters.PublishDate.HasValue)
             {
                 var date = queryParameters.PublishDate.Value.Date;
-                query = query.Where(p => p.PublishDate.Date == date);
+                query = query.Where(p => p.PublishDate >= date && p.PublishDate < date.AddDays(1));
             }
 
             if (!string.IsNullOrWhiteSpace(queryParameters.Author))
@@ -81,6 +83,20 @@ namespace ECommerce.Infrastructure.Repositories
             return await query
                 .Skip((queryParameters.PageNumber - 1) * queryParameters.PageSize)
                 .Take(queryParameters.PageSize)
+                .Select(p => new ProductResponseDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Stock = p.Stock,
+                    ImageUrl = p.ImageUrl,
+                    Description = p.Description,
+                    CategoryId = p.CategoryId,
+                    CategoryName = p.Category != null ? p.Category.Name : string.Empty,
+                    PublishDate = p.PublishDate,
+                    Author = p.Author,
+                    TopRated = p.TopRated
+                })
                 .ToListAsync();
         }
 

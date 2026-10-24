@@ -33,6 +33,13 @@ public class AppDbContext : IdentityDbContext<User>
          .Property(p => p.Price)
          .HasPrecision(18, 2);
 
+        // Catalogue indexes: default sort, category and top-rated listings, price and date filters.
+        modelBuilder.Entity<Product>().HasIndex(p => p.CreatedAt).IsDescending();
+        modelBuilder.Entity<Product>().HasIndex(p => new { p.CategoryId, p.CreatedAt });
+        modelBuilder.Entity<Product>().HasIndex(p => new { p.TopRated, p.CreatedAt });
+        modelBuilder.Entity<Product>().HasIndex(p => p.Price);
+        modelBuilder.Entity<Product>().HasIndex(p => p.PublishDate);
+
         modelBuilder.Entity<OrderItem>()
             .Property(oi => oi.Price)
             .HasPrecision(18, 2);
