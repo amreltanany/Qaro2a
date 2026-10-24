@@ -79,7 +79,7 @@ namespace ECommerce.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 6, 3, 19, 21, 29, 627, DateTimeKind.Utc).AddTicks(988),
+                            CreatedAt = new DateTime(2026, 10, 24, 4, 22, 51, 716, DateTimeKind.Utc).AddTicks(3332),
                             Name = "Electronics"
                         });
                 });
@@ -230,7 +230,16 @@ namespace ECommerce.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CreatedAt")
+                        .IsDescending();
+
+                    b.HasIndex("Price");
+
+                    b.HasIndex("PublishDate");
+
+                    b.HasIndex("CategoryId", "CreatedAt");
+
+                    b.HasIndex("TopRated", "CreatedAt");
 
                     b.ToTable("Products");
 
@@ -240,7 +249,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Id = 1,
                             Author = "System",
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 6, 3, 19, 21, 29, 627, DateTimeKind.Utc).AddTicks(1107),
+                            CreatedAt = new DateTime(2026, 10, 24, 4, 22, 51, 716, DateTimeKind.Utc).AddTicks(3426),
                             Description = "Product Description",
                             Name = "product",
                             Price = 10.99m,

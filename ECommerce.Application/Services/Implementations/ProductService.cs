@@ -31,9 +31,7 @@ namespace ECommerce.Application.Services.Implementations
 
         public async Task<IEnumerable<ProductResponseDto>> GetAllAsync(QueryParameters queryParams)
         {
-            var products = await _productRepository.GetAllAsync(queryParams);
-
-            return _mapper.Map<IEnumerable<ProductResponseDto>>(products);
+            return await _productRepository.GetListAsync(queryParams);
         }
 
         public async Task<ProductResponseDto> GetByIdAsync(int id)
