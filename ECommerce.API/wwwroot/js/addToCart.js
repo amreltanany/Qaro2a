@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
             if (btn.classList.contains('button') && !btn.classList.contains('loading')) {
                 btn.classList.add('loading');
                 setTimeout(() => btn.classList.remove('loading'), 3700);
+            } else if (btn.classList.contains('shop-cart-round')) {
+                btn.classList.add('is-added');
+                setTimeout(() => btn.classList.remove('is-added'), 1600);
             }
 
             // 2. Add to Cart Logic
