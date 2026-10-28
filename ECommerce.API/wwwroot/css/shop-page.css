@@ -975,3 +975,59 @@ html[dir="rtl"] .shop-filter-form .form-select {
     padding-left: 2.1rem;
     padding-right: 0.75rem;
 }
+
+/* ---------- add to cart: a round cart icon that grows into the full button on hover ---------- */
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate {
+    position: relative;
+    width: 46px !important;
+    min-width: 46px !important;
+    height: 46px;
+    min-height: 46px !important;
+    padding: 0 !important;
+    flex: 0 0 auto;
+    transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1), min-width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.25s ease, color 0.25s ease, transform 0.4s cubic-bezier(0.36, 1.01, 0.32, 1.27);
+}
+
+.shop-products-row .product-card .shop-cart-idle {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    line-height: 1;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.3s ease;
+}
+
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate span.shop-cart-label {
+    opacity: 0;
+    white-space: nowrap;
+    transition: opacity 0.2s ease, transform 0.7s ease;
+}
+
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:hover,
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:focus-visible,
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate.loading {
+    width: 9.25rem !important;
+    min-width: 9.25rem !important;
+}
+
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:hover .shop-cart-idle,
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:focus-visible .shop-cart-idle,
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate.loading .shop-cart-idle {
+    opacity: 0;
+    transform: scale(0.6);
+}
+
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:hover span.shop-cart-label,
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:focus-visible span.shop-cart-label,
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate.loading span.shop-cart-label {
+    opacity: 1;
+    transition: opacity 0.25s ease 0.15s, transform 0.7s ease;
+}
+
+/* let long category / author names breathe before truncating */
+.product-card .shop-card-author-chip { flex: 0 1 auto; max-width: 52%; }
+.product-card .shop-card-category-chip { flex: 0 1 auto; max-width: 48%; }

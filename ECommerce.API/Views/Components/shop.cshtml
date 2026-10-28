@@ -24,6 +24,8 @@
     var minPriceValue = ViewBag.MinPrice;
     var maxPriceValue = ViewBag.MaxPrice;
     var selectedCategoryId = ViewBag.CategoryId as int?;
+    var categoryTitle = (!isSearch && string.IsNullOrWhiteSpace(authorValue) && selectedCategoryId.HasValue) ? categories.FirstOrDefault(c => c.Id == selectedCategoryId.Value)?.Name : null;
+    var isCategoryPage = !string.IsNullOrWhiteSpace(categoryTitle);
     var isAuthorPage = !string.IsNullOrWhiteSpace(authorValue) && string.IsNullOrWhiteSpace(searchTerm);
     var hasActiveFilters = !string.IsNullOrWhiteSpace(publishDateValue)
         || !string.IsNullOrWhiteSpace(authorValue)
@@ -40,7 +42,7 @@
 <section id="billboard">
     <div class="container">
         <div class="row justify-content-center shop-search-header">
-            <h1 class="section-title text-center mt-4" data-aos="fade-up">@(isSearch ? L("Search results", "نتائج البحث") : (isAuthorPage ? authorValue : L("Shop", "المتجر")))</h1>
+            <h1 class="section-title text-center mt-4" data-aos="fade-up">@(isSearch ? L("Search results", "نتائج البحث") : (isAuthorPage ? authorValue : (isCategoryPage ? categoryTitle : L("Shop", "المتجر"))))</h1>
             <div class="col-md-6 text-center" data-aos="fade-up" data-aos-delay="300">
                 @if (isSearch)
                 {
@@ -51,9 +53,9 @@
                         </a>
                     </div>
                 }
-                else if (isAuthorPage)
+                else if (isAuthorPage || isCategoryPage)
                 {
-                    <p class="shop-author-sub">@L("Books by the author", "كتب المؤلف") <span>·</span> @Model.Count @L("book(s)", "كتاب")</p>
+                    <p class="shop-author-sub">@(isAuthorPage ? L("Books by the author", "كتب المؤلف") : L("Category", "القسم")) <span>·</span> @Model.Count @L("book(s)", "كتاب")</p>
                     <div class="shop-back-wrapper">
                         <a href="/Home/Shop" class="btn btn-outline-secondary btn-sm">
                             <i class="bi bi-arrow-@(isArabic ? "right" : "left") me-1"></i>@L("All books", "كل الكتب")
@@ -219,7 +221,7 @@
                                                 <a href="/Home/Author/@Uri.EscapeDataString(product.Author.Trim().Replace(" ", "-"))" class="shop-card-author-chip">@product.Author</a>
                                                 @if (!string.IsNullOrWhiteSpace(product.CategoryName))
                                                 {
-                                                    <a href="/Home/Shop?categoryId=@product.CategoryId" class="shop-card-category-chip">@product.CategoryName</a>
+                                                    <a href="/Home/Category/@Uri.EscapeDataString(product.CategoryName.Trim().Replace(" ", "-"))" class="shop-card-category-chip">@product.CategoryName</a>
                                                 }
                                             </div>
                                         </div>
@@ -227,7 +229,9 @@
                                             <p class="shop-card-price mb-0" dir="ltr">@product.Price.ToString("N0") <span class="shop-card-currency">EGP</span></p>
                                             @if (product.Stock > 0)
                                             {
-                                                <button type="button" class="button btn-add-cart shop-cart-animate" data-product-id="@product.Id" data-product-name="@product.Name">
+                                                <button type="button" class="button btn-add-cart shop-cart-animate" data-product-id="@product.Id" data-product-name="@product.Name"
+                                                        title="@L("Add to cart", "أضف إلى السلة")" aria-label="@L("Add to cart", "أضف إلى السلة")">
+                                                    <i class="bi bi-cart3 shop-cart-idle" aria-hidden="true"></i>
                                                     <span class="shop-cart-label">
                                                         <i class="bi bi-plus-lg shop-cart-plus-icon" aria-hidden="true"></i>
                                                         @L("Add to cart", "أضف إلى السلة")

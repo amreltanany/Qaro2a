@@ -98,6 +98,17 @@ public class HomeController : Controller
         return Shop(author: author);
     }
 
+    // /Home/Category/جريمة-وغموض-وإثارة  (spaces are written as hyphens in the URL)
+    [HttpGet("Home/Category/{name}")]
+    public async Task<IActionResult> Category(string name)
+    {
+        var slug = Uri.UnescapeDataString(name ?? string.Empty).Trim();
+        var category = (await _categoryService.GetAllCategoriesAsync())
+            .FirstOrDefault(c => c.Name.Trim().Replace(' ', '-') == slug || c.Name.Trim() == slug);
+        if (category == null) return NotFound();
+        return await Shop(categoryId: category.Id);
+    }
+
     [HttpGet("Home/Product/{id:int}")]
     public async Task<IActionResult> Product(int id)
     {
