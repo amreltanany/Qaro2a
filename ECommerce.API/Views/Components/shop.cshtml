@@ -203,7 +203,7 @@
                                                 data-product-id="@product.Id" data-product-name="@product.Name">
                                             <i class="bi bi-heart"></i>
                                         </button>
-                                        <a href="/Home/Product/@product.Id" class="shop-card-cover-link" aria-label="@product.Name"><img src="@cardImg" alt="@product.Name" class="img-fluid" loading="lazy" decoding="async" /></a>
+                                        <a href="@ECommerce.API.Helpers.SlugHelper.ProductPath(product.Id, product.Name)" class="shop-card-cover-link" aria-label="@product.Name"><img src="@cardImg" alt="@product.Name" class="img-fluid" loading="lazy" decoding="async" /></a>
                                         @if (!string.IsNullOrWhiteSpace(product.Description))
                                         {
                                             <div class="shop-card-peek" dir="rtl" aria-hidden="true">
@@ -214,7 +214,7 @@
                                     <div class="banner-content shop-card-body">
                                         <div class="shop-card-text" dir="rtl">
                                             <h5 class="element-title">
-                                                <a class="item-anchor shop-card-title-link" href="/Home/Product/@product.Id">@product.Name</a>
+                                                <a class="item-anchor shop-card-title-link" href="@ECommerce.API.Helpers.SlugHelper.ProductPath(product.Id, product.Name)">@product.Name</a>
                                             </h5>
                                             <p class="shop-card-description">@product.Description</p>
                                             <div class="shop-card-meta">

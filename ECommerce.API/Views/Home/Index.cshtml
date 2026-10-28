@@ -100,7 +100,7 @@
                         <div class="swiper-slide">
                             <div class="banner-item image-zoom-effect">
                                 <div class="image-holder">
-                                    <a href="/Home/Product/@product.Id">
+                                    <a href="@ECommerce.API.Helpers.SlugHelper.ProductPath(product.Id, product.Name)">
                                         <img src="@productSrc"
                                             alt="@product.Name" class="img-fluid" loading="lazy" decoding="async"
                                             width="400" height="300"
@@ -109,7 +109,7 @@
                                 </div>
                                 <div class="banner-content home-book-caption py-4 px-2 px-md-3" dir="rtl">
                                     <h5 class="element-title">
-                                        <a href="/Home/Product/@product.Id" class="item-anchor">@product.Name</a>
+                                        <a href="@ECommerce.API.Helpers.SlugHelper.ProductPath(product.Id, product.Name)" class="item-anchor">@product.Name</a>
                                     </h5>
                                     <p class="home-book-description mb-0">@product.Description</p>
                                     <div class="btn-left">

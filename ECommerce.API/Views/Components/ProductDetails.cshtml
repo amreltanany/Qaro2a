@@ -125,7 +125,7 @@
                 <div class="pd__related-grid">
                     @foreach (var r in related)
                     {
-                        <a class="pd__rel" href="/Home/Product/@r.Id">
+                        <a class="pd__rel" href="@ECommerce.API.Helpers.SlugHelper.ProductPath(r.Id, r.Name)">
                             <span class="pd__rel-img"><img src="@Url.Content(r.ImageUrl ?? "~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png")" alt="@r.Name" loading="lazy" decoding="async" /></span>
                             <span class="pd__rel-name">@r.Name</span>
                             <span class="pd__rel-price" dir="ltr">@r.Price.ToString("N0") EGP</span>

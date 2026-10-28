@@ -109,11 +109,17 @@ public class HomeController : Controller
         return await Shop(categoryId: category.Id);
     }
 
-    [HttpGet("Home/Product/{id:int}")]
-    public async Task<IActionResult> Product(int id)
+    [HttpGet("Home/Product/{id:int}/{slug?}")]
+    public async Task<IActionResult> Product(int id, string? slug = null)
     {
         var product = await _productService.GetByIdAsync(id);
         if (product == null) return NotFound();
+
+        // canonical URL: /Home/Product/{id}/{name-with-hyphens}
+        var canonical = ECommerce.API.Helpers.SlugHelper.ProductPath(product.Id, product.Name);
+        var wanted = ECommerce.API.Helpers.SlugHelper.Slug(product.Name);
+        if (!string.Equals(slug ?? string.Empty, wanted, StringComparison.Ordinal))
+            return RedirectPermanent(canonical + Request.QueryString);
 
         var related = (await _productService.GetAllAsync(new QueryParameters
         {
