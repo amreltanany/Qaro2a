@@ -95,7 +95,10 @@ namespace ECommerce.Infrastructure.Repositories
                     CategoryName = p.Category != null ? p.Category.Name : string.Empty,
                     PublishDate = p.PublishDate,
                     Author = p.Author,
-                    TopRated = p.TopRated
+                    TopRated = p.TopRated,
+                    Isbn = p.Isbn,
+                    Pages = p.Pages,
+                    Size = p.Size
                 })
                 .ToListAsync();
         }

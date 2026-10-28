@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (btn.classList.contains('button') && !btn.classList.contains('loading')) {
                 btn.classList.add('loading');
                 setTimeout(() => btn.classList.remove('loading'), 3700);
-            } else if (btn.classList.contains('shop-cart-round')) {
+            } else if (btn.classList.contains('shop-cart-round') || btn.classList.contains('pd__cta')) {
                 btn.classList.add('is-added');
                 setTimeout(() => btn.classList.remove('is-added'), 1600);
             }
@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function () {
             // 2. Add to Cart Logic
             var productId = parseInt(this.getAttribute('data-product-id'), 10);
             var productName = this.getAttribute('data-product-name');
+            var qtySel = this.getAttribute('data-qty-input');
+            var qtyEl = qtySel ? document.querySelector(qtySel) : null;
+            var qty = qtyEl ? Math.max(1, parseInt(qtyEl.value, 10) || 1) : 1;
             var userId = (typeof localStorage !== 'undefined' && localStorage.getItem('userId')) ||
                 (document.querySelector('meta[name="user-id"]') && document.querySelector('meta[name="user-id"]').getAttribute('content')) || 'guest';
 
@@ -32,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token
                 },
-                body: JSON.stringify({ productId: productId, quantity: 1 })
+                body: JSON.stringify({ productId: productId, quantity: qty })
             })
                 .then(function (res) {
                     if (!res.ok) {

@@ -77,6 +77,8 @@ public class HomeController : Controller
             CategoryId = categoryId
         };
         var products = (await _productService.GetAllAsync(query)).ToList();
+        var priciest = (await _productService.GetAllAsync(new QueryParameters { PageNumber = 1, PageSize = 1, SortBy = "price_desc" })).FirstOrDefault();
+        ViewBag.PriceCeil = priciest == null ? 1000 : (int)(Math.Ceiling(priciest.Price / 50m) * 50m);
         ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
         ViewBag.Search = query.Search;
         ViewBag.SortBy = query.SortBy;
@@ -88,6 +90,31 @@ public class HomeController : Controller
         return View("/Views/Components/Shop.cshtml", products);
     }
   
+    // /Home/Author/طاهرة-مافي  (spaces are written as hyphens in the URL)
+    [HttpGet("Home/Author/{name}")]
+    public Task<IActionResult> Author(string name)
+    {
+        var author = Uri.UnescapeDataString(name ?? string.Empty).Replace('-', ' ').Trim();
+        return Shop(author: author);
+    }
+
+    [HttpGet("Home/Product/{id:int}")]
+    public async Task<IActionResult> Product(int id)
+    {
+        var product = await _productService.GetByIdAsync(id);
+        if (product == null) return NotFound();
+
+        var related = (await _productService.GetAllAsync(new QueryParameters
+        {
+            PageNumber = 1,
+            PageSize = 5,
+            CategoryId = product.CategoryId
+        })).Where(p => p.Id != product.Id).Take(4).ToList();
+
+        ViewBag.Related = related;
+        return View("/Views/Components/ProductDetails.cshtml", product);
+    }
+
     public IActionResult Publish()
     {
         return RedirectToAction("Index", "Publish");

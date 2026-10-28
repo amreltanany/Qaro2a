@@ -20,6 +20,9 @@ namespace ECommerce.Application.DTOs.Product
             public DateTime PublishDate { get; set; }
             public string Author { get; set; } = string.Empty;
             public bool TopRated { get; set; }
+            public string? Isbn { get; set; }
+            public int? Pages { get; set; }
+            public string? Size { get; set; }
         }
     
 }

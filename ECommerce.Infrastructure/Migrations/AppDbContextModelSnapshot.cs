@@ -79,7 +79,7 @@ namespace ECommerce.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 10, 24, 4, 22, 51, 716, DateTimeKind.Utc).AddTicks(3332),
+                            CreatedAt = new DateTime(2026, 10, 28, 16, 54, 41, 565, DateTimeKind.Utc).AddTicks(4150),
                             Name = "Electronics"
                         });
                 });
@@ -211,9 +211,15 @@ namespace ECommerce.Infrastructure.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Isbn")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Pages")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasPrecision(18, 2)
@@ -221,6 +227,9 @@ namespace ECommerce.Infrastructure.Migrations
 
                     b.Property<DateTime>("PublishDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Size")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
@@ -249,7 +258,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Id = 1,
                             Author = "System",
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 10, 24, 4, 22, 51, 716, DateTimeKind.Utc).AddTicks(3426),
+                            CreatedAt = new DateTime(2026, 10, 28, 16, 54, 41, 565, DateTimeKind.Utc).AddTicks(4200),
                             Description = "Product Description",
                             Name = "product",
                             Price = 10.99m,

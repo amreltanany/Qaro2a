@@ -18,6 +18,11 @@ namespace ECommerce.Domain.Entities
         public bool TopRated { get; private set; }
 
         public string? ImageUrl { get; set; }
+
+        // Book details shown on the product page
+        public string? Isbn { get; set; }
+        public int? Pages { get; set; }
+        public string? Size { get; set; }
         public string Description { get; private set; }
 
         //CategoryId → foreign key, simple integer to link to Category in the database

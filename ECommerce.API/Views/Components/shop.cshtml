@@ -24,6 +24,7 @@
     var minPriceValue = ViewBag.MinPrice;
     var maxPriceValue = ViewBag.MaxPrice;
     var selectedCategoryId = ViewBag.CategoryId as int?;
+    var isAuthorPage = !string.IsNullOrWhiteSpace(authorValue) && string.IsNullOrWhiteSpace(searchTerm);
     var hasActiveFilters = !string.IsNullOrWhiteSpace(publishDateValue)
         || !string.IsNullOrWhiteSpace(authorValue)
         || minPriceValue != null
@@ -39,7 +40,7 @@
 <section id="billboard">
     <div class="container">
         <div class="row justify-content-center shop-search-header">
-            <h1 class="section-title text-center mt-4" data-aos="fade-up">@(isSearch ? L("Search results", "نتائج البحث") : L("Shop", "المتجر"))</h1>
+            <h1 class="section-title text-center mt-4" data-aos="fade-up">@(isSearch ? L("Search results", "نتائج البحث") : (isAuthorPage ? authorValue : L("Shop", "المتجر")))</h1>
             <div class="col-md-6 text-center" data-aos="fade-up" data-aos-delay="300">
                 @if (isSearch)
                 {
@@ -47,6 +48,15 @@
                     <div class="shop-back-wrapper">
                         <a href="/Home/Shop" class="btn btn-outline-secondary btn-sm">
                             <i class="bi bi-arrow-left me-1"></i>@L("Back to Shop", "العودة إلى المتجر")
+                        </a>
+                    </div>
+                }
+                else if (isAuthorPage)
+                {
+                    <p class="shop-author-sub">@L("Books by the author", "كتب المؤلف") <span>·</span> @Model.Count @L("book(s)", "كتاب")</p>
+                    <div class="shop-back-wrapper">
+                        <a href="/Home/Shop" class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-arrow-@(isArabic ? "right" : "left") me-1"></i>@L("All books", "كل الكتب")
                         </a>
                     </div>
                 }
@@ -62,18 +72,18 @@
     <div class="container-fluid px-3 px-lg-4">
         <div class="row g-4 py-3 align-items-start">
             <aside class="col-12 col-lg-3 col-xl-2">
-                <div class="card p-3 sticky-top shop-filter-sidebar" style="top: 90px;">
-                    <button class="shop-filter-toggle d-lg-none w-100 d-flex align-items-center justify-content-between border-0 bg-transparent p-0 mb-0"
+                <div class="card shop-filter-sidebar sticky-top" style="top: 100px;">
+                    <button class="shop-filter-toggle w-100 d-flex align-items-center justify-content-between border-0 bg-transparent p-0 mb-0"
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#shopFilterCollapse"
-                            aria-expanded="@(hasActiveFilters ? "true" : "false")"
+                            aria-expanded="false"
                             aria-controls="shopFilterCollapse">
                         <h5 class="mb-0">@L("Filters", "الفلاتر")</h5>
+                        <span class="shop-filter-toggle__icon" aria-hidden="true"><i class="bi bi-sliders"></i></span>
                         <i class="bi bi-chevron-down shop-filter-chevron" aria-hidden="true"></i>
                     </button>
-                    <h5 class="mb-3 shop-filter-title-desktop d-none d-lg-block">@L("Filters", "الفلاتر")</h5>
-                    <div class="collapse shop-filter-collapse @(hasActiveFilters ? "show" : "")" id="shopFilterCollapse">
+                    <div class="collapse shop-filter-collapse" id="shopFilterCollapse">
                     <div class="shop-filter-collapse-inner">
                     <form method="get" action="/Home/Shop" class="d-grid gap-3 shop-filter-form">
                         <input type="hidden" name="s" value="@searchTerm" />
@@ -90,9 +100,23 @@
 
                         <div>
                             <label class="form-label">@L("Price Range", "نطاق السعر")</label>
-                            <div class="d-flex gap-2">
-                                <input type="number" class="form-control" name="minPrice" step="0.01" min="0" value="@minPriceValue" aria-label="@L("Minimum price", "الحد الأدنى")" />
-                                <input type="number" class="form-control" name="maxPrice" step="0.01" min="0" value="@maxPriceValue" aria-label="@L("Maximum price", "الحد الأقصى")" />
+                            @{
+                                int priceCeil = ViewBag.PriceCeil is int pc && pc > 0 ? pc : 1000;
+                                int priceLo = minPriceValue != null ? (int)Math.Max(0, Math.Min((decimal)minPriceValue, priceCeil)) : 0;
+                                int priceHi = maxPriceValue != null ? (int)Math.Max(0, Math.Min((decimal)maxPriceValue, priceCeil)) : priceCeil;
+                            }
+                            <div class="price-range" data-min="0" data-max="@priceCeil" dir="ltr">
+                                <div class="price-range__values">
+                                    <span><b id="priceLoLabel">@priceLo</b> EGP</span>
+                                    <span><b id="priceHiLabel">@priceHi</b> EGP</span>
+                                </div>
+                                <div class="price-range__track">
+                                    <div class="price-range__fill" id="priceFill"></div>
+                                    <input type="range" id="priceLo" min="0" max="@priceCeil" step="5" value="@priceLo" aria-label="@L("Minimum price", "الحد الأدنى")" />
+                                    <input type="range" id="priceHi" min="0" max="@priceCeil" step="5" value="@priceHi" aria-label="@L("Maximum price", "الحد الأقصى")" />
+                                </div>
+                                <input type="hidden" name="minPrice" id="priceMinField" value="@(minPriceValue != null ? priceLo.ToString() : "")" />
+                                <input type="hidden" name="maxPrice" id="priceMaxField" value="@(maxPriceValue != null ? priceHi.ToString() : "")" />
                             </div>
                         </div>
 
@@ -129,9 +153,9 @@
                             </select>
                         </div>
 
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary w-100">@L("Apply", "تطبيق")</button>
-                            <a href="/Home/Shop" class="btn btn-outline-secondary w-100">@L("Reset", "إعادة تعيين")</a>
+                        <div class="shop-filter-actions">
+                            <button type="submit" class="btn btn-primary">@L("Apply", "تطبيق")</button>
+                            <a href="/Home/Shop" class="btn btn-outline-secondary">@L("Reset", "إعادة تعيين")</a>
                         </div>
                     </form>
                     </div>
@@ -177,26 +201,43 @@
                                                 data-product-id="@product.Id" data-product-name="@product.Name">
                                             <i class="bi bi-heart"></i>
                                         </button>
-                                        <img src="@cardImg" alt="@product.Name" class="img-fluid" loading="lazy" decoding="async" />
+                                        <a href="/Home/Product/@product.Id" class="shop-card-cover-link" aria-label="@product.Name"><img src="@cardImg" alt="@product.Name" class="img-fluid" loading="lazy" decoding="async" /></a>
+                                        @if (!string.IsNullOrWhiteSpace(product.Description))
+                                        {
+                                            <div class="shop-card-peek" dir="rtl" aria-hidden="true">
+                                                <p>@product.Description</p>
+                                            </div>
+                                        }
                                     </div>
                                     <div class="banner-content shop-card-body">
                                         <div class="shop-card-text" dir="rtl">
                                             <h5 class="element-title">
-                                                <span class="item-anchor" style="cursor: default;">@product.Name</span>
+                                                <a class="item-anchor shop-card-title-link" href="/Home/Product/@product.Id">@product.Name</a>
                                             </h5>
-                                            <p class="shop-card-description" title="@product.Description">@product.Description</p>
-                                            <p class="shop-card-author mb-0">
-                                                <a href="/Home/Shop?author=@Uri.EscapeDataString(product.Author)" class="text-decoration-none">@product.Author</a>
-                                            </p>
+                                            <p class="shop-card-description">@product.Description</p>
+                                            <div class="shop-card-meta">
+                                                <a href="/Home/Author/@Uri.EscapeDataString(product.Author.Trim().Replace(" ", "-"))" class="shop-card-author-chip">@product.Author</a>
+                                                @if (!string.IsNullOrWhiteSpace(product.CategoryName))
+                                                {
+                                                    <a href="/Home/Shop?categoryId=@product.CategoryId" class="shop-card-category-chip">@product.CategoryName</a>
+                                                }
+                                            </div>
                                         </div>
                                         <div class="shop-card-actions @(product.Stock > 0 ? null : "shop-card-actions--out-of-stock")">
                                             <p class="shop-card-price mb-0" dir="ltr">@product.Price.ToString("N0") <span class="shop-card-currency">EGP</span></p>
                                             @if (product.Stock > 0)
                                             {
-                                                <button type="button" class="btn-add-cart shop-cart-round" data-product-id="@product.Id" data-product-name="@product.Name"
-                                                        title="@L("Add to cart", "أضف إلى السلة")" aria-label="@L("Add to cart", "أضف إلى السلة")">
-                                                    <i class="bi bi-cart3 shop-cart-round__cart" aria-hidden="true"></i>
-                                                    <i class="bi bi-check-lg shop-cart-round__check" aria-hidden="true"></i>
+                                                <button type="button" class="button btn-add-cart shop-cart-animate" data-product-id="@product.Id" data-product-name="@product.Name">
+                                                    <span class="shop-cart-label">
+                                                        <i class="bi bi-plus-lg shop-cart-plus-icon" aria-hidden="true"></i>
+                                                        @L("Add to cart", "أضف إلى السلة")
+                                                    </span>
+                                                    <div class="cart">
+                                                        <svg viewBox="0 0 36 26">
+                                                            <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
+                                                            <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
+                                                        </svg>
+                                                    </div>
                                                 </button>
                                             }
                                             else
@@ -217,5 +258,28 @@
     </div>
 </section>
 
+<script>
+    (function () {
+        var lo = document.getElementById('priceLo'), hi = document.getElementById('priceHi');
+        if (!lo || !hi) return;
+        var fill = document.getElementById('priceFill'), loL = document.getElementById('priceLoLabel'), hiL = document.getElementById('priceHiLabel');
+        var fMin = document.getElementById('priceMinField'), fMax = document.getElementById('priceMaxField');
+        var min = +lo.min, max = +lo.max, gap = 5;
+        function sync(source) {
+            var a = +lo.value, b = +hi.value;
+            if (a > b - gap) { if (source === lo) { a = b - gap; lo.value = a; } else { b = a + gap; hi.value = b; } }
+            loL.textContent = a; hiL.textContent = b;
+            var pa = (a - min) / (max - min) * 100, pb = (b - min) / (max - min) * 100;
+            fill.style.left = pa + '%'; fill.style.right = (100 - pb) + '%';
+            // untouched ends are not sent, so the filter only counts when it narrows the range
+            fMin.value = a > min ? a : '';
+            fMax.value = b < max ? b : '';
+            lo.style.zIndex = a > max - 20 ? 5 : 3;
+        }
+        lo.addEventListener('input', function () { sync(lo); });
+        hi.addEventListener('input', function () { sync(hi); });
+        sync();
+    })();
+</script>
 <script src="~/js/addToCart.js"></script>
 <script src="~/js/addToWishlist.js"></script>

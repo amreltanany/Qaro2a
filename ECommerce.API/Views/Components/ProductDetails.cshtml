@@ -1,0 +1,161 @@
+@model ECommerce.Application.DTOs.Product.ProductResponseDto
+@{
+    var isArabic = string.Equals(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    var related = ViewBag.Related as IList<ECommerce.Application.DTOs.Product.ProductResponseDto> ?? new List<ECommerce.Application.DTOs.Product.ProductResponseDto>();
+    var cover = Url.Content(Model.ImageUrl ?? "~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png");
+    var inStock = Model.Stock > 0;
+    var maxQty = Math.Max(1, Math.Min(Model.Stock, 10));
+    var shortText = Model.Description ?? string.Empty;
+    var firstPara = shortText.Replace("\r", "").Split('\n', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? string.Empty;
+    ViewData["Title"] = Model.Name;
+    ViewData["SeoTitle"] = $"{Model.Name} — {Model.Author} | {L("Qaro2a", "قروءه")}";
+    ViewData["MetaDescription"] = firstPara.Length > 160 ? firstPara.Substring(0, 157) + "..." : firstPara;
+    ViewData["OgImage"] = Model.ImageUrl;
+}
+
+<link href="https://cdn.jsdelivr.net/npm/inter-ui@3.11.0/inter.min.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="~/css/product-details.css" asp-append-version="true" />
+
+<section class="pd">
+    <div class="container pd__wrap">
+        <nav class="pd__crumbs" aria-label="breadcrumb">
+            <a asp-controller="Home" asp-action="Index">@L("Home", "الرئيسية")</a>
+            <span>/</span>
+            <a asp-controller="Home" asp-action="Shop">@L("Shop", "المتجر")</a>
+            @if (!string.IsNullOrWhiteSpace(Model.CategoryName))
+            {
+                <span>/</span>
+                <a href="/Home/Shop?categoryId=@Model.CategoryId">@Model.CategoryName</a>
+            }
+        </nav>
+
+        <div class="pd__top">
+            <div class="pd__media">
+                <img src="@cover" alt="@Model.Name" class="pd__cover" width="800" height="1100" decoding="async" fetchpriority="high" />
+            </div>
+
+            <div class="pd__info">
+                @if (!string.IsNullOrWhiteSpace(Model.CategoryName))
+                {
+                    <a class="pd__eyebrow" href="/Home/Shop?categoryId=@Model.CategoryId">@Model.CategoryName</a>
+                }
+                <h1 class="pd__title">@Model.Name</h1>
+                <a class="pd__author" href="/Home/Shop?author=@Uri.EscapeDataString(Model.Author)">@Model.Author</a>
+
+                <p class="pd__price" dir="ltr">@Model.Price.ToString("N0") <span>EGP</span></p>
+
+                @if (!string.IsNullOrWhiteSpace(firstPara))
+                {
+                    <p class="pd__lead">@(firstPara.Length > 220 ? firstPara.Substring(0, 217) + "..." : firstPara)</p>
+                }
+
+                <div class="pd__stock @(inStock ? "pd__stock--in" : "pd__stock--out")">
+                    <i class="bi @(inStock ? "bi-check-circle-fill" : "bi-x-circle-fill")" aria-hidden="true"></i>
+                    @(inStock ? L("In stock", "متوفر") : L("Out of stock", "غير متوفر"))
+                </div>
+
+                @if (inStock)
+                {
+                    <div class="pd__qty-label">@L("Quantity", "الكمية")</div>
+                    <div class="pd__buy">
+                        <div class="pd__qty" data-max="@maxQty">
+                            <button type="button" class="pd__qty-btn" data-qty-step="-1" aria-label="@L("Decrease", "إنقاص")"><i class="bi bi-dash-lg"></i></button>
+                            <input type="number" id="pdQty" value="1" min="1" max="@maxQty" inputmode="numeric" aria-label="@L("Quantity", "الكمية")" />
+                            <button type="button" class="pd__qty-btn" data-qty-step="1" aria-label="@L("Increase", "زيادة")"><i class="bi bi-plus-lg"></i></button>
+                        </div>
+                        <button type="button" class="pd__wish btn-add-wishlist" data-product-id="@Model.Id" data-product-name="@Model.Name" aria-label="@L("Add to wishlist", "إضافة للمفضلة")">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                    <button type="button" class="pd__cta btn-add-cart" data-product-id="@Model.Id" data-product-name="@Model.Name" data-qty-input="#pdQty">
+                        <i class="bi bi-bag-plus" aria-hidden="true"></i>
+                        <span>@L("Add to cart", "أضف إلى السلة")</span>
+                    </button>
+                }
+                else
+                {
+                    <button type="button" class="pd__cta pd__cta--off" disabled>@L("Out of stock", "غير متوفر")</button>
+                }
+            </div>
+        </div>
+
+        <div class="pd__facts">
+            <div class="pd__fact">
+                <i class="bi bi-journal-text" aria-hidden="true"></i>
+                <strong>@(Model.Pages.HasValue ? Model.Pages.Value.ToString("N0") : "—")</strong>
+                <span>@L("Pages", "صفحة")</span>
+            </div>
+            <div class="pd__fact">
+                <i class="bi bi-arrows-fullscreen" aria-hidden="true"></i>
+                <strong dir="ltr">@(string.IsNullOrWhiteSpace(Model.Size) ? "—" : Model.Size)</strong>
+                <span>@L("Size", "المقاس")</span>
+            </div>
+            <div class="pd__fact">
+                <i class="bi bi-calendar3" aria-hidden="true"></i>
+                <strong>@Model.PublishDate.Year</strong>
+                <span>@L("Year", "سنة النشر")</span>
+            </div>
+            <div class="pd__fact">
+                <i class="bi bi-upc-scan" aria-hidden="true"></i>
+                <strong dir="ltr">@(string.IsNullOrWhiteSpace(Model.Isbn) ? "—" : Model.Isbn)</strong>
+                <span>ISBN</span>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <div class="pd__about" dir="rtl">
+                <h2>@L("About the book", "عن الكتاب")</h2>
+                <div class="pd__about-text">
+                    @foreach (var para in Model.Description.Replace("\r", "").Split('\n'))
+                    {
+                        if (string.IsNullOrWhiteSpace(para)) { <br /> }
+                        else { <p>@para</p> }
+                    }
+                </div>
+                <div class="pd__publisher">@L("Publisher", "الناشر"): <strong>@L("Kayan Publishing", "كيان للنشر")</strong></div>
+            </div>
+        }
+
+        @if (related.Count > 0)
+        {
+            <div class="pd__related">
+                <h2>@L("More in this category", "المزيد من نفس القسم")</h2>
+                <div class="pd__related-grid">
+                    @foreach (var r in related)
+                    {
+                        <a class="pd__rel" href="/Home/Product/@r.Id">
+                            <span class="pd__rel-img"><img src="@Url.Content(r.ImageUrl ?? "~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png")" alt="@r.Name" loading="lazy" decoding="async" /></span>
+                            <span class="pd__rel-name">@r.Name</span>
+                            <span class="pd__rel-price" dir="ltr">@r.Price.ToString("N0") EGP</span>
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<script src="~/js/addToCart.js"></script>
+<script src="~/js/addToWishlist.js"></script>
+<script>
+    (function () {
+        var input = document.getElementById('pdQty');
+        if (!input) return;
+        var max = parseInt(input.max, 10) || 1;
+        function clamp() {
+            var v = parseInt(input.value, 10);
+            if (isNaN(v) || v < 1) v = 1;
+            if (v > max) v = max;
+            input.value = v;
+        }
+        document.querySelectorAll('[data-qty-step]').forEach(function (b) {
+            b.addEventListener('click', function () {
+                input.value = (parseInt(input.value, 10) || 1) + parseInt(b.getAttribute('data-qty-step'), 10);
+                clamp();
+            });
+        });
+        input.addEventListener('change', clamp);
+    })();
+</script>
