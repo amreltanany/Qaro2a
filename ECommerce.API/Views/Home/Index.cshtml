@@ -30,6 +30,9 @@
 @section Head {
     <link rel="preload" as="image" href="@heroBg" type="image/webp" fetchpriority="high" />
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/inter-ui@3.11.0/inter.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/button.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/shop-page.css" asp-append-version="true" />
     <script type="application/ld+json">
     {
       "@@context": "https://schema.org",
@@ -85,34 +88,68 @@
             </div>
         </div>
         <div class="row g-0">
-            <div class="swiper main-swiper py-2 py-md-3" data-aos="fade-up" data-aos-delay="600">
-                <div class="swiper-wrapper border-animation-left">
+            <div class="shop-products-row top-rated-slider py-2 py-md-3" data-aos="fade-up" data-aos-delay="600">
+                <div class="top-rated-track">
                     @foreach (var product in Model)
                     {
-                        var rawImg = product.ImageUrl ?? "~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png";
-                        var productSrc = Url.Content(rawImg);
-                        if (!productSrc.StartsWith("http", StringComparison.OrdinalIgnoreCase))
-                        {
-                            var q = productSrc.Contains('?', StringComparison.Ordinal) ? '&' : '?';
-                            productSrc = $"{productSrc}{q}width=720&format=webp&quality=80";
-                        }
-
-                        <div class="swiper-slide">
-                            <div class="banner-item image-zoom-effect">
-                                <div class="image-holder">
-                                    <a href="@ECommerce.API.Helpers.SlugHelper.ProductPath(product.Id, product.Name)">
-                                        <img src="@productSrc"
-                                            alt="@product.Name" class="img-fluid" loading="lazy" decoding="async"
-                                            width="400" height="300"
-                                            style="width: 100%; height: 420px; object-fit: contain; background: #f4f3f0;">
+                        var cardImg = Url.Content(product.ImageUrl ?? "~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png");
+                        var productPath = ECommerce.API.Helpers.SlugHelper.ProductPath(product.Id, product.Name);
+                        <div class="top-rated-item">
+                            <div class="banner-item image-zoom-effect product-card h-100">
+                                <div class="image-holder shop-card-media">
+                                    <span class="shop-card-badge">@L("Top Rated", "الأعلى تقييمًا")</span>
+                                    <button type="button" class="shop-wishlist-btn btn-add-wishlist" title="@L("Add to wishlist", "إضافة للمفضلة")" aria-label="@L("Add to wishlist", "إضافة للمفضلة")"
+                                            data-product-id="@product.Id" data-product-name="@product.Name">
+                                        <i class="bi bi-heart"></i>
+                                    </button>
+                                    <a href="@productPath" class="shop-card-cover-link" aria-label="@product.Name">
+                                        <img src="@cardImg" alt="@product.Name" class="img-fluid" loading="lazy" decoding="async" />
                                     </a>
+                                    @if (!string.IsNullOrWhiteSpace(product.Description))
+                                    {
+                                        <div class="shop-card-peek" dir="rtl" aria-hidden="true">
+                                            <p>@product.Description</p>
+                                        </div>
+                                    }
                                 </div>
-                                <div class="banner-content home-book-caption py-4 px-2 px-md-3" dir="rtl">
-                                    <h5 class="element-title">
-                                        <a href="@ECommerce.API.Helpers.SlugHelper.ProductPath(product.Id, product.Name)" class="item-anchor">@product.Name</a>
-                                    </h5>
-                                    <p class="home-book-description mb-0">@product.Description</p>
-                                    <div class="btn-left">
+                                <div class="banner-content shop-card-body">
+                                    <div class="shop-card-text" dir="rtl">
+                                        <h5 class="element-title">
+                                            <a class="item-anchor shop-card-title-link" href="@productPath">@product.Name</a>
+                                        </h5>
+                                        <p class="shop-card-description">@product.Description</p>
+                                        <div class="shop-card-meta">
+                                            <a href="/Home/Author/@Uri.EscapeDataString(product.Author.Trim().Replace(" ", "-"))" class="shop-card-author-chip">@product.Author</a>
+                                            @if (!string.IsNullOrWhiteSpace(product.CategoryName))
+                                            {
+                                                <a href="/Home/Category/@Uri.EscapeDataString(product.CategoryName.Trim().Replace(" ", "-"))" class="shop-card-category-chip">@product.CategoryName</a>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="shop-card-actions @(product.Stock > 0 ? null : "shop-card-actions--out-of-stock")">
+                                        <p class="shop-card-price mb-0" dir="ltr">@product.Price.ToString("N0") <span class="shop-card-currency">EGP</span></p>
+                                        @if (product.Stock > 0)
+                                        {
+                                            <button type="button" class="button btn-add-cart shop-cart-animate" data-product-id="@product.Id" data-product-name="@product.Name" aria-label="@L("Add to cart", "أضف إلى السلة")">
+                                                <i class="bi bi-cart3 shop-cart-idle" aria-hidden="true"></i>
+                                                <span class="shop-cart-label">
+                                                    <i class="bi bi-plus-lg shop-cart-plus-icon" aria-hidden="true"></i>
+                                                    @L("Add to cart", "أضف إلى السلة")
+                                                </span>
+                                                <div class="cart">
+                                                    <svg viewBox="0 0 36 26">
+                                                        <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
+                                                        <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
+                                                    </svg>
+                                                </div>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="shop-out-of-stock-btn" disabled>
+                                                <span>@L("Out of stock", "غير متوفر")</span>
+                                            </button>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -232,30 +269,23 @@
     <script src="~/js/arrow-divider.js" defer asp-append-version="true"></script>
     <script src="~/js/hero-3d.js" defer asp-append-version="true"></script>
     <script>
-        // Top-rated books: smooth auto slide every 1.3s, paused while the mouse is over the slider.
-        window.addEventListener('load', function () {
-            var el = document.querySelector('.main-swiper');
-            if (!el || typeof Swiper === 'undefined') return;
-            if (el.swiper) el.swiper.destroy(true, true);
-            var count = el.querySelectorAll('.swiper-slide').length;
-            var s = new Swiper(el, {
-                slidesPerView: 1,
-                spaceBetween: 16,
-                speed: 800,
-                loop: count > 3,
-                grabCursor: true,
-                autoplay: { delay: 1300, disableOnInteraction: false, pauseOnMouseEnter: true },
-                navigation: { nextEl: '.icon-arrow-right', prevEl: '.icon-arrow-left' },
-                breakpoints: {
-                    768: { slidesPerView: 2, spaceBetween: 20 },
-                    992: { slidesPerView: 3, spaceBetween: 24 }
-                }
+        // Top-rated books: endless ticker (CSS animation over a doubled track), paused while hovered/touched.
+        // Registered before addToCart.js / addToWishlist.js so the cloned set gets its click handlers too.
+        document.addEventListener('DOMContentLoaded', function () {
+            var track = document.querySelector('.top-rated-track');
+            if (!track) return;
+            var items = Array.prototype.slice.call(track.children);
+            items.forEach(function (it) {
+                var c = it.cloneNode(true);
+                c.setAttribute('aria-hidden', 'true');
+                c.querySelectorAll('a,button').forEach(function (x) { x.tabIndex = -1; });
+                track.appendChild(c);
             });
-            // pauseOnMouseEnter also covers touch-hold on phones
-            el.addEventListener('touchstart', function () { s.autoplay.stop(); }, { passive: true });
-            el.addEventListener('touchend', function () { s.autoplay.start(); }, { passive: true });
+            track.style.setProperty('--ticker-secs', Math.max(items.length * 7, 30) + 's');
+            track.classList.add('is-running');
         });
-    </script>
+    </script>    <script src="~/js/addToCart.js" asp-append-version="true"></script>
+    <script src="~/js/addToWishlist.js" asp-append-version="true"></script>
     <script>
         (function () {
             var openBtn = document.getElementById('videoOverlayOpen');

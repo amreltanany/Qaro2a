@@ -1031,3 +1031,18 @@ html[dir="rtl"] .shop-filter-form .form-select {
 /* let long category / author names breathe before truncating */
 .product-card .shop-card-author-chip { flex: 0 1 auto; max-width: 52%; }
 .product-card .shop-card-category-chip { flex: 0 1 auto; max-width: 48%; }
+
+/* ---------- uniform, smaller cards: every cover sits in the same 3:4 frame ---------- */
+.product-card .shop-card-media { aspect-ratio: 3 / 4; }
+.product-card .shop-card-media .shop-card-cover-link,
+.product-card .shop-card-media img { display: block; width: 100%; height: 100%; }
+.product-card .shop-card-media img { padding: 0; object-fit: cover; transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); will-change: transform; }
+.product-card:hover .shop-card-media img { transform: scale(1.06); }
+.shop-products-row .product-card { padding: 10px; border-radius: 18px; }
+.product-card .shop-card-body { padding: 10px 4px 2px; }
+.product-card .shop-card-text .element-title { font-size: 1rem; }
+.product-card .shop-card-description { font-size: 0.78rem; line-height: 1.5; }
+.product-card .shop-card-badge { top: 8px; padding: 3px 10px; font-size: 0.64rem; }
+.product-card .shop-card-media .shop-wishlist-btn { width: 32px; height: 32px; top: 8px; inset-inline-end: 8px; }
+.product-card .shop-card-media .shop-wishlist-btn i { font-size: 0.9rem; }
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate { min-width: 7.5rem !important; min-height: 2.6rem; }

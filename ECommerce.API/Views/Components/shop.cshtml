@@ -186,7 +186,7 @@
                     <div class="row g-4 py-1 shop-products-row" data-aos="fade-up" data-aos-delay="600">
                         @foreach (var product in Model)
                         {
-                            <div class="col-12 col-md-6 col-lg-4">
+                            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
                                 @{
                                     var cardImg = Url.Content(product.ImageUrl ?? "~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png");
                                     string? cardBadge = product.TopRated
