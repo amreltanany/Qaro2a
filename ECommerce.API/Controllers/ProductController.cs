@@ -1,3 +1,4 @@
+using ECommerce.API.Filters;
 using ECommerce.Application.DTOs.Product;
 using ECommerce.Application.DTOs.Query;
 using ECommerce.Application.Interfaces;
@@ -46,6 +47,7 @@ namespace ECommerce.API.Controllers
         }
 
         // POST: api/Products
+        [RequireAdmin]
         [HttpPost]
         public async Task<ActionResult<ProductResponseDto>> Create([FromBody] ProductCreateDto dto)
         {
@@ -54,6 +56,7 @@ namespace ECommerce.API.Controllers
         }
 
         // POST: api/Products/with-image
+        [RequireAdmin]
         [HttpPost("with-image")]
         public async Task<ActionResult<ProductResponseDto>> CreateWithImage([FromForm] ProductCreateDto dto, IFormFile? image)
         {
@@ -84,6 +87,7 @@ namespace ECommerce.API.Controllers
         }
 
         // PUT: api/Products/5
+        [RequireAdmin]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, ProductUpdateDto dto)
         {
@@ -92,6 +96,7 @@ namespace ECommerce.API.Controllers
         }
 
         // DELETE: api/Products/5
+        [RequireAdmin]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

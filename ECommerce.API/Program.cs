@@ -113,7 +113,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 #endregion
 
 #region Authentication / Authorization
-builder.Services.AddIdentity<User, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>(o =>
+{
+    o.Lockout.MaxFailedAccessAttempts = 5;
+    o.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+    o.Lockout.AllowedForNewUsers = true;
+})
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
@@ -123,6 +128,15 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+
+// per-IP limit on login / register / password reset: 10 requests per minute
+builder.Services.AddRateLimiter(o =>
+{
+    o.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    o.AddPolicy("auth", ctx => System.Threading.RateLimiting.RateLimitPartition.GetFixedWindowLimiter(
+        ctx.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+        _ => new System.Threading.RateLimiting.FixedWindowRateLimiterOptions { PermitLimit = 10, Window = TimeSpan.FromMinutes(1), QueueLimit = 0 }));
+});
 
 // Explicitly set JWT as default to override Identity Cookie defaults
 builder.Services.AddAuthentication(options => {
@@ -277,9 +291,19 @@ app.Use(async (ctx, next) =>
 
 app.UseDefaultFiles();
 app.UseStaticFiles(staticFileOptions);
+app.Use(async (ctx, next) =>
+{
+    var h = ctx.Response.Headers;
+    h["X-Content-Type-Options"] = "nosniff";
+    h["X-Frame-Options"] = "SAMEORIGIN";
+    h["Referrer-Policy"] = "strict-origin-when-cross-origin";
+    h["Permissions-Policy"] = "camera=(), geolocation=(), payment=()";
+    await next();
+});
 app.UseHttpsRedirection();
 app.UseMiddleware<ECommerce.API.Middleware.ExceptionHandlingMiddleware>();
 app.UseRouting();
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());

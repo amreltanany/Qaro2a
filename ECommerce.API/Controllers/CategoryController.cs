@@ -1,3 +1,4 @@
+using ECommerce.API.Filters;
 ﻿using ECommerce.Application.DTOs.Category;
 using ECommerce.Application.DTOs.Product;
 using ECommerce.Application.Interfaces;
@@ -37,6 +38,7 @@ namespace ECommerce.API.Controllers
         }
 
         // Create a new category
+        [RequireAdmin]
         [HttpPost]
         public async Task<ActionResult<CategoryResponseDto>> Create(CategoryCreateDto dto)
         {
@@ -56,6 +58,7 @@ namespace ECommerce.API.Controllers
         }
 
         // Update a category
+        [RequireAdmin]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, CategoryUpdateDto dto)
         {
@@ -75,6 +78,7 @@ namespace ECommerce.API.Controllers
         }
 
         // Delete a category
+        [RequireAdmin]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

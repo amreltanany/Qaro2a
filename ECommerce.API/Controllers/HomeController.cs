@@ -64,6 +64,10 @@ public class HomeController : Controller
         int? categoryId = null,
         string? sortBy = null)
     {
+        // hostile or silly input: keep text short and prices inside what the database column can hold
+        static string? Clip(string? v, int max = 100) { v = v?.Trim(); return string.IsNullOrEmpty(v) ? null : (v.Length > max ? v[..max] : v); }
+        static decimal? Money(decimal? v) => v is null ? null : Math.Clamp(v.Value, 0m, 10_000_000m);
+        s = Clip(s); author = Clip(author); sortBy = Clip(sortBy, 30); minPrice = Money(minPrice); maxPrice = Money(maxPrice);
         var query = new QueryParameters
         {
             PageNumber = 1,

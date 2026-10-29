@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using ECommerce.API.Filters;
 using ECommerce.Application.DTOs.Order;
 using ECommerce.Application.DTOs.OrderItem;
 using ECommerce.Application.Interfaces;
@@ -19,6 +20,7 @@ namespace ECommerce.API.Controllers
             _orderService = orderService;
         }
 
+        [RequireAdmin]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -36,13 +38,18 @@ namespace ECommerce.API.Controllers
             return Ok(orders);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("sub");
             var order = await _orderService.GetOrderByIdAsync(id);
+            if (order == null) return NotFound();
+            if (string.IsNullOrEmpty(userId) || order.UserId != userId) return Forbid(); // only the owner (admins use the dashboard)
             return Ok(order);
         }
 
+        [RequireAdmin]
         [HttpPost]
         public async Task<IActionResult> Create(OrderCreateDto orderDto)
         {
@@ -50,6 +57,7 @@ namespace ECommerce.API.Controllers
             return CreatedAtAction(nameof(Get), new { id = createdOrder.Id }, createdOrder);
         }
 
+        [RequireAdmin]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, OrderUpdateDto orderDto)
         {
@@ -87,6 +95,7 @@ namespace ECommerce.API.Controllers
             return NoContent();
         }
 
+        [RequireAdmin]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

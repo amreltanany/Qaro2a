@@ -34,6 +34,7 @@ public class AccountController : ControllerBase
     }
 
     [AllowAnonymous]
+    [Microsoft.AspNetCore.RateLimiting.EnableRateLimiting("auth")]
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginDto dto)
     {
@@ -46,9 +47,17 @@ public class AccountController : ControllerBase
         if (user == null)
             return StatusCode(StatusCodes.Status401Unauthorized, new { message = "Invalid email or password." });
 
+        // lock the account for a while after repeated wrong passwords (brute-force protection)
+        if (await _userManager.IsLockedOutAsync(user))
+            return StatusCode(StatusCodes.Status429TooManyRequests, new { message = "Too many failed attempts. Please try again in a few minutes." });
+
         var result = await _userManager.CheckPasswordAsync(user, password);
         if (!result)
+        {
+            await _userManager.AccessFailedAsync(user);
             return StatusCode(StatusCodes.Status401Unauthorized, new { message = "Invalid email or password." });
+        }
+        await _userManager.ResetAccessFailedCountAsync(user);
 
         var response = new AuthResponseDto(
             user.Email ?? string.Empty,
@@ -58,6 +67,7 @@ public class AccountController : ControllerBase
     }
 
     [AllowAnonymous]
+    [Microsoft.AspNetCore.RateLimiting.EnableRateLimiting("auth")]
     [HttpPost("forgot-password")]
     public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto)
     {
@@ -94,6 +104,7 @@ public class AccountController : ControllerBase
     }
 
     [AllowAnonymous]
+    [Microsoft.AspNetCore.RateLimiting.EnableRateLimiting("auth")]
     [HttpPost("reset-password")]
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
     {
@@ -121,6 +132,7 @@ public class AccountController : ControllerBase
     }
 
     [AllowAnonymous]
+    [Microsoft.AspNetCore.RateLimiting.EnableRateLimiting("auth")]
     [HttpPost("register")]
     public async Task<ActionResult<AuthResponseDto>> Register(RegisterDto dto)
     {
