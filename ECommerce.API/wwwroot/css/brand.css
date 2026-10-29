@@ -74,3 +74,17 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 /* the old template watermarks (previous logo) are not used any more: plain Paper Beige to navy fade behind the About section */
 .home-about-section { background-image: linear-gradient(180deg, #ffffff 0%, var(--brand-beige) 78%, rgba(0, 52, 110, .12) 100%) !important; }
 .pd__cta:hover:not(.pd__cta--off) { background: var(--brand-navy); }
+
+/* add-to-cart: white icon, label and animated cart on the blue button (navy while hovering / adding) */
+.product-card .shop-card-actions .button.shop-cart-animate,
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate {
+    background: var(--brand-blue); color: #fff; --text: #fff; --cart: #fff; --tick: #fff;
+}
+.product-card .shop-card-actions .button.shop-cart-animate:hover,
+.product-card .shop-card-actions .button.shop-cart-animate:focus-visible,
+.product-card .shop-card-actions .button.shop-cart-animate.loading,
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:hover:not(.loading),
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate.loading {
+    background: var(--brand-navy); color: #fff; --text: #fff; --cart: #fff; --tick: #fff;
+}
+.shop-cart-idle, .shop-cart-label, .shop-cart-plus-icon { color: #fff; }
