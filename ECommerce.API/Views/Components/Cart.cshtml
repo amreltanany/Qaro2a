@@ -23,6 +23,10 @@
             <div class="text-muted">
                 @L("Your cart is empty.", "سلة التسوق فارغة.") <a asp-controller="Home" asp-action="Shop">@L("Continue shopping", "متابعة التسوق")</a>.
             </div>
+            <p class="mt-3 mb-0 text-muted">
+                <i class="bi bi-truck" aria-hidden="true"></i>
+                @L("Already placed an order?", "عملت طلب قبل كده؟") <a asp-controller="Track" asp-action="Index">@L("Track your order", "تتبّع طلبك")</a>
+            </p>
         }
         else
         {
@@ -75,6 +79,7 @@
                 <a asp-controller="Home" asp-action="Shop" class="btn btn-outline-primary">@L("Continue shopping", "متابعة التسوق")</a>
                 <a asp-controller="Cart" asp-action="Checkout" class="btn btn-primary">@L("Checkout", "إتمام الطلب")</a>
             </div>
+            <p class="mt-3 mb-0 small text-muted">@L("Already placed an order?", "عملت طلب قبل كده؟") <a asp-controller="Track" asp-action="Index">@L("Track your order", "تتبّع طلبك")</a></p>
         }
     </div>
 </section>
