@@ -268,6 +268,13 @@ var staticFileOptions = new StaticFileOptions
     }
 };
 
+// manuscripts are private: never served as static files (admins use /AdminPublishes/Download)
+app.Use(async (ctx, next) =>
+{
+    if (ctx.Request.Path.StartsWithSegments("/uploads/publish", StringComparison.OrdinalIgnoreCase)) { ctx.Response.StatusCode = StatusCodes.Status404NotFound; return; }
+    await next();
+});
+
 app.UseDefaultFiles();
 app.UseStaticFiles(staticFileOptions);
 app.UseHttpsRedirection();

@@ -86,13 +86,33 @@
                     {
                         @foreach (var order in Model.Orders)
                         {
-                            <div class="order-card">
+                            
+                                var statusKey = (order.Status ?? "").Trim().ToLowerInvariant();
+                                var statusLabel = statusKey switch
+                                {
+                                    "pending" => L("Pending", "قيد الانتظار"),
+                                    "paid" => L("Paid", "مدفوع"),
+                                    "shipped" => L("Shipped", "تم الشحن"),
+                                    "cancelled" => L("Cancelled", "ملغي"),
+                                    _ => order.Status
+                                };
+                            <div class="order-card" data-order-id="@order.Id" data-order-date="@order.OrderDate.ToLocalTime().ToString("yyyy-MM-dd HH:mm")" data-order-status="@statusLabel" data-order-total="@order.TotalAmount.ToString("N2") EGP"
+                                 data-order-address="@order.ShippingAddress" data-order-phone="@order.ShippingPhone">
                                 <div class="order-card-header">
                                     <strong>@L("Order", "طلب") #@order.Id</strong>
                                     <span>@order.OrderDate.ToLocalTime().ToString("g")</span>
-                                    <span class="badge bg-secondary">@order.Status</span>
+                                    <span class="order-status order-status--@statusKey">@statusLabel</span>
                                     <span class="ms-auto fw-semibold">@order.TotalAmount.ToString("N2") EGP</span>
+                                    <span class="order-actions">
+                                        <button type="button" class="order-btn order-details-btn" aria-expanded="false" data-show="@L("Details", "التفاصيل")" data-hide="@L("Hide", "إخفاء")">
+                                            <i class="bi bi-eye"></i> <span>@L("Details", "التفاصيل")</span>
+                                        </button>
+                                        <button type="button" class="order-btn order-download-btn" title="@L("Download order details", "تحميل تفاصيل الطلب")">
+                                            <i class="bi bi-download"></i> <span>@L("Download", "تحميل")</span>
+                                        </button>
+                                    </span>
                                 </div>
+                                <div class="order-body" hidden>
                                 @if (!string.IsNullOrWhiteSpace(order.ShippingAddress) ||
                                                                 !string.IsNullOrWhiteSpace(order.ShippingPhone))
                                 {
@@ -130,6 +150,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                </div>
                             </div>
                         }
                     }
@@ -138,3 +159,35 @@
         </div>
     </div>
 </section>
+
+<script>
+(function () {
+    var cols = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(new[] { L("Product", "المنتج"), L("Price", "السعر"), L("Qty", "الكمية"), L("Subtotal", "الإجمالي الفرعي") }));
+    var labels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(new { order = L("Order", "طلب"), date = L("Date", "التاريخ"), status = L("Status", "الحالة"), total = L("Total", "الإجمالي"), ship = L("Ship to", "الشحن إلى"), phone = L("Phone", "الهاتف") }));
+    function cell(v) { v = String(v == null ? '' : v); if (/^[=+\-@@]/.test(v)) v = "'" + v; return '"' + v.replace(/"/g, '""') + '"'; } // quotes + no spreadsheet formulas
+    document.querySelectorAll('.order-card').forEach(function (card) {
+        var body = card.querySelector('.order-body'), btn = card.querySelector('.order-details-btn');
+        btn.addEventListener('click', function () {
+            var open = body.hasAttribute('hidden');
+            if (open) body.removeAttribute('hidden'); else body.setAttribute('hidden', '');
+            btn.setAttribute('aria-expanded', open);
+            btn.classList.toggle('is-open', open);
+            btn.querySelector('span').textContent = btn.getAttribute(open ? 'data-hide' : 'data-show');
+        });
+        card.querySelector('.order-download-btn').addEventListener('click', function () {
+            var d = card.dataset, rows = [
+                [labels.order, '#' + d.orderId], [labels.date, d.orderDate], [labels.status, d.orderStatus], [labels.total, d.orderTotal],
+                [labels.ship, d.orderAddress], [labels.phone, d.orderPhone], [], cols];
+            card.querySelectorAll('.order-items-table tbody tr').forEach(function (tr) {
+                rows.push(Array.prototype.map.call(tr.children, function (td) { return td.textContent.trim(); }));
+            });
+            var csv = '\uFEFF' + rows.map(function (r) { return r.map(cell).join(','); }).join('\r\n');
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+            a.download = 'order-' + d.orderId + '.csv';
+            document.body.appendChild(a); a.click(); a.remove();
+            setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+        });
+    });
+})();
+</script>
