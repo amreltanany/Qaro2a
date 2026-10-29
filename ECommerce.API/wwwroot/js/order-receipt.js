@@ -69,13 +69,16 @@
         stage.appendChild(printer); stage.appendChild(win); stage.appendChild(bar); overlay.appendChild(stage);
         document.body.appendChild(overlay); document.body.classList.add('rcpt-open');
         var prevFocus = document.activeElement;
+        // fit the whole printer + receipt + buttons inside the window, so nothing needs scrolling
+        function fit() { stage.style.zoom = 1; var h = stage.getBoundingClientRect().height; var k = Math.min(1, (window.innerHeight - 16) / h); stage.style.zoom = k; }
+        fit(); window.addEventListener('resize', fit);
 
         function print() {
             paper.classList.remove('is-torn', 'is-printing'); void paper.offsetWidth;
             printer.classList.add('is-busy'); paper.classList.add('is-printing');
             clearTimeout(print.t); print.t = setTimeout(function () { printer.classList.remove('is-busy'); }, 3200);
         }
-        function shut() { document.body.classList.remove('rcpt-open'); overlay.remove(); document.removeEventListener('keydown', onKey); if (prevFocus && prevFocus.focus) prevFocus.focus(); }
+        function shut() { window.removeEventListener('resize', fit); document.body.classList.remove('rcpt-open'); overlay.remove(); document.removeEventListener('keydown', onKey); if (prevFocus && prevFocus.focus) prevFocus.focus(); }
         function onKey(e) { if (e.key === 'Escape') shut(); }
         document.addEventListener('keydown', onKey);
         overlay.addEventListener('click', function (e) { if (e.target === overlay) shut(); });
