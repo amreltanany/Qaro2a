@@ -48,16 +48,17 @@
                             <div class="pub-drop__head">
                                 <div>
                                     <p class="pub-drop__title">@L("Upload your manuscript", "ارفع مخطوطتك")</p>
-                                    <p class="pub-drop__hint">@L("Drag and drop, or take the shot.", "اسحب وأفلت الملف، أو سدّد الكرة.")</p>
+                                    <p class="pub-drop__hint">@L("Click to choose a PDF, drag and drop it here, or take the shot.", "اضغط لاختيار ملف PDF، أو اسحبه هنا، أو سدّد الكرة.")</p>
                                 </div>
                             </div>
                             <div class="pub-file" aria-live="polite">
                                 <span class="pub-file__icon">PDF</span>
                                 <div class="pub-file__body">
-                                    <div class="pub-file__name"><span data-file-name></span><span data-file-size></span></div>
+                                    <div class="pub-file__name"><span data-file-name></span><span data-file-size dir="ltr"></span></div>
                                     <div class="pub-file__bar"><i></i></div>
                                     <div class="pub-file__status"></div>
                                 </div>
+                                <button type="button" class="pub-file__remove" aria-label="@L("Remove file", "إزالة الملف")" title="@L("Remove file", "إزالة الملف")">&times;</button>
                             </div>
                             <svg class="pub-hoop" id="pubHoop" viewBox="0 0 130 150" aria-hidden="true">
                                 <rect x="35" y="4" width="60" height="44" rx="5" fill="#fff" stroke="#3b3f8f" stroke-width="3" />

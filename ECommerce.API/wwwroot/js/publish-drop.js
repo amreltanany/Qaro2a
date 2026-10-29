@@ -34,6 +34,13 @@
         swish();
     }
     input.addEventListener('change', onFile);
+    zone.querySelector('.pub-file__remove').addEventListener('click', function (e) {
+        e.preventDefault(); e.stopPropagation();
+        input.value = '';
+        file.classList.remove('is-visible');
+        zone.classList.remove('is-done', 'is-error');
+        bar.style.width = '0';
+    });
     ['dragenter', 'dragover'].forEach(function (e) { input.addEventListener(e, function () { zone.classList.add('is-over'); }); });
     ['dragleave', 'drop'].forEach(function (e) { input.addEventListener(e, function () { zone.classList.remove('is-over'); }); });
 
