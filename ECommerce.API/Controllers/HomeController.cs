@@ -174,6 +174,10 @@ public class HomeController : Controller
         return View("/Views/Components/Login.cshtml");
     }
 
+    public IActionResult PrivacyPolicy() => View("/Views/Components/PrivacyPolicy.cshtml");
+
+    public IActionResult TermsOfService() => View("/Views/Components/TermsOfService.cshtml");
+
     public IActionResult Register()
     {
         return View("/Views/Components/Register.cshtml");
