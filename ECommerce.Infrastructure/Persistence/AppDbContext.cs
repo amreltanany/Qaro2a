@@ -25,6 +25,8 @@ public class AppDbContext : IdentityDbContext<User>
     public DbSet<WishlistItem> WishlistItems => Set<WishlistItem>();
     public DbSet<Contact> Contacts => Set<Contact>();
 
+    private static readonly DateTime SeedDate = new DateTime(2026, 10, 29, 0, 0, 0, DateTimeKind.Utc);
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder); 
@@ -97,28 +99,18 @@ public class AppDbContext : IdentityDbContext<User>
             .HasForeignKey(p => p.UserId)
             .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
 
+        // Catalogue seed. Ids start at 1; dates are fixed so migrations stay stable.
+        // Books are seeded the same way (Product HasData, ids from 1) once the list is final.
         modelBuilder.Entity<Category>().HasData(
-             new
-             {
-                 Id = 1,
-                 Name = "Electronics",
-                 CreatedAt = DateTime.UtcNow
-             }
-         );
-        modelBuilder.Entity<Product>().HasData(
-            new
-            {
-                Id = 1,
-                Name = "product",
-                Price = 10.99m,
-                Stock = 10,
-                Description = "Product Description",
-                CategoryId = 1,
-                Author = "System",
-                PublishDate = new DateTime(2026, 1, 1),
-                TopRated = false,
-                CreatedAt = DateTime.UtcNow // MUST add this
-            }
+            new { Id = 1, Name = "اجتماعي ودراما", CreatedAt = SeedDate },
+            new { Id = 2, Name = "فانتازيا وخيال علمي", CreatedAt = SeedDate },
+            new { Id = 3, Name = "جريمة وغموض وإثارة", CreatedAt = SeedDate },
+            new { Id = 4, Name = "رومانسي", CreatedAt = SeedDate },
+            new { Id = 5, Name = "تدريب وهوايات", CreatedAt = SeedDate },
+            new { Id = 6, Name = "نفسي", CreatedAt = SeedDate },
+            new { Id = 7, Name = "تاريخي وسير", CreatedAt = SeedDate },
+            new { Id = 8, Name = "فكر وثقافة", CreatedAt = SeedDate },
+            new { Id = 9, Name = "رعب", CreatedAt = SeedDate }
         );
     }
 }
