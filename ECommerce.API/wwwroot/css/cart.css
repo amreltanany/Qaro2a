@@ -283,3 +283,5 @@
 
 .cart-card__name a { color: inherit; text-decoration: none; }
 .cart-card__name a:hover { color: #7a5b32; }
+
+.cart-card__footer--end { justify-content: flex-end; }
