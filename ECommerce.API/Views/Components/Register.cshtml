@@ -43,10 +43,10 @@
 
 <script>
 var i18n = {
-    fallbackError: '@L("Something went wrong. Please try again.", "حدث خطأ ما. حاول مرة أخرى.")',
-    mustAgree: '@L("You must agree to the Terms of Service.", "يجب الموافقة على شروط الخدمة.")',
-    couldNotGetUser: '@L("Could not get user", "تعذر تحميل بيانات المستخدم")',
-    registerFailed: '@L("Register failed", "فشل إنشاء الحساب")'
+    fallbackError: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L("Something went wrong. Please try again.", "حدث خطأ ما. حاول مرة أخرى."))),
+    mustAgree: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L("You must agree to the Terms of Service.", "يجب الموافقة على شروط الخدمة."))),
+    couldNotGetUser: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L("Could not get user", "تعذر تحميل بيانات المستخدم"))),
+    registerFailed: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L("Register failed", "فشل إنشاء الحساب")))
 };
 function parseApiErrorResponse(res) {
     return res.text().then(function (text) {
@@ -113,7 +113,7 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
         window.location.href = '/Home/Shop';
     })
     .catch(function (err) {
-        errEl.textContent = err.message || i18n.registerFailed;
+        errEl.textContent = (window.qaroLocalize ? window.qaroLocalize(err.message) : err.message) || i18n.registerFailed;
         errEl.classList.remove('d-none');
     });
 });

@@ -1,33 +1,33 @@
 @{
-    ViewData["Title"] = "Something went wrong";
+    var isArabic = string.Equals(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    ViewData["Title"] = L("Something went wrong", "حصلت مشكلة");
     var requestId = ViewData["RequestId"] as string;
+    ViewData["Code"] = 500;
 }
 
-<section class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-4 p-md-5 text-center">
-                    <h1 class="h3 mb-3">Something went wrong.</h1>
-                    <p class="text-muted mb-4">
-                        We could not complete your request right now. Please refresh the page or try again in a moment.
-                    </p>
-
-                    @if (!string.IsNullOrWhiteSpace(requestId))
-                    {
-                        <p class="small text-muted mb-4">
-                            Request ID: <code>@requestId</code>
-                        </p>
-                    }
-
-                    <div class="d-flex justify-content-center gap-2 flex-wrap">
-                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Go to Home</a>
-                        <button type="button" class="btn btn-outline-secondary" onclick="window.location.reload();">
-                            Refresh Page
-                        </button>
-                    </div>
-                </div>
-            </div>
+<section class="status-page">
+    <div class="container text-center">
+        <div class="status-page__code" aria-hidden="true">500</div>
+        <h1 class="status-page__title">@L("Something went wrong", "حصلت مشكلة")</h1>
+        <p class="status-page__text">@L("We could not complete your request right now. Please refresh the page or try again in a moment.", "ماقدرناش نكمّل طلبك دلوقتي. حدّث الصفحة أو حاول تاني بعد شوية.")</p>
+        <div class="status-page__actions">
+            <button type="button" class="status-page__btn status-page__btn--dark" onclick="window.location.reload();">@L("Refresh", "تحديث الصفحة")</button>
+            <a asp-controller="Home" asp-action="Index" class="status-page__btn">@L("Back to home", "الرئيسية")</a>
         </div>
+        @if (!string.IsNullOrWhiteSpace(requestId))
+        {
+            <p class="small text-muted mt-4">@L("Reference", "رقم مرجعي"): <code>@requestId</code></p>
+        }
     </div>
 </section>
+
+<style>
+    .status-page { padding: 9rem 0 6rem; background: linear-gradient(180deg, #f6efe4 0%, #fff 100%); }
+    .status-page__code { font-family: "Inter", system-ui, sans-serif; font-size: clamp(5rem, 16vw, 9rem); font-weight: 800; line-height: 1; letter-spacing: -0.04em; color: #1a252f; opacity: 0.9; }
+    .status-page__title { margin: 1rem 0 0.5rem; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; color: #2b2118; }
+    .status-page__text { max-width: 34rem; margin: 0 auto 2rem; color: #7a6d5d; line-height: 1.9; }
+    .status-page__actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .status-page__btn { padding: 0.8rem 1.6rem; border: 0; border-radius: 14px; background: #fff; color: #2b2118; font-weight: 700; text-decoration: none; box-shadow: 0 8px 18px -8px rgba(98, 74, 42, 0.4), inset 0 1px 0 #fff; cursor: pointer; }
+    .status-page__btn--dark { background: linear-gradient(180deg, #2f2a24, #0f0c09); color: #fff; }
+</style>

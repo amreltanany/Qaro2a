@@ -227,6 +227,11 @@ else
    app.UseExceptionHandler("/Home/Error");
 }
 
+// Friendly 404/403 pages for browsers; API calls keep their plain status codes.
+app.UseWhen(
+    ctx => !ctx.Request.Path.StartsWithSegments("/api") && ctx.Request.Headers.Accept.ToString().Contains("text/html"),
+    branch => branch.UseStatusCodePagesWithReExecute("/Home/StatusPage", "?code={0}"));
+
 app.UseResponseCompression();
 
 app.UseImageSharp();

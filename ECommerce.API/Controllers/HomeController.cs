@@ -304,6 +304,14 @@ public class HomeController : Controller
         return RedirectToAction("Index");
     }
 
+    // Re-executed by the status-code middleware for 403/404/... on page requests.
+    [HttpGet]
+    public IActionResult StatusPage(int code = 404)
+    {
+        ViewData["Code"] = code;
+        return View("/Views/Components/StatusPage.cshtml");
+    }
+
     [HttpGet]
     public IActionResult Error()
     {

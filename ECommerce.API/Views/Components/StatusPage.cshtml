@@ -1,0 +1,41 @@
+@{
+    var isArabic = string.Equals(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    var code = ViewData["Code"] is int c ? c : 404;
+    var title = code switch
+    {
+        403 => L("You don't have access to this page", "مش مسموح لك بدخول الصفحة دي"),
+        404 => L("We couldn't find this page", "الصفحة دي مش موجودة"),
+        _ => L("Something went wrong", "حصلت مشكلة")
+    };
+    var text = code switch
+    {
+        403 => L("Please log in with an account that has access.", "سجّل الدخول بحساب له صلاحية الدخول."),
+        404 => L("The link may be old or mistyped. You can head back to the shop and find your next read.", "ممكن يكون الرابط قديم أو فيه خطأ. تقدر ترجع للمتجر وتلاقي كتابك الجاي."),
+        _ => L("We could not complete your request right now. Please try again in a moment.", "ماقدرناش نكمّل طلبك دلوقتي. حاول تاني بعد شوية.")
+    };
+    ViewData["Title"] = title;
+}
+
+<section class="status-page">
+    <div class="container text-center">
+        <div class="status-page__code" aria-hidden="true">@code</div>
+        <h1 class="status-page__title">@title</h1>
+        <p class="status-page__text">@text</p>
+        <div class="status-page__actions">
+            <a asp-controller="Home" asp-action="Shop" class="status-page__btn status-page__btn--dark">@L("Browse the shop", "تصفّح المتجر")</a>
+            <a asp-controller="Home" asp-action="Index" class="status-page__btn">@L("Back to home", "الرئيسية")</a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .status-page { padding: 9rem 0 6rem; background: linear-gradient(180deg, #f6efe4 0%, #fff 100%); }
+    .status-page__code { font-family: "Inter", system-ui, sans-serif; font-size: clamp(5rem, 16vw, 9rem); font-weight: 800; line-height: 1; letter-spacing: -0.04em; color: #1a252f; opacity: 0.9; }
+    .status-page__title { margin: 1rem 0 0.5rem; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; color: #2b2118; }
+    .status-page__text { max-width: 34rem; margin: 0 auto 2rem; color: #7a6d5d; line-height: 1.9; }
+    .status-page__actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .status-page__btn { padding: 0.8rem 1.6rem; border-radius: 14px; background: #fff; color: #2b2118; font-weight: 700; text-decoration: none; box-shadow: 0 8px 18px -8px rgba(98, 74, 42, 0.4), inset 0 1px 0 #fff; transition: transform 0.2s ease; }
+    .status-page__btn:hover { transform: translateY(-2px); }
+    .status-page__btn--dark { background: linear-gradient(180deg, #2f2a24, #0f0c09); color: #fff; }
+</style>

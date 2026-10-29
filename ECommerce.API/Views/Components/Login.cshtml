@@ -135,7 +135,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
         });
     })
     .catch(function (err) {
-        errEl.textContent = err.message || i18n.loginFailed;
+        errEl.textContent = (window.qaroLocalize ? window.qaroLocalize(err.message) : err.message) || i18n.loginFailed;
         errEl.classList.remove('d-none');
     });
 });
