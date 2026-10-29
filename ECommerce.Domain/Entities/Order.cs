@@ -17,6 +17,7 @@ namespace ECommerce.Domain.Entities
         public OrderStatus Status { get; private set; } = OrderStatus.Pending;
         public string? ShippingAddress { get; private set; }
         public string? ShippingPhone { get; private set; }
+        public string? CustomerName { get; private set; }
         public decimal DeliveryFee { get; private set; }
 
         private readonly List<OrderItem> _items = new();
@@ -65,6 +66,11 @@ namespace ECommerce.Domain.Entities
         public void SetShippingAddress(string? address)
         {
             ShippingAddress = address;
+        }
+
+        public void SetCustomerName(string? name)
+        {
+            CustomerName = name;
         }
 
         public void SetShippingPhone(string? phone)

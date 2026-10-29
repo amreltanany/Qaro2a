@@ -79,7 +79,7 @@ namespace ECommerce.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 10, 28, 16, 54, 41, 565, DateTimeKind.Utc).AddTicks(4150),
+                            CreatedAt = new DateTime(2026, 10, 29, 4, 15, 53, 833, DateTimeKind.Utc).AddTicks(9842),
                             Name = "Electronics"
                         });
                 });
@@ -126,6 +126,9 @@ namespace ECommerce.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("DeliveryFee")
                         .HasPrecision(18, 2)
@@ -258,7 +261,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Id = 1,
                             Author = "System",
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 10, 28, 16, 54, 41, 565, DateTimeKind.Utc).AddTicks(4200),
+                            CreatedAt = new DateTime(2026, 10, 29, 4, 15, 53, 833, DateTimeKind.Utc).AddTicks(9898),
                             Description = "Product Description",
                             Name = "product",
                             Price = 10.99m,
@@ -538,15 +541,7 @@ namespace ECommerce.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ECommerce.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Product");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ECommerce.Domain.Entities.Order", b =>

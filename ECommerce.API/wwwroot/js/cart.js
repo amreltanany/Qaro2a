@@ -1,10 +1,9 @@
 (function () {
     var token = typeof localStorage !== 'undefined' && localStorage.getItem('token');
     function authHeaders() {
-        return {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        };
+        var h = { 'Content-Type': 'application/json' };
+        if (token) h['Authorization'] = 'Bearer ' + token;   // guests rely on the cart cookie
+        return h;
     }
 
     document.querySelectorAll('.cart-qty-plus, .cart-qty-minus').forEach(function (btn) {
@@ -20,11 +19,6 @@
             if (newQty === currentQty) return;
             if (isPlus && !isNaN(maxStock) && newQty > maxStock) {
                 showError('Insufficient stock. Available: ' + maxStock);
-                return;
-            }
-
-            if (!token) {
-                window.location.href = '/Home/Login';
                 return;
             }
 
@@ -57,10 +51,6 @@
         btn.addEventListener('click', function () {
             var row = this.closest('.cart-card') || this.closest('tr');
             var itemId = row.getAttribute('data-item-id');
-            if (!token) {
-                window.location.href = '/Home/Login';
-                return;
-            }
             fetch('/api/Cart/items/' + itemId, {
                 method: 'DELETE',
                 headers: authHeaders()

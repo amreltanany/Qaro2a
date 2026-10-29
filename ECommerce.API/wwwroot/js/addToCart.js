@@ -24,17 +24,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 (document.querySelector('meta[name="user-id"]') && document.querySelector('meta[name="user-id"]').getAttribute('content')) || 'guest';
 
             var token = (typeof localStorage !== 'undefined' && localStorage.getItem('token')) || '';
-            if (!token || !userId || userId === 'guest') {
-                window.location.href = '/Home/Login';
-                return;
-            }
+            // no token: the server keeps a guest cart in a cookie
 
             fetch('/api/Cart', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
+                credentials: 'same-origin',
+                headers: token
+                    ? { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }
+                    : { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ productId: productId, quantity: qty })
             })
                 .then(function (res) {

@@ -36,6 +36,11 @@
                     </div>
                     <button type="submit" class="btn btn-primary w-100">@L("Login", "تسجيل الدخول")</button>
                 </form>
+                <p class="mt-3 text-center small login-forgot">
+                    <a id="forgotWhatsapp" href="https://wa.me/201555012590?text=@Uri.EscapeDataString(L("Hello, I forgot my password for my Qaro2a account. Please help me reset it.", "مرحبًا، نسيت كلمة المرور الخاصة بحسابي على قروءه. أرجو مساعدتي في استعادتها."))" target="_blank" rel="noopener noreferrer">
+                        <i class="bi bi-whatsapp" aria-hidden="true"></i> @L("Forgot your password? Message us on WhatsApp", "نسيت كلمة المرور؟ تواصل معنا على واتساب")
+                    </a>
+                </p>
                 <p class="mt-3 text-center small">
                     @L("Don't have an account?", "ليس لديك حساب؟") <a asp-controller="Home" asp-action="Register">@L("Register", "إنشاء حساب")</a>
                 </p>
@@ -46,10 +51,10 @@
 
 <script>
 var i18n = {
-    fallbackError: '@L("Something went wrong. Please try again.", "حدث خطأ ما. حاول مرة أخرى.")',
-    couldNotGetUser: '@L("Could not get user", "تعذر تحميل بيانات المستخدم")',
-    couldNotSetAdminSession: '@L("Could not set admin session", "تعذر إنشاء جلسة المدير")',
-    loginFailed: '@L("Login failed", "فشل تسجيل الدخول")'
+    fallbackError: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L("Something went wrong. Please try again.", "حدث خطأ ما. حاول مرة أخرى."))),
+    couldNotGetUser: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L("Could not get user", "تعذر تحميل بيانات المستخدم"))),
+    couldNotSetAdminSession: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L("Could not set admin session", "تعذر إنشاء جلسة المدير"))),
+    loginFailed: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L("Login failed", "فشل تسجيل الدخول")))
 };
 function parseApiErrorResponse(res) {
     return res.text().then(function (text) {

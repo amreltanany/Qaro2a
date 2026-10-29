@@ -222,3 +222,22 @@
 .button.checkout-place.loading {
     --span-y: -56px;
 }
+
+/* ---------- checkout: guest note ---------- */
+.checkout-guest-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 1.25rem;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: #f6efe4;
+    box-shadow: inset 0 1px 0 #fff, 0 6px 14px -8px rgba(98, 74, 42, 0.3);
+}
+
+.checkout-guest-note > i { font-size: 1.5rem; color: #7a5b32; line-height: 1.2; }
+.checkout-guest-note strong { display: block; color: #2b2118; }
+.checkout-guest-note span { display: block; font-size: 0.88rem; color: #6e6254; }
+.checkout-guest-note__links { margin-top: 4px; }
+.checkout-guest-note__links a { color: #7a5b32; font-weight: 600; }
+.checkout-guest-note__links span { display: inline; margin: 0 4px; }

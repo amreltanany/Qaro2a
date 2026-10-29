@@ -28,6 +28,8 @@ namespace ECommerce.Domain.Entities
             Quantity = quantity;
         }
 
+        public void AssignTo(string ownerKey) => UserId = ownerKey;
+
         public decimal Subtotal => Price * Quantity;
     }
 }

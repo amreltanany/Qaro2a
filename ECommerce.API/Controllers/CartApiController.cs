@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using ECommerce.API.Helpers;
 using ECommerce.Application.DTOs.Cart;
 using ECommerce.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -24,21 +25,38 @@ namespace ECommerce.API.Controllers
             ?? User.FindFirstValue(JwtRegisteredClaimNames.NameId)
             ?? User.FindFirstValue("sub");
 
-        [Authorize]
+        // logged-in user id, or the guest cart key (created on first add)
+        private async Task<string?> OwnerAsync(bool create)
+        {
+            var userId = GetUserId();
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var guest = CartOwner.GuestKey(HttpContext, false);
+                if (guest != null)
+                {
+                    await _cartService.MergeGuestCartAsync(guest, userId);
+                    CartOwner.ClearGuest(HttpContext);
+                }
+                return userId;
+            }
+            return CartOwner.GuestKey(HttpContext, create);
+        }
+
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetMyCart()
         {
-            var userId = GetUserId();
-            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+            var userId = await OwnerAsync(false);
+            if (string.IsNullOrEmpty(userId)) return Ok(Array.Empty<CartItemDto>());
             var items = await _cartService.GetCartByUserIdAsync(userId);
             return Ok(items);
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> AddToCart([FromBody] AddToCartDto dto)
         {
-            var userId = GetUserId();
+            var userId = await OwnerAsync(true);
             if (string.IsNullOrEmpty(userId)) return Unauthorized();
             try
             {
@@ -59,11 +77,11 @@ namespace ECommerce.API.Controllers
             }
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpPut("items/{itemId}")]
         public async Task<IActionResult> UpdateItemQuantity(int itemId, [FromBody] UpdateCartItemQuantityDto dto)
         {
-            var userId = GetUserId();
+            var userId = await OwnerAsync(false);
             if (string.IsNullOrEmpty(userId)) return Unauthorized();
             try
             {
@@ -76,11 +94,11 @@ namespace ECommerce.API.Controllers
             }
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpDelete("items/{itemId}")]
         public async Task<IActionResult> RemoveItem(int itemId)
         {
-            var userId = GetUserId();
+            var userId = await OwnerAsync(false);
             if (string.IsNullOrEmpty(userId)) return Unauthorized();
             await _cartService.RemoveCartItemAsync(itemId, userId);
             return NoContent();

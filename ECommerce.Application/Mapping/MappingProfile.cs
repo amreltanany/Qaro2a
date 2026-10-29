@@ -41,7 +41,7 @@ namespace ECommerce.Application.Mapping
                 .ForMember(dest => dest.TotalAmount, opt => opt.MapFrom(src => src.GetTotal()))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
                 .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.User != null ? src.User.Email : null))
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User != null ? src.User.FullName : null))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User != null ? src.User.FullName : src.CustomerName))
                 .ForMember(dest => dest.ShippingAddress, opt => opt.MapFrom(src => src.ShippingAddress))
                 .ForMember(dest => dest.ShippingPhone, opt => opt.MapFrom(src => src.ShippingPhone));
 

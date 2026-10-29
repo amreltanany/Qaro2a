@@ -100,9 +100,9 @@ namespace ECommerce.Application.Services.Implementations
             await _cartItemRepository.DeleteAsync(item);
         }
 
-        public async Task CreateOrderFromCartAsync(string userId, string address, string? phone)
+        public async Task CreateOrderFromCartAsync(string cartKey, string? orderUserId, string address, string? phone, string? customerName)
         {
-            var cartItems = (await _cartItemRepository.GetByUserIdAsync(userId)).ToList();
+            var cartItems = (await _cartItemRepository.GetByUserIdAsync(cartKey)).ToList();
             if (cartItems.Count == 0) throw new InvalidOperationException("Cart is empty");
 
             var orderItems = new List<OrderItem>();
@@ -110,12 +110,33 @@ namespace ECommerce.Application.Services.Implementations
             {
                 orderItems.Add(new OrderItem(item.ProductId, item.Price, item.Quantity));
             }
-            var order = new Order(userId, orderItems);
+            var order = new Order(orderUserId, orderItems);
             order.SetShippingAddress(address);
             order.SetShippingPhone(phone);
+            order.SetCustomerName(customerName);
 
             await _orderRepository.AddAsync(order);
-            await _cartItemRepository.DeleteByUserIdAsync(userId);
+            await _cartItemRepository.DeleteByUserIdAsync(cartKey);
+        }
+
+        public async Task MergeGuestCartAsync(string guestKey, string userId)
+        {
+            var guestItems = (await _cartItemRepository.GetByUserIdAsync(guestKey)).ToList();
+            foreach (var g in guestItems)
+            {
+                var existing = await _cartItemRepository.GetByUserIdAndProductIdAsync(userId, g.ProductId);
+                if (existing != null)
+                {
+                    existing.SetQuantity(existing.Quantity + g.Quantity);
+                    await _cartItemRepository.UpdateAsync(existing);
+                    await _cartItemRepository.DeleteAsync(g);
+                }
+                else
+                {
+                    g.AssignTo(userId);
+                    await _cartItemRepository.UpdateAsync(g);
+                }
+            }
         }
     }
 }

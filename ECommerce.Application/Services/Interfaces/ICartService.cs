@@ -8,6 +8,10 @@ namespace ECommerce.Infrastructure.Services.Interfaces
         Task<CartItemDto> AddToCartAsync(string userId, int productId, int quantity);
         Task UpdateCartItemQuantityAsync(int cartItemId, string userId, int quantity);
         Task RemoveCartItemAsync(int cartItemId, string userId);
-        Task CreateOrderFromCartAsync(string userId, string address, string? phone);
+        /// <param name="cartKey">user id or guest key that owns the cart</param>
+        /// <param name="orderUserId">null for a guest order</param>
+        Task CreateOrderFromCartAsync(string cartKey, string? orderUserId, string address, string? phone, string? customerName);
+        /// <summary>Moves a guest cart into the user's cart (same products are summed).</summary>
+        Task MergeGuestCartAsync(string guestKey, string userId);
     }
 }

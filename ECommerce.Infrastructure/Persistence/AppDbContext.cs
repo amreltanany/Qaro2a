@@ -51,11 +51,9 @@ public class AppDbContext : IdentityDbContext<User>
             .Property(c => c.Price)
             .HasPrecision(18, 2);
 
-        modelBuilder.Entity<CartItem>()
-            .HasOne(c => c.User)
-            .WithMany()
-            .HasForeignKey(c => c.UserId)
-            .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
+        // CartItem.UserId holds either a user id or a guest key ("guest:<guid>"), so it is not a foreign key.
+        modelBuilder.Entity<CartItem>().Ignore(c => c.User);
+        modelBuilder.Entity<CartItem>().HasIndex(c => c.UserId);
 
         modelBuilder.Entity<CartItem>()
             .HasOne(c => c.Product)
