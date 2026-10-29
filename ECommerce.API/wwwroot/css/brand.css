@@ -78,13 +78,17 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 /* add-to-cart: white icon, label and animated cart on the blue button (navy while hovering / adding) */
 .product-card .shop-card-actions .button.shop-cart-animate,
 .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate {
-    background: var(--brand-blue); color: #fff; --text: #fff; --cart: #fff; --tick: #fff;
+    background: var(--brand-blue); color: #fff; --text: #fff; --cart: #fff; --tick: var(--brand-navy);
 }
 .product-card .shop-card-actions .button.shop-cart-animate:hover,
 .product-card .shop-card-actions .button.shop-cart-animate:focus-visible,
 .product-card .shop-card-actions .button.shop-cart-animate.loading,
 .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:hover:not(.loading),
 .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate.loading {
-    background: var(--brand-navy); color: #fff; --text: #fff; --cart: #fff; --tick: #fff;
+    background: var(--brand-navy); color: #fff; --text: #fff; --cart: #fff; --tick: var(--brand-navy);
 }
 .shop-cart-idle, .shop-cart-label, .shop-cart-plus-icon { color: #fff; }
+
+/* the basket fills white while adding, so the tick is drawn in the button colour (navy) to stay visible */
+.shop-products-row .product-card .shop-card-actions .button.shop-cart-animate.loading,
+.product-card .shop-card-actions .button.shop-cart-animate.loading { --tick: var(--brand-navy); }
