@@ -107,7 +107,7 @@
                                         <button type="button" class="order-btn order-details-btn" aria-expanded="false" data-show="@L("Details", "التفاصيل")" data-hide="@L("Hide", "إخفاء")">
                                             <i class="bi bi-eye"></i> <span>@L("Details", "التفاصيل")</span>
                                         </button>
-                                        <button type="button" class="order-btn order-download-btn" title="@L("Download order details", "تحميل تفاصيل الطلب")">
+                                        <button type="button" class="order-btn order-download-btn" title="@L("Receipt - download as image", "الإيصال - تحميل كصورة")">
                                             <i class="bi bi-download"></i> <span>@L("Download", "تحميل")</span>
                                         </button>
                                     </span>
@@ -160,11 +160,17 @@
     </div>
 </section>
 
+<script src="~/js/order-receipt.js" asp-append-version="true"></script>
 <script>
 (function () {
-    var cols = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(new[] { L("Product", "المنتج"), L("Price", "السعر"), L("Qty", "الكمية"), L("Subtotal", "الإجمالي الفرعي") }));
-    var labels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(new { order = L("Order", "طلب"), date = L("Date", "التاريخ"), status = L("Status", "الحالة"), total = L("Total", "الإجمالي"), ship = L("Ship to", "الشحن إلى"), phone = L("Phone", "الهاتف") }));
-    function cell(v) { v = String(v == null ? '' : v); if (/^[=+\-@@]/.test(v)) v = "'" + v; return '"' + v.replace(/"/g, '""') + '"'; } // quotes + no spreadsheet formulas
+    var T = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(new {
+        dir = isArabic ? "rtl" : "ltr",
+        official = L("OFFICIAL RECEIPT", "إيصال رسمي"), order = L("ORDER", "الطلب"), date = L("DATE", "التاريخ"), status = L("STATUS", "الحالة"),
+        phone = L("PHONE", "الهاتف"), ship = L("Ship to", "الشحن إلى"), item = L("ITEM", "المنتج"), amount = L("AMT", "المبلغ"), total = L("TOTAL", "الإجمالي"),
+        thanks = L("Thank you for shopping with Qaro2a", "شكرًا لتسوقك مع قروءه"),
+        reprint = L("Print again", "طباعة مرة أخرى"), download = L("Download image", "تحميل كصورة"), close = L("Close", "إغلاق"),
+        preparing = L("Preparing...", "جاري التجهيز..."), failed = L("Could not create the image. Please try again.", "تعذر إنشاء الصورة. حاول مرة أخرى.")
+    }));
     document.querySelectorAll('.order-card').forEach(function (card) {
         var body = card.querySelector('.order-body'), btn = card.querySelector('.order-details-btn');
         btn.addEventListener('click', function () {
@@ -174,20 +180,7 @@
             btn.classList.toggle('is-open', open);
             btn.querySelector('span').textContent = btn.getAttribute(open ? 'data-hide' : 'data-show');
         });
-        card.querySelector('.order-download-btn').addEventListener('click', function () {
-            var d = card.dataset, rows = [
-                [labels.order, '#' + d.orderId], [labels.date, d.orderDate], [labels.status, d.orderStatus], [labels.total, d.orderTotal],
-                [labels.ship, d.orderAddress], [labels.phone, d.orderPhone], [], cols];
-            card.querySelectorAll('.order-items-table tbody tr').forEach(function (tr) {
-                rows.push(Array.prototype.map.call(tr.children, function (td) { return td.textContent.trim(); }));
-            });
-            var csv = '\uFEFF' + rows.map(function (r) { return r.map(cell).join(','); }).join('\r\n');
-            var a = document.createElement('a');
-            a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
-            a.download = 'order-' + d.orderId + '.csv';
-            document.body.appendChild(a); a.click(); a.remove();
-            setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
-        });
+        card.querySelector('.order-download-btn').addEventListener('click', function () { window.QaroReceipt.open(card, T); });
     });
 })();
 </script>
