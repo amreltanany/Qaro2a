@@ -97,7 +97,10 @@
                         <div class="top-rated-item">
                             <div class="banner-item image-zoom-effect product-card h-100">
                                 <div class="image-holder shop-card-media">
-                                    <span class="shop-card-badge">@L("Top Rated", "الأعلى تقييمًا")</span>
+                                    @if (!string.IsNullOrWhiteSpace(product.CategoryName))
+                                    {
+                                        <span class="shop-card-badge">@ECommerce.API.Helpers.CategoryLabels.Localize(product.CategoryName, isArabic)</span>
+                                    }
                                     <button type="button" class="shop-wishlist-btn btn-add-wishlist" title="@L("Add to wishlist", "إضافة للمفضلة")" aria-label="@L("Add to wishlist", "إضافة للمفضلة")"
                                             data-product-id="@product.Id" data-product-name="@product.Name">
                                         <i class="bi bi-heart"></i>
@@ -120,10 +123,6 @@
                                         <p class="shop-card-description">@product.Description</p>
                                         <div class="shop-card-meta">
                                             <a href="/Home/Author/@Uri.EscapeDataString(product.Author.Trim().Replace(" ", "-"))" class="shop-card-author-chip">@product.Author</a>
-                                            @if (!string.IsNullOrWhiteSpace(product.CategoryName))
-                                            {
-                                                <a href="/Home/Category/@Uri.EscapeDataString(product.CategoryName.Trim().Replace(" ", "-"))" class="shop-card-category-chip">@product.CategoryName</a>
-                                            }
                                         </div>
                                     </div>
                                     <div class="shop-card-actions @(product.Stock > 0 ? null : "shop-card-actions--out-of-stock")">

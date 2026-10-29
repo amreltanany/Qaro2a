@@ -130,11 +130,11 @@
                                 {
                                     if (selectedCategoryId.HasValue && selectedCategoryId.Value == category.Id)
                                     {
-                                        <option value="@category.Id" selected>@category.Name</option>
+                                        <option value="@category.Id" selected>@ECommerce.API.Helpers.CategoryLabels.Localize(category.Name, isArabic)</option>
                                     }
                                     else
                                     {
-                                        <option value="@category.Id">@category.Name</option>
+                                        <option value="@category.Id">@ECommerce.API.Helpers.CategoryLabels.Localize(category.Name, isArabic)</option>
                                     }
                                 }
                             </select>
@@ -189,9 +189,7 @@
                             <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
                                 @{
                                     var cardImg = Url.Content(product.ImageUrl ?? "~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png");
-                                    string? cardBadge = product.TopRated
-                                        ? L("Top Rated", "الأعلى تقييمًا")
-                                        : (product.PublishDate.Year >= DateTime.UtcNow.Year ? L("New", "جديد") : null);
+                                    string? cardBadge = string.IsNullOrWhiteSpace(product.CategoryName) ? null : ECommerce.API.Helpers.CategoryLabels.Localize(product.CategoryName, isArabic);
                                 }
                                 <div class="banner-item image-zoom-effect product-card h-100">
                                     <div class="image-holder shop-card-media">
@@ -219,10 +217,6 @@
                                             <p class="shop-card-description">@product.Description</p>
                                             <div class="shop-card-meta">
                                                 <a href="/Home/Author/@Uri.EscapeDataString(product.Author.Trim().Replace(" ", "-"))" class="shop-card-author-chip">@product.Author</a>
-                                                @if (!string.IsNullOrWhiteSpace(product.CategoryName))
-                                                {
-                                                    <a href="/Home/Category/@Uri.EscapeDataString(product.CategoryName.Trim().Replace(" ", "-"))" class="shop-card-category-chip">@product.CategoryName</a>
-                                                }
                                             </div>
                                         </div>
                                         <div class="shop-card-actions @(product.Stock > 0 ? null : "shop-card-actions--out-of-stock")">

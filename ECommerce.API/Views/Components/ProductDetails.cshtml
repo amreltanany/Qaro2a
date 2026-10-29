@@ -26,7 +26,7 @@
             @if (!string.IsNullOrWhiteSpace(Model.CategoryName))
             {
                 <span>/</span>
-                <a href="/Home/Shop?categoryId=@Model.CategoryId">@Model.CategoryName</a>
+                <a href="/Home/Shop?categoryId=@Model.CategoryId">@ECommerce.API.Helpers.CategoryLabels.Localize(Model.CategoryName, isArabic)</a>
             }
         </nav>
 
@@ -38,7 +38,7 @@
             <div class="pd__info">
                 @if (!string.IsNullOrWhiteSpace(Model.CategoryName))
                 {
-                    <a class="pd__eyebrow" href="/Home/Shop?categoryId=@Model.CategoryId">@Model.CategoryName</a>
+                    <a class="pd__eyebrow" href="/Home/Shop?categoryId=@Model.CategoryId">@ECommerce.API.Helpers.CategoryLabels.Localize(Model.CategoryName, isArabic)</a>
                 }
                 <h1 class="pd__title">@Model.Name</h1>
                 <a class="pd__author" href="/Home/Shop?author=@Uri.EscapeDataString(Model.Author)">@Model.Author</a>
