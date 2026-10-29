@@ -93,4 +93,3 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate.loading,
 .product-card .shop-card-actions .button.shop-cart-animate.loading { --tick: var(--brand-navy); }
 
-.footer-pages-grid li:last-child .footer-page-link { white-space: nowrap; }
