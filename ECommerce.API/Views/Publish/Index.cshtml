@@ -42,8 +42,35 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="pdfFile" class="form-label">@L("Manuscript (PDF, max 5 MB)", "المخطوطة (PDF بحد أقصى 5 ميجابايت)")</label>
-                        <input type="file" class="form-control" id="pdfFile" name="pdfFile" accept=".pdf,application/pdf" required />
+                        <label class="form-label">@L("Manuscript (PDF, max 5 MB)", "المخطوطة (PDF بحد أقصى 5 ميجابايت)")</label>
+                        <div class="pub-drop" id="pubDrop" data-text="@System.Text.Json.JsonSerializer.Serialize(new { ready = L("File ready - press Submit", "الملف جاهز - اضغط إرسال"), notPdf = L("Only PDF files are accepted", "الملفات المقبولة PDF فقط"), tooBig = L("The file is larger than 5 MB", "حجم الملف أكبر من 5 ميجابايت") })">
+                            <input type="file" class="pub-drop__input" id="pdfFile" name="pdfFile" accept=".pdf,application/pdf" required aria-label="@L("Manuscript PDF", "ملف المخطوطة PDF")" />
+                            <div class="pub-drop__head">
+                                <div>
+                                    <p class="pub-drop__title">@L("Upload your manuscript", "ارفع مخطوطتك")</p>
+                                    <p class="pub-drop__hint">@L("Drag and drop, or take the shot.", "اسحب وأفلت الملف، أو سدّد الكرة.")</p>
+                                </div>
+                            </div>
+                            <div class="pub-file" aria-live="polite">
+                                <span class="pub-file__icon">PDF</span>
+                                <div class="pub-file__body">
+                                    <div class="pub-file__name"><span data-file-name></span><span data-file-size></span></div>
+                                    <div class="pub-file__bar"><i></i></div>
+                                    <div class="pub-file__status"></div>
+                                </div>
+                            </div>
+                            <svg class="pub-hoop" id="pubHoop" viewBox="0 0 130 150" aria-hidden="true">
+                                <rect x="35" y="4" width="60" height="44" rx="5" fill="#fff" stroke="#3b3f8f" stroke-width="3" />
+                                <rect x="52" y="22" width="26" height="18" rx="2" fill="none" stroke="#3b3f8f" stroke-width="2.5" />
+                                <ellipse cx="65" cy="56" rx="32" ry="7" fill="none" stroke="#3b3f8f" stroke-width="4" />
+                                <g class="net" stroke="#3b3f8f" stroke-width="1.6" fill="none" stroke-linecap="round">
+                                    <path d="M34 58 L50 128 M45 62 L56 130 M58 63 L61 131 M72 63 L69 131 M85 62 L74 130 M96 58 L80 128" />
+                                    <path d="M37 76 Q65 86 93 76 M41 94 Q65 103 89 94 M45 111 Q65 119 85 111" />
+                                </g>
+                            </svg>
+                            <span class="pub-ball" id="pubBall" role="button" tabindex="0" aria-label="@L("Pick a file", "اختر ملفًا")">PDF</span>
+                            <p class="pub-aim">@L("Aim the file and release to shoot into the basket.", "وجّه الملف وسيبه عشان يدخل السلة.")</p>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">@L("Submit", "إرسال")</button>
@@ -53,3 +80,11 @@
         </div>
     </div>
 </section>
+
+@section Head {
+    <link rel="stylesheet" href="~/css/publish-drop.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="~/js/publish-drop.js" asp-append-version="true"></script>
+}
