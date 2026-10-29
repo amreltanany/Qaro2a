@@ -190,3 +190,35 @@
         padding-right: 0.875rem;
     }
 }
+
+/* ---------- checkout: animated place-order button ---------- */
+.button.checkout-place {
+    --background: #2b2118;
+    --text: #fff;
+    --cart: #fff;
+    --tick: #2b2118;
+    width: 100%;
+    min-height: 56px;
+    border: 0;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #2f2a24 0%, #0f0c09 100%);
+    box-shadow: 0 14px 24px -8px rgba(15, 12, 9, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.button.checkout-place span.checkout-place__label {
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 56px;
+}
+
+.button.checkout-place span.checkout-place__label::before,
+.button.checkout-place span.checkout-place__label::after {
+    display: none !important;
+    content: none !important;
+}
+
+.button.checkout-place.loading {
+    --span-y: -56px;
+}

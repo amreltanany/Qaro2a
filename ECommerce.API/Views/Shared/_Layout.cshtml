@@ -657,7 +657,12 @@
     {
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                Swal.fire({ title: '@L("Order placed", "تم تأكيد الطلب")', icon: 'success', confirmButtonText: '@L("OK", "حسنًا")' });
+                Swal.fire({
+                    icon: 'success',
+                    title: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L("Order received", "تم استلام طلبك"))),
+                    text: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L("Your order has been received and we will contact you to confirm.", "تم استلام طلبك وسوف يتم التواصل معك للتأكيد."))),
+                    confirmButtonText: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L("OK", "حسنًا")))
+                });
             });
         </script>
     }
