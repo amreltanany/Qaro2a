@@ -49,7 +49,7 @@ public class HomeController : Controller
         var products = await _productService.GetAllAsync(new QueryParameters
         {
             PageNumber = 1,
-            PageSize = 3,
+            PageSize = 12,
             TopRatedOnly = true,
             SortBy = "publishdate_desc"
         });

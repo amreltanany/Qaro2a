@@ -302,6 +302,92 @@ namespace ECommerce.Infrastructure.Migrations
                     b.HasIndex("TopRated", "CreatedAt");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Author = "نوران بسيوني",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "بعد فارق — نوران بسيوني. من إصدارات قروءه.",
+                            ImageUrl = "/images/products/baad-fariq.webp",
+                            Name = "بعد فارق",
+                            Price = 130m,
+                            PublishDate = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Stock = 10,
+                            TopRated = true
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Author = "ممدوح عماد",
+                            CategoryId = 2,
+                            CreatedAt = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "أرخبيل الملوك — ممدوح عماد. من إصدارات قروءه.",
+                            ImageUrl = "/images/products/arkhabil-el-molouk.webp",
+                            Name = "أرخبيل الملوك",
+                            Price = 130m,
+                            PublishDate = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Stock = 10,
+                            TopRated = true
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Author = "آية المنشاوي",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "طيف نجاة — آية المنشاوي. من إصدارات قروءه.",
+                            ImageUrl = "/images/products/tayf-najah.webp",
+                            Name = "طيف نجاة",
+                            Price = 130m,
+                            PublishDate = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Stock = 10,
+                            TopRated = true
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Author = "آية المنشاوي",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "لوحة أخيرة — آية المنشاوي. من إصدارات قروءه.",
+                            ImageUrl = "/images/products/lawha-akhira.webp",
+                            Name = "لوحة أخيرة",
+                            Price = 130m,
+                            PublishDate = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Stock = 10,
+                            TopRated = true
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Author = "ممدوح عماد، نوران بسيوني، رنا رؤوف، آية المنشاوي",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "حلقة الذنب — ممدوح عماد، نوران بسيوني، رنا رؤوف، آية المنشاوي. من إصدارات قروءه.",
+                            ImageUrl = "/images/products/halaqat-al-dhanb.webp",
+                            Name = "حلقة الذنب",
+                            Price = 130m,
+                            PublishDate = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Stock = 10,
+                            TopRated = true
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Author = "رنا رؤوف",
+                            CategoryId = 4,
+                            CreatedAt = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "طلبك مرفوض — رنا رؤوف. من إصدارات قروءه.",
+                            ImageUrl = "/images/products/talabak-marfoud.webp",
+                            Name = "طلبك مرفوض",
+                            Price = 130m,
+                            PublishDate = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Stock = 10,
+                            TopRated = true
+                        });
                 });
 
             modelBuilder.Entity("ECommerce.Domain.Entities.Publish", b =>
