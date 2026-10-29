@@ -5,16 +5,16 @@
     max-width: min(260px, calc(100vw - 16px));
     padding: 7px 13px;
     border-radius: 12px;
-    background: linear-gradient(180deg, #34291f 0%, #1d160f 100%);
+    background: linear-gradient(180deg, #00346e 0%, #00346e 100%);
     color: #f8f1e6;
-    font-family: "Cairo", "Inter", "Segoe UI", system-ui, sans-serif;
+    font-family: "Cairo", var(--font-body);
     font-size: 0.78rem;
     font-weight: 600;
     line-height: 1.45;
     letter-spacing: 0.01em;
     white-space: nowrap;
     text-align: center;
-    box-shadow: 0 12px 24px -8px rgba(20, 14, 8, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 24px -8px rgba(0, 24, 56, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
     pointer-events: none;
     opacity: 0;
     transform: translateY(6px) scale(0.96);
@@ -32,9 +32,9 @@
     width: 10px;
     height: 10px;
     margin-left: -5px;
-    background: #1d160f;
+    background: #00346e;
     border-radius: 2px;
     transform: rotate(45deg);
 }
 
-.qt-tip.is-below .qt-tip__arrow { bottom: auto; top: -5px; background: #34291f; }
+.qt-tip.is-below .qt-tip__arrow { bottom: auto; top: -5px; background: #00346e; }

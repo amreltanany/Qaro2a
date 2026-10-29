@@ -125,9 +125,9 @@
     var needsSwiper = isHomeIndex;
     var bodyPageClass = isHomeIndex ? "homepage" : "site-page";
     var returnUrl = $"{Context.Request.PathBase}{Context.Request.Path}{Context.Request.QueryString}";
-    var footerImageUrl = Url.Content("~/logo/Footer.png");
-    var navLogoLightUrl = $"{Url.Content("~/logo/qaro2a-logo-light.png")}?width=180&format=webp&quality=85";
-    var navLogoDarkUrl = $"{Url.Content("~/logo/qaro2a-logo-dark.png")}?width=180&format=webp&quality=85";
+    var footerImageUrl = "none";
+    var navLogoLightUrl = Url.Content("~/logo/qaro2a-master-light.png");
+    var navLogoDarkUrl = Url.Content("~/logo/qaro2a-master-color.png");
 }
 <!DOCTYPE html>
 <html lang="@htmlLang" dir="@htmlDir">
@@ -148,16 +148,17 @@
         <style>
             .intro-loader{display:none}
             html.loading,html.loading body{overflow:hidden}
-            html.loading .intro-loader{display:flex;position:fixed;inset:0;z-index:5000;align-items:center;justify-content:center;direction:ltr;background:#1a252f;animation:il-curtain .75s cubic-bezier(.76,0,.24,1) 2.55s forwards}
+            html.loading .intro-loader{display:flex;position:fixed;inset:0;z-index:5000;align-items:center;justify-content:center;direction:ltr;background:#00346e;animation:il-curtain .75s cubic-bezier(.76,0,.24,1) 2.55s forwards}
             .il-pair{display:flex;align-items:center;max-width:100vw}
-            .il-mark{flex:none;width:clamp(4.6rem,9vw,7.2rem);aspect-ratio:1;border-radius:50%;background:#1977be;display:grid;place-items:center;transform:scale(0);animation:il-pop .5s cubic-bezier(.34,1.56,.64,1) .1s forwards,il-settle .9s ease .65s}
-            .il-mark img{width:62%;height:auto;display:block;clip-path:inset(0 100% 0 0);animation:il-reveal .55s cubic-bezier(.65,0,.35,1) .45s forwards}
+            html.loading .il-name{display:none !important}
+            .il-mark{flex:none;width:clamp(12rem,34vw,22rem);display:grid;place-items:center;transform:scale(0);animation:il-pop .5s cubic-bezier(.34,1.56,.64,1) .1s forwards,il-settle .9s ease .65s}
+            .il-mark img{width:100%;height:auto;display:block;clip-path:inset(0 100% 0 0);animation:il-reveal .55s cubic-bezier(.65,0,.35,1) .45s forwards}
             .il-name{display:grid;grid-template-columns:0fr;animation:il-open .7s cubic-bezier(.65,0,.35,1) 1.15s forwards}
             .il-name-in{min-width:0;overflow:hidden;padding-inline-start:clamp(.8rem,1.8vw,1.4rem)}
             .il-line{display:block;overflow:hidden;white-space:nowrap}
             .il-line>span{display:block;transform:translateY(115%);animation:il-up .7s cubic-bezier(.22,1,.36,1) 1.25s forwards}
             .il-title{font-weight:900;font-size:clamp(1.25rem,3.1vw,2.5rem);line-height:1.15;text-transform:uppercase;color:#fff;font-family:inherit}
-            .il-sub{margin-top:.35rem;font-weight:700;font-size:clamp(.62rem,1.2vw,.95rem);letter-spacing:.42em;text-transform:uppercase;color:#4da3ff}
+            .il-sub{margin-top:.35rem;font-weight:700;font-size:clamp(.62rem,1.2vw,.95rem);letter-spacing:.42em;text-transform:uppercase;color:#0270b8}
             .il-sub>span{animation-delay:1.4s}
             html[lang=ar] .il-sub{letter-spacing:0}
             @@media(max-width:560px){.il-title{font-size:1.15rem}.il-sub{letter-spacing:.3em}}
@@ -175,7 +176,7 @@
     <link rel="alternate" hreflang="en" href="@hreflangEn" />
     <link rel="alternate" hreflang="x-default" href="@hreflangDefault" />
     <link rel="sitemap" type="application/xml" title="Sitemap" href="@($"{baseUrl}/sitemap.xml")" />
-    <link rel="icon" type="image/png" href="~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png" asp-append-version="true" />
+    <link rel="icon" type="image/png" href="~/logo/favicon-qaro2a.png" asp-append-version="true" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -183,11 +184,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style"
-        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Noto+Serif+Arabic:wght@400;500;600;700;900&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Noto+Serif+Arabic:wght@400;500;600;700;900&family=Playfair+Display:wght@400;500;600;700&display=swap">
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap">
     </noscript>
     <meta name="format-detection" content="telephone=no">
     <meta name="mobile-web-app-capable" content="yes">
@@ -255,6 +256,7 @@
     <link rel="preload" as="style" href="~/css/layout-sections.css" asp-append-version="true"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" type="text/css" href="~/css/layout-sections.css" asp-append-version="true"></noscript>
+    <link rel="stylesheet" type="text/css" href="~/css/brand.css" asp-append-version="true">
 </head>
 
 <body class="@bodyPageClass">
@@ -263,7 +265,7 @@
     {
         <div class="intro-loader" aria-hidden="true">
             <div class="il-pair">
-                <div class="il-mark"><img src="@navLogoLightUrl" alt="" width="300" height="300" decoding="async" /></div>
+                <div class="il-mark"><img src="@navLogoLightUrl" alt="" width="720" height="286" decoding="async" /></div>
                 <div class="il-name"><div class="il-name-in">
                     <span class="il-line il-title"><span>QARO2A</span></span>
                     <span class="il-line il-sub"><span>@L("Books · Podcast", "كتب · بودكاست")</span></span>
@@ -446,8 +448,8 @@
                 </ul>
 
                 <a class="site-header__brand" asp-controller="Home" asp-action="Index" aria-label="@L("Qaro2a home", "الصفحة الرئيسية لقروءه")">
-                    <img class="site-header__logo site-header__logo--light" src="@navLogoLightUrl" alt="" width="300" height="300" loading="eager" fetchpriority="high" decoding="async" />
-                    <img class="site-header__logo site-header__logo--dark" src="@navLogoDarkUrl" alt="" aria-hidden="true" width="300" height="300" loading="eager" decoding="async" />
+                    <img class="site-header__logo site-header__logo--light" src="@navLogoLightUrl" alt="" width="720" height="286" loading="eager" fetchpriority="high" decoding="async" />
+                    <img class="site-header__logo site-header__logo--dark" src="@navLogoDarkUrl" alt="" aria-hidden="true" width="720" height="286" loading="eager" decoding="async" />
                 </a>
 
                 <div class="site-header__end">
@@ -543,6 +545,7 @@
                 <div class="container site-container text-white py-4 py-md-5">
                     <div class="footer-columns">
                         <div class="footer-col">
+                            <img src="~/logo/qaro2a-master-light.png" alt="@L("Qaro2a", "قروءه")" class="footer-logo" width="720" height="286" loading="lazy" decoding="async" />
                             <h5 class="text-white footer-heading">@L("Who We Are", "من نحن")</h5>
                             <p class="mb-0 small opacity-90">@L("We are a multidimensional literary HUB where stories come to life.", "نحن منصة أدبية متعددة الأبعاد حيث تنبض القصص بالحياة.")</p>
                         </div>

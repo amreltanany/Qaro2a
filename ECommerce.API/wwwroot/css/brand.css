@@ -1,0 +1,76 @@
+/* Qaro2a brand identity v1.0 — loaded after every other stylesheet.
+   Core palette: Qaro2a Blue (mark, headings, buttons, links), Deep Navy (text, dark backgrounds), Paper Beige (secondary background), White (base).
+   Branch colours: Bookstore green #70B802 (dark #518601 for text), Podcast gold #E8AC00, Publishing burgundy #670E30.
+   Type: Readex Pro for headlines, IBM Plex Sans Arabic for body and captions. */
+:root {
+    --brand-blue: #0270B8;
+    --brand-navy: #00346E;
+    --brand-beige: #F7F3EB;
+    --brand-green: #70B802;
+    --brand-green-dark: #518601;
+    --brand-gold: #E8AC00;
+    --brand-gold-dark: #9C7300;
+    --brand-burgundy: #670E30;
+    --brand-text: #33475f;
+    --brand-muted: #5a6b82;
+}
+
+html, body { background: #fff; }
+
+body {
+    --heading-font: var(--font-heading);
+    --heading-font-weight: 600;
+    --heading-color: var(--brand-navy);
+    --bs-body-color: var(--brand-text);
+    --bs-body-color-rgb: 51, 71, 95;
+    --bs-primary: var(--brand-blue);
+    --bs-primary-rgb: 2, 112, 184;
+    --bs-link-color: var(--brand-blue);
+    --bs-link-color-rgb: 2, 112, 184;
+    --bs-link-hover-color: var(--brand-navy);
+    --bs-link-hover-color-rgb: 0, 52, 110;
+    --swiper-theme-color: var(--brand-blue);
+    color: var(--brand-text);
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--brand-navy);
+}
+
+.text-muted { color: var(--brand-muted) !important; }
+::selection { background: rgba(2, 112, 184, .22); color: var(--brand-navy); }
+:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+
+/* primary buttons: blue, navy on hover */
+.btn-primary, .btn-primary:disabled {
+    --bs-btn-bg: var(--brand-blue); --bs-btn-border-color: var(--brand-blue); --bs-btn-color: #fff;
+    --bs-btn-hover-bg: var(--brand-navy); --bs-btn-hover-border-color: var(--brand-navy); --bs-btn-hover-color: #fff;
+    --bs-btn-active-bg: var(--brand-navy); --bs-btn-active-border-color: var(--brand-navy);
+}
+.btn-outline-primary {
+    --bs-btn-color: var(--brand-blue); --bs-btn-border-color: var(--brand-blue);
+    --bs-btn-hover-bg: var(--brand-blue); --bs-btn-hover-border-color: var(--brand-blue); --bs-btn-hover-color: #fff;
+    --bs-btn-active-bg: var(--brand-navy); --bs-btn-active-border-color: var(--brand-navy);
+}
+.form-control:focus, .form-select:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 .2rem rgba(2, 112, 184, .18); }
+.form-check-input:checked { background-color: var(--brand-blue); border-color: var(--brand-blue); }
+
+/* header / footer */
+.footer-bg { background-image: none !important; background-color: var(--brand-navy); }
+.footer-logo { display: block; width: 11rem; max-width: 70%; height: auto; margin-bottom: 1rem; }
+.footer-heading { font-family: var(--font-heading); font-weight: 600; }
+
+/* shop = Bookstore branch: green accents (light shades for backgrounds, dark shades for text) */
+.product-card .shop-card-badge { background: #e7f5cf; color: var(--brand-green-dark); }
+.product-card .shop-card-price, .shop-card-price { color: var(--brand-navy); }
+.product-card .shop-card-author-chip { background: var(--brand-beige); color: var(--brand-navy); }
+
+/* publishing branch: burgundy on the Publish page */
+.pub-drop:hover, .pub-drop.is-over { border-color: var(--brand-burgundy); }
+.pub-drop__title { color: var(--brand-burgundy); }
+
+/* the old template watermarks (previous logo) are not used any more: plain Paper Beige to navy fade behind the About section */
+.home-about-section { background-image: linear-gradient(180deg, #ffffff 0%, var(--brand-beige) 78%, rgba(0, 52, 110, .12) 100%) !important; }
+.pd__cta:hover:not(.pd__cta--off) { background: var(--brand-navy); }

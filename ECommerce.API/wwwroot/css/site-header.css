@@ -1,7 +1,7 @@
 /* Floating header: transparent over the hero, white pill when scrolling up. */
 .site-header {
     --sh-red: #d62839;
-    --sh-navy: #1a252f;
+    --sh-navy: #00346e;
     --sh-r: 1.5rem;
     --bar-bg: transparent;
     --bar-fg: #fff;
@@ -120,7 +120,7 @@ html[dir="rtl"] .site-header__bar {
 
 .site-header__logo {
     display: block;
-    height: 4.5rem;
+    height: 3.4rem;
     width: auto;
     transition: opacity 0.4s ease;
 }
@@ -131,7 +131,8 @@ html[dir="rtl"] .site-header__bar {
 
 .site-header__logo--dark {
     position: absolute;
-    inset: 0;
+    inset-block: 0;
+    inset-inline-start: 0;
     opacity: var(--logo-dark);
 }
 
@@ -283,7 +284,7 @@ html[dir="rtl"] .site-header__links .nav-link {
     }
 
     .site-header__logo {
-        height: 4.5rem;
+        height: 2.7rem;
     }
 
     .site-header__links,
@@ -451,25 +452,25 @@ html { scrollbar-gutter: stable; }
 *::-webkit-scrollbar { width: 12px; height: 12px; }
 
 *::-webkit-scrollbar-track {
-    background: #f3ece0;
+    background: #f7f3eb;
     box-shadow: inset 1px 0 0 rgba(120, 95, 60, 0.12);
 }
 
 *::-webkit-scrollbar-thumb {
     min-height: 48px;
-    border: 3px solid #f3ece0;
+    border: 3px solid #f7f3eb;
     border-radius: 999px;
     background: linear-gradient(180deg, #c3a27a 0%, #8b6a3e 100%);
     transition: background 0.2s ease;
 }
 
-*::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #a98354 0%, #6a4d28 100%); }
-*::-webkit-scrollbar-thumb:active { background: #5b4326; }
-*::-webkit-scrollbar-corner { background: #f3ece0; }
+*::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #0270b8 0%, #00346e 100%); }
+*::-webkit-scrollbar-thumb:active { background: #00346e; }
+*::-webkit-scrollbar-corner { background: #f7f3eb; }
 
 /* Firefox (no ::-webkit-scrollbar there) */
 @supports not selector(::-webkit-scrollbar) {
-    * { scrollbar-width: thin; scrollbar-color: #a98354 #f3ece0; }
+    * { scrollbar-width: thin; scrollbar-color: #0270b8 #f7f3eb; }
 }
 
 /* ---------- cart count badge ---------- */
@@ -485,7 +486,7 @@ html { scrollbar-gutter: stable; }
     border-radius: 999px;
     background: #d62839;
     color: #fff;
-    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 0.66rem;
     font-weight: 700;
     line-height: 18px;

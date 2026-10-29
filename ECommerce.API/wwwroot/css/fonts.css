@@ -1,10 +1,11 @@
 /* Site typography — requires Google Fonts in _Layout (Cairo + Noto Serif Arabic + Playfair Display) */
 
 html {
-  --font-english: "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-arabic: "Cairo", "Segoe UI", Tahoma, sans-serif;
-  /* Display face for Arabic headings (free serif display; the licensed Thmanyah files must not be hosted) */
-  --font-arabic-display: "Noto Serif Arabic", "Cairo", "Segoe UI", Tahoma, serif;
+  --font-body: "IBM Plex Sans Arabic", "Readex Pro", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --font-heading: "Readex Pro", "IBM Plex Sans Arabic", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --font-english: var(--font-body);
+  --font-arabic: var(--font-body);
+  --font-arabic-display: var(--font-heading);
 }
 
 html[lang="en"] {
