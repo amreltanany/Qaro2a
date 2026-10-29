@@ -51,7 +51,12 @@
                                     }
                                     else
                                     {
-                                        <span class="text-muted">Guest</span>
+                                        <span>@(string.IsNullOrWhiteSpace(order.UserName) ? "—" : order.UserName)</span>
+                                        <span class="badge bg-light text-dark border ms-1">Guest</span>
+                                        @if (!string.IsNullOrWhiteSpace(order.ShippingPhone))
+                                        {
+                                            <br /><small class="text-muted" dir="ltr">@order.ShippingPhone</small>
+                                        }
                                     }
                                 </td>
                                 <td>@order.TotalAmount.ToString("N2") EGP</td>
@@ -127,7 +132,11 @@
                             }
                             else
                             {
-                                <span class="text-muted">Guest</span>
+                                <div>@(string.IsNullOrWhiteSpace(order.UserName) ? "—" : order.UserName) <span class="badge bg-light text-dark border ms-1">Guest</span></div>
+                                @if (!string.IsNullOrWhiteSpace(order.ShippingPhone))
+                                {
+                                    <div class="text-muted" dir="ltr">@order.ShippingPhone</div>
+                                }
                             }
                         </div>
                         <div class="fw-semibold mb-2">Total: @order.TotalAmount.ToString("N2") EGP</div>
