@@ -25,13 +25,13 @@ namespace ECommerce.Domain.Entities
 
         protected Order() { }
 
-        public Order(string? userId, List<OrderItem> items)
+        public Order(string? userId, List<OrderItem> items, decimal? deliveryFee = null)
         {
             UserId = userId;
             _items = items;
             OrderDate = DateTime.UtcNow;
             Status = OrderStatus.Pending;
-            DeliveryFee = OrderPricing.DeliveryFee;
+            DeliveryFee = deliveryFee ?? OrderPricing.DeliveryFee;
         }
 
         public void AddItem(int productId, decimal price, int quantity)

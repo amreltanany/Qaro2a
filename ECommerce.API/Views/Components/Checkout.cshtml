@@ -41,11 +41,11 @@
                     </p>
                     <p>
                         <span class="text-muted">@L("Delivery fee:", "رسوم التوصيل:")</span>
-                        <span class="fw-semibold ms-2">@Model.DeliveryFee.ToString("N2") EGP</span>
+                        <span class="fw-semibold ms-2" id="deliveryFeeValue">@(Model.HasGovernorate ? Model.DeliveryFee.ToString("N2") + " EGP" : L("Choose your governorate", "اختر المحافظة"))</span>
                     </p>
                     <p class="fs-5 fw-bold">
                         <span class="text-muted">@L("Total:", "الإجمالي:")</span>
-                        <span class="ms-2">@Model.GrandTotal.ToString("N2") EGP</span>
+                        <span class="ms-2" id="grandTotalValue" data-subtotal="@Model.ItemsSubtotal.ToString(System.Globalization.CultureInfo.InvariantCulture)">@Model.GrandTotal.ToString("N2") EGP</span>
                     </p>
                 </div>
             </div>
@@ -85,6 +85,16 @@
                         <input type="tel" class="form-control" id="Phone" name="Phone" value="@Model.Phone" placeholder="@L("Enter your phone number", "أدخل رقم هاتفك")" required />
                     </div>
                     <div class="mb-3">
+                        <label for="Governorate" class="form-label">@L("Governorate", "المحافظة")</label>
+                        <select class="form-select" id="Governorate" name="Governorate" required>
+                            <option value="" data-fee="">@L("Choose your governorate", "اختر المحافظة")</option>
+                            @foreach (var g in ECommerce.Domain.Common.OrderPricing.Governorates)
+                            {
+                                <option value="@g.Key" data-fee="@ECommerce.Domain.Common.OrderPricing.FeeFor(g).ToString(System.Globalization.CultureInfo.InvariantCulture)" selected="@(Model.Governorate == g.Key)">@L(g.En, g.Ar) - @ECommerce.Domain.Common.OrderPricing.FeeFor(g).ToString("N0") EGP</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="Address" class="form-label">@L("Address", "العنوان")</label>
                         <textarea class="form-control" id="Address" name="Address" rows="3" placeholder="@L("Enter your shipping address", "أدخل عنوان الشحن")" required>@Model.Address</textarea>
                     </div>
@@ -104,6 +114,14 @@
             var form = document.getElementById('checkoutForm');
             var btn = document.getElementById('placeOrderBtn');
             if (!form || !btn) return;
+            var gov = document.getElementById('Governorate'), feeEl = document.getElementById('deliveryFeeValue'), totEl = document.getElementById('grandTotalValue');
+            function fmt(n) { return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' EGP'; }
+            function updateFee() {
+                var o = gov.options[gov.selectedIndex], fee = parseFloat(o && o.getAttribute('data-fee'));
+                if (isNaN(fee)) { feeEl.textContent = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L("Choose your governorate", "اختر المحافظة"))); totEl.textContent = fmt(parseFloat(totEl.getAttribute('data-subtotal'))); return; }
+                feeEl.textContent = fmt(fee); totEl.textContent = fmt(parseFloat(totEl.getAttribute('data-subtotal')) + fee);
+            }
+            gov.addEventListener('change', updateFee); updateFee();
             var sending = false;
             form.addEventListener('submit', function (e) {
                 if (sending) { e.preventDefault(); return; }

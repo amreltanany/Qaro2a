@@ -1,0 +1,131 @@
+@model ECommerce.API.ViewModels.TrackViewModel
+@{
+    var isArabic = string.Equals(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    ViewData["Title"] = L("Track my order", "تتبّع طلبي");
+    ViewData["MetaDescription"] = L("Track your Qaro2a order with your order number and phone number.", "تتبّع طلبك من قروءه برقم الطلب ورقم الهاتف.");
+    var order = Model.Order;
+}
+
+<link rel="stylesheet" href="~/css/account.css" asp-append-version="true" />
+
+<section class="py-5">
+    <div class="container" style="max-width: 760px;">
+        @if (Model.JustPlaced && order != null)
+        {
+            <div class="alert alert-success" role="status">
+                <strong>@L("Thank you! Your order was placed.", "شكرًا لك! تم تسجيل طلبك.")</strong>
+                <div class="mt-1">@L("Your order number is", "رقم طلبك هو") <strong>#@order.Id</strong>. @L("Keep it: you can follow the order any time from \"Track my order\" with this number and your phone number.", "احتفظ به: تقدر تتابع الطلب في أي وقت من \"تتبّع طلبي\" برقم الطلب ورقم هاتفك.")</div>
+            </div>
+        }
+
+        <h2 class="mb-3">@L("Track my order", "تتبّع طلبي")</h2>
+
+        @if (order == null)
+        {
+            <p class="text-muted">@L("Enter the order number and the phone number you used when ordering.", "اكتب رقم الطلب ورقم الهاتف اللي استخدمته وقت الطلب.")</p>
+            @if (Model.NotFound)
+            {
+                <div class="alert alert-danger" role="alert">@L("We could not find an order with these details. Check the number and the phone and try again.", "ما لقيناش طلب بالبيانات دي. راجع الرقم ورقم الهاتف وحاول تاني.")</div>
+            }
+            <form asp-controller="Track" asp-action="Lookup" method="post" asp-antiforgery="true" class="card border-0 shadow-sm p-4">
+                <div class="mb-3">
+                    <label for="orderNumber" class="form-label">@L("Order number", "رقم الطلب")</label>
+                    <input type="text" inputmode="numeric" class="form-control" id="orderNumber" name="orderNumber" value="@Model.OrderNumber" maxlength="12" placeholder="1042" required />
+                </div>
+                <div class="mb-3">
+                    <label for="trackPhone" class="form-label">@L("Phone number used on the order", "رقم الهاتف المستخدم في الطلب")</label>
+                    <input type="tel" class="form-control" id="trackPhone" name="phone" value="@Model.Phone" maxlength="30" placeholder="01XXXXXXXXX" required autocomplete="tel" />
+                </div>
+                <button type="submit" class="btn btn-primary">@L("Track", "تتبّع")</button>
+            </form>
+        }
+        else
+        {
+            var statusKey = (order.Status ?? "").Trim().ToLowerInvariant();
+            var statusLabel = statusKey switch
+            {
+                "pending" => L("Pending", "قيد الانتظار"),
+                "paid" => L("Paid", "مدفوع"),
+                "shipped" => L("Shipped", "تم الشحن"),
+                "cancelled" => L("Cancelled", "ملغي"),
+                _ => order.Status
+            };
+            var itemsSubtotal = order.Items.Sum(i => i.Subtotal);
+            <div class="order-card" data-order-id="@order.Id" data-order-date="@order.OrderDate.ToLocalTime().ToString("yyyy-MM-dd HH:mm")" data-order-status="@statusLabel" data-order-total="@order.TotalAmount.ToString("N2") EGP"
+                 data-order-address="@order.ShippingAddress" data-order-phone="@order.ShippingPhone" data-order-delivery="@order.DeliveryFee.ToString("N2") EGP">
+                <div class="order-card-header">
+                    <strong>@L("Order", "طلب") #@order.Id</strong>
+                    <span>@order.OrderDate.ToLocalTime().ToString("g")</span>
+                    <span class="order-status order-status--@statusKey">@statusLabel</span>
+                    <span class="ms-auto fw-semibold">@order.TotalAmount.ToString("N2") EGP</span>
+                    <span class="order-actions">
+                        <button type="button" class="order-btn order-download-btn"><i class="bi bi-download"></i> <span>@L("Receipt - download as image", "الإيصال - تحميل كصورة")</span></button>
+                    </span>
+                </div>
+                <div class="px-3 py-2 small border-bottom bg-white">
+                    @if (!string.IsNullOrWhiteSpace(order.ShippingAddress))
+                    {
+                        <div><span class="text-muted">@L("Ship to:", "الشحن إلى:")</span> @order.ShippingAddress</div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(order.ShippingPhone))
+                    {
+                        <div><span class="text-muted">@L("Phone:", "الهاتف:")</span> <span dir="ltr">@order.ShippingPhone</span></div>
+                    }
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm mb-0 order-items-table">
+                        <thead>
+                            <tr>
+                                <th>@L("Product", "المنتج")</th>
+                                <th class="text-end">@L("Price", "السعر")</th>
+                                <th class="text-end">@L("Qty", "الكمية")</th>
+                                <th class="text-end">@L("Subtotal", "الإجمالي الفرعي")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var line in order.Items)
+                            {
+                                <tr>
+                                    <td>@line.ProductName</td>
+                                    <td class="text-end">@line.Price.ToString("N2") EGP</td>
+                                    <td class="text-end">@line.Quantity</td>
+                                    <td class="text-end">@line.Subtotal.ToString("N2") EGP</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr><td colspan="3" class="text-end text-muted">@L("Items subtotal", "إجمالي المنتجات")</td><td class="text-end">@itemsSubtotal.ToString("N2") EGP</td></tr>
+                            <tr><td colspan="3" class="text-end text-muted">@L("Delivery fee", "رسوم التوصيل")</td><td class="text-end">@order.DeliveryFee.ToString("N2") EGP</td></tr>
+                            <tr class="fw-bold"><td colspan="3" class="text-end">@L("Total", "الإجمالي")</td><td class="text-end">@order.TotalAmount.ToString("N2") EGP</td></tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="mt-3 d-flex gap-2">
+                <a asp-controller="Home" asp-action="Shop" class="btn btn-outline-primary">@L("Continue shopping", "متابعة التسوق")</a>
+                <a asp-controller="Track" asp-action="Index" class="btn btn-outline-secondary">@L("Track another order", "تتبّع طلب آخر")</a>
+            </div>
+        }
+    </div>
+</section>
+
+@if (order != null)
+{
+    <script src="~/js/order-receipt.js" asp-append-version="true"></script>
+    <script>
+    (function () {
+        var T = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(new {
+            dir = isArabic ? "rtl" : "ltr",
+            official = L("OFFICIAL RECEIPT", "إيصال رسمي"), order = L("ORDER", "الطلب"), date = L("DATE", "التاريخ"), status = L("STATUS", "الحالة"),
+            phone = L("PHONE", "الهاتف"), ship = L("Ship to", "الشحن إلى"), item = L("ITEM", "المنتج"), amount = L("AMT", "المبلغ"), total = L("TOTAL", "الإجمالي"),
+            delivery = L("DELIVERY", "التوصيل"),
+            thanks = L("Thank you for shopping with Qaro2a", "شكرًا لتسوقك مع قروءه"),
+            reprint = L("Print again", "طباعة مرة أخرى"), download = L("Download image", "تحميل كصورة"), close = L("Close", "إغلاق"),
+            preparing = L("Preparing...", "جاري التجهيز..."), failed = L("Could not create the image. Please try again.", "تعذر إنشاء الصورة. حاول مرة أخرى.")
+        }));
+        var card = document.querySelector('.order-card');
+        card.querySelector('.order-download-btn').addEventListener('click', function () { window.QaroReceipt.open(card, T); });
+    })();
+    </script>
+}

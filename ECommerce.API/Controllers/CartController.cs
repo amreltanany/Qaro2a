@@ -1,3 +1,4 @@
+using ECommerce.Domain.Common;
 using ECommerce.API.Helpers;
 using ECommerce.API.ViewModels;
 using ECommerce.Application.Interfaces;
@@ -88,7 +89,7 @@ namespace ECommerce.API.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ConfirmCheckout(string FullName, string Email, string Phone, string Address)
+        public async Task<IActionResult> ConfirmCheckout(string FullName, string Email, string Phone, string Address, string? Governorate)
         {
             var (key, userId) = await ResolveOwnerAsync();
             if (string.IsNullOrEmpty(key))
@@ -100,6 +101,7 @@ namespace ECommerce.API.Controllers
             var isGuest = user == null;
 
             var missing = string.IsNullOrWhiteSpace(Address)
+                || OrderPricing.Find(Governorate) == null
                 || (isGuest && (string.IsNullOrWhiteSpace(FullName) || string.IsNullOrWhiteSpace(Phone)));
             if (missing)
             {
@@ -111,18 +113,21 @@ namespace ECommerce.API.Controllers
                     Email = user?.Email ?? string.Empty,
                     Phone = user?.PhoneNumber ?? Phone ?? string.Empty,
                     Address = Address ?? string.Empty,
+                    Governorate = OrderPricing.Find(Governorate)?.Key ?? string.Empty,
                     CartItems = cartItems
                 });
             }
 
-            await _cartService.CreateOrderFromCartAsync(
+            var orderId = await _cartService.CreateOrderFromCartAsync(
                 key,
                 userId,
                 Address.Trim(),
                 Phone?.Trim(),
-                isGuest ? FullName.Trim() : user!.FullName);
-            TempData["OrderPlaced"] = true;
-            return RedirectToAction("Index", "Home");
+                isGuest ? FullName.Trim() : user!.FullName,
+                OrderPricing.Find(Governorate)!.Key);
+            // the confirmation page reads these once (TempData), so only the person who just ordered can open it
+            TempData["PlacedOrderId"] = orderId;
+            return RedirectToAction("Placed", "Track");
         }
     }
 }

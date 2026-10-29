@@ -1,3 +1,4 @@
+using ECommerce.Domain.Common;
 using AutoMapper;
 using ECommerce.Application.DTOs.Cart;
 using ECommerce.Application.Interfaces;
@@ -100,8 +101,9 @@ namespace ECommerce.Application.Services.Implementations
             await _cartItemRepository.DeleteAsync(item);
         }
 
-        public async Task CreateOrderFromCartAsync(string cartKey, string? orderUserId, string address, string? phone, string? customerName)
+        public async Task<int> CreateOrderFromCartAsync(string cartKey, string? orderUserId, string address, string? phone, string? customerName, string governorateKey)
         {
+            var governorate = OrderPricing.Find(governorateKey) ?? throw new ArgumentException("Unknown governorate", nameof(governorateKey));
             var cartItems = (await _cartItemRepository.GetByUserIdAsync(cartKey)).ToList();
             if (cartItems.Count == 0) throw new InvalidOperationException("Cart is empty");
 
@@ -110,13 +112,14 @@ namespace ECommerce.Application.Services.Implementations
             {
                 orderItems.Add(new OrderItem(item.ProductId, item.Price, item.Quantity));
             }
-            var order = new Order(orderUserId, orderItems);
-            order.SetShippingAddress(address);
+            var order = new Order(orderUserId, orderItems, OrderPricing.FeeFor(governorate));
+            order.SetShippingAddress(governorate.Ar + " - " + address);
             order.SetShippingPhone(phone);
             order.SetCustomerName(customerName);
 
             await _orderRepository.AddAsync(order);
             await _cartItemRepository.DeleteByUserIdAsync(cartKey);
+            return order.Id;
         }
 
         public async Task MergeGuestCartAsync(string guestKey, string userId)

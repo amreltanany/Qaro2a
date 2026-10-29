@@ -97,7 +97,7 @@
                                     _ => order.Status
                                 };
                             <div class="order-card" data-order-id="@order.Id" data-order-date="@order.OrderDate.ToLocalTime().ToString("yyyy-MM-dd HH:mm")" data-order-status="@statusLabel" data-order-total="@order.TotalAmount.ToString("N2") EGP"
-                                 data-order-address="@order.ShippingAddress" data-order-phone="@order.ShippingPhone">
+                                 data-order-address="@order.ShippingAddress" data-order-phone="@order.ShippingPhone" data-order-delivery="@order.DeliveryFee.ToString("N2") EGP">
                                 <div class="order-card-header">
                                     <strong>@L("Order", "طلب") #@order.Id</strong>
                                     <span>@order.OrderDate.ToLocalTime().ToString("g")</span>
@@ -148,6 +148,10 @@
                                                 </tr>
                                             }
                                         </tbody>
+                                        <tfoot>
+                                            <tr><td colspan="3" class="text-end text-muted">@L("Delivery fee", "رسوم التوصيل")</td><td class="text-end">@order.DeliveryFee.ToString("N2") EGP</td></tr>
+                                            <tr class="fw-bold"><td colspan="3" class="text-end">@L("Total", "الإجمالي")</td><td class="text-end">@order.TotalAmount.ToString("N2") EGP</td></tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                                 </div>
@@ -166,7 +170,7 @@
     var T = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(new {
         dir = isArabic ? "rtl" : "ltr",
         official = L("OFFICIAL RECEIPT", "إيصال رسمي"), order = L("ORDER", "الطلب"), date = L("DATE", "التاريخ"), status = L("STATUS", "الحالة"),
-        phone = L("PHONE", "الهاتف"), ship = L("Ship to", "الشحن إلى"), item = L("ITEM", "المنتج"), amount = L("AMT", "المبلغ"), total = L("TOTAL", "الإجمالي"),
+        phone = L("PHONE", "الهاتف"), ship = L("Ship to", "الشحن إلى"), item = L("ITEM", "المنتج"), amount = L("AMT", "المبلغ"), total = L("TOTAL", "الإجمالي"), delivery = L("DELIVERY", "التوصيل"),
         thanks = L("Thank you for shopping with Qaro2a", "شكرًا لتسوقك مع قروءه"),
         reprint = L("Print again", "طباعة مرة أخرى"), download = L("Download image", "تحميل كصورة"), close = L("Close", "إغلاق"),
         preparing = L("Preparing...", "جاري التجهيز..."), failed = L("Could not create the image. Please try again.", "تعذر إنشاء الصورة. حاول مرة أخرى.")

@@ -48,6 +48,7 @@
             paper.appendChild(line);
         });
         paper.appendChild(el('div', 'rcpt-dash'));
+        if (d.orderDelivery) paper.appendChild(row(T.delivery || 'DELIVERY', d.orderDelivery));
         var tot = row(T.total, d.orderTotal); tot.classList.add('rcpt-total'); paper.appendChild(tot);
         paper.appendChild(el('div', 'rcpt-dash'));
         paper.appendChild(el('div', 'rcpt-thanks', T.thanks));
