@@ -35,6 +35,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({ productId: productId, quantity: qty })
             })
                 .then(function (res) {
+                    if (res.ok && window.updateCartBadge) {
+                        // refresh the header badge with the new total
+                        fetch('/api/Cart', { credentials: 'same-origin', headers: token ? { 'Authorization': 'Bearer ' + token } : {} })
+                            .then(function (r) { return r.json(); })
+                            .then(function (items) { window.updateCartBadge(items.reduce(function (s, i) { return s + (i.quantity || 0); }, 0)); })
+                            .catch(function () { });
+                    }
                     if (!res.ok) {
                         return res.json().then(function (body) {
                             var msg = (body && (body.message || (body.Errors && body.Errors.Message)))

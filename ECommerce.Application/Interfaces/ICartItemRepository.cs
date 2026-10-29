@@ -11,6 +11,8 @@ namespace ECommerce.Application.Interfaces
         Task UpdateAsync(CartItem cartItem);
         Task DeleteAsync(CartItem cartItem);
         Task DeleteByUserIdAsync(string userId);
+        /// <summary>Total quantity in the cart (for the header badge).</summary>
+        Task<int> CountQuantityAsync(string ownerKey);
         /// <summary>Returns cart items created before the given cutoff (e.g. for expiry cleanup).</summary>
         Task<IReadOnlyList<CartItem>> GetOlderThanAsync(DateTime cutoffUtc);
     }

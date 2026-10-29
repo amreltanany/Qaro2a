@@ -8,7 +8,6 @@
 }
 
 <link rel="stylesheet" href="~/css/cart.css" asp-append-version="true" />
-<link rel="stylesheet" href="~/css/button.css" asp-append-version="true" />
 
 <section class="checkout-page-section">
     <div class="container checkout-page-container">
@@ -21,7 +20,12 @@
                     @foreach (var item in Model.CartItems)
                     {
                         <article class="checkout-card">
-                            <h3 class="checkout-card__name">@item.ProductName</h3>
+                            <div class="cart-card__head">
+                                <span class="cart-card__cover cart-card__cover--sm">
+                                    <img src="@Url.Content(item.ImageUrl ?? "~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png")" alt="@item.ProductName" loading="lazy" />
+                                </span>
+                                <h3 class="checkout-card__name">@item.ProductName</h3>
+                            </div>
                             <div class="cart-card__row">
                                 <span class="checkout-card__price">@item.Price.ToString("N2") EGP</span>
                                 <span class="text-muted small">@L("Qty", "الكمية"): @item.Quantity</span>
@@ -84,14 +88,9 @@
                         <label for="Address" class="form-label">@L("Address", "العنوان")</label>
                         <textarea class="form-control" id="Address" name="Address" rows="3" placeholder="@L("Enter your shipping address", "أدخل عنوان الشحن")" required>@Model.Address</textarea>
                     </div>
-                    <button type="submit" class="button checkout-place" id="placeOrderBtn">
+                    <button type="submit" class="checkout-place" id="placeOrderBtn">
                         <span class="checkout-place__label">@L("Place order", "تأكيد الطلب")</span>
-                        <div class="cart">
-                            <svg viewBox="0 0 36 26">
-                                <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
-                                <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
-                            </svg>
-                        </div>
+                        <svg class="checkout-place__tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
                     </button>
                 </form>
             </div>
@@ -111,8 +110,8 @@
                 if (!form.checkValidity()) return;      // let the browser show the validation messages
                 e.preventDefault();
                 sending = true;
-                btn.classList.add('loading');            // play the cart animation, then send the order
-                setTimeout(function () { form.submit(); }, 3200);
+                btn.classList.add('is-done');             // show the tick, then send the order
+                setTimeout(function () { form.submit(); }, 900);
             });
         })();
     </script>

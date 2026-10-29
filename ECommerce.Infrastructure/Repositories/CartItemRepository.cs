@@ -47,6 +47,9 @@ namespace ECommerce.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<int> CountQuantityAsync(string ownerKey) =>
+            await _context.CartItems.Where(c => c.UserId == ownerKey).SumAsync(c => (int?)c.Quantity) ?? 0;
+
         public async Task DeleteByUserIdAsync(string userId)
         {
             var items = await _context.CartItems.Where(c => c.UserId == userId).ToListAsync();

@@ -35,7 +35,12 @@
                 {
                     var atMaxStock = item.Quantity >= item.AvailableStock;
                     <article class="cart-card" data-item-id="@item.Id" data-max-stock="@item.AvailableStock">
-                        <h3 class="cart-card__name">@item.ProductName</h3>
+                        <div class="cart-card__head">
+                            <a class="cart-card__cover" href="@ECommerce.API.Helpers.SlugHelper.ProductPath(item.ProductId, item.ProductName)">
+                                <img src="@Url.Content(item.ImageUrl ?? "~/logo/429827302_747764070661978_6323408778619379006_n-removebg-preview.png")" alt="@item.ProductName" loading="lazy" />
+                            </a>
+                            <h3 class="cart-card__name"><a href="@ECommerce.API.Helpers.SlugHelper.ProductPath(item.ProductId, item.ProductName)">@item.ProductName</a></h3>
+                        </div>
                         <div class="cart-card__row">
                             <span class="cart-card__price">@item.Price.ToString("N2") EGP</span>
                             <div class="cart-card__qty">

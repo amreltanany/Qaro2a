@@ -463,7 +463,7 @@
                             <a asp-controller="Home" asp-action="Wishlist" class="site-header__icon" aria-label="@L("Wishlist", "المفضلة")" title="@L("Wishlist", "المفضلة")"><i class="bi bi-bookmark-heart" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a asp-controller="Cart" asp-action="Index" class="site-header__icon" aria-label="@L("Shopping cart", "سلة التسوق")" title="@L("Cart", "السلة")"><i class="bi bi-cart3" aria-hidden="true"></i></a>
+                            <a asp-controller="Cart" asp-action="Index" class="site-header__icon" aria-label="@L("Shopping cart", "سلة التسوق")" title="@L("Cart", "السلة")"><i class="bi bi-cart3" aria-hidden="true"></i><span class="site-header__badge" data-cart-count>@await Component.InvokeAsync("CartCount")</span></a>
                         </li>
                         <li>
                             <a href="#search" class="site-header__icon search-button" aria-label="@L("Open search", "فتح البحث")" title="@L("Search", "بحث")"><i class="bi bi-search" aria-hidden="true"></i></a>
@@ -510,7 +510,7 @@
                             <a asp-controller="Home" asp-action="Wishlist" class="site-header__icon" aria-label="@L("Wishlist", "المفضلة")"><i class="bi bi-bookmark-heart" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a asp-controller="Cart" asp-action="Index" class="site-header__icon" aria-label="@L("Shopping cart", "سلة التسوق")"><i class="bi bi-cart3" aria-hidden="true"></i></a>
+                            <a asp-controller="Cart" asp-action="Index" class="site-header__icon" aria-label="@L("Shopping cart", "سلة التسوق")"><i class="bi bi-cart3" aria-hidden="true"></i><span class="site-header__badge" data-cart-count>@await Component.InvokeAsync("CartCount")</span></a>
                         </li>
                         <li>
                             <a href="#search" class="site-header__icon search-button" aria-label="@L("Open search", "فتح البحث")"><i class="bi bi-search" aria-hidden="true"></i></a>

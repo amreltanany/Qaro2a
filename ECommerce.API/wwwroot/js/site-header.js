@@ -59,4 +59,17 @@
         if (popup) popup.classList.toggle('is-visible');
         if (header.classList.contains('is-open')) setOpen(false);
     });
+
+    // Cart count badge: hide at zero, and let other scripts refresh it (window.updateCartBadge).
+    function paintBadge(el, n) {
+        el.textContent = n;
+        el.setAttribute('data-count', n);
+    }
+    document.querySelectorAll('[data-cart-count]').forEach(function (el) { paintBadge(el, parseInt(el.textContent, 10) || 0); });
+    window.updateCartBadge = function (n) {
+        document.querySelectorAll('[data-cart-count]').forEach(function (el) {
+            paintBadge(el, n);
+            el.classList.remove('is-pop'); void el.offsetWidth; el.classList.add('is-pop');
+        });
+    };
 })();
