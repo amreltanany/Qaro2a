@@ -4,6 +4,7 @@ using ECommerce.Domain.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ECommerce.API.Controllers;
 
@@ -33,27 +34,25 @@ public class PublishController : Controller
     private static bool IsArabic => string.Equals(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "ar", StringComparison.OrdinalIgnoreCase);
     private static string T(string en, string ar) => IsArabic ? ar : en;
 
+    // open to everyone: no account is needed to send a manuscript (like guest checkout)
     [HttpGet]
-    public IActionResult Index()
-    {
-        var userId = ResolveUserId();
-        if (string.IsNullOrEmpty(userId))
-            return RedirectToAction("Login", "Home", new { returnUrl = Url.Action(nameof(Index)) });
-
-        return View();
-    }
+    public IActionResult Index() => View();
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [EnableRateLimiting("publish")]
     [RequestSizeLimit(RequestLimit)]
     [RequestFormLimits(MultipartBodyLengthLimit = RequestLimit)]
-    public async Task<IActionResult> Index(string mobileNumber, IFormFile? pdfFile, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> Index(string? fullName, string mobileNumber, IFormFile? pdfFile, CancellationToken cancellationToken = default)
     {
-        var userId = ResolveUserId();
-        if (string.IsNullOrEmpty(userId))
-            return RedirectToAction("Login", "Home", new { returnUrl = Url.Action(nameof(Index)) });
-
+        var userId = ResolveUserId(); // null for a visitor without an account
         var errors = new List<string>();
+
+        fullName = fullName?.Trim();
+        if (string.IsNullOrWhiteSpace(fullName) || fullName.Length < 2)
+            errors.Add(T("Please enter your name.", "من فضلك اكتب اسمك."));
+        else if (fullName.Length > 100)
+            errors.Add(T("The name is too long.", "الاسم طويل جدًا."));
 
         mobileNumber = (mobileNumber ?? string.Empty).Trim();
         if (mobileNumber.Length == 0)
@@ -63,7 +62,7 @@ public class PublishController : Controller
 
         // at most a few submissions per user per hour, so the form cannot be used to flood the disk
         var since = DateTime.UtcNow.AddHours(-1);
-        var recent = (await _publishRepository.GetByUserIdAsync(userId)).Count(p => p.CreatedAt > since);
+        var recent = string.IsNullOrEmpty(userId) ? 0 : (await _publishRepository.GetByUserIdAsync(userId)).Count(p => p.CreatedAt > since);
         if (recent >= MaxUploadsPerHour)
             errors.Add(T("Too many submissions. Please try again later.", "عدد كبير من الطلبات. حاول مرة أخرى لاحقًا."));
 
@@ -81,6 +80,7 @@ public class PublishController : Controller
             foreach (var err in errors)
                 ModelState.AddModelError("", err);
             ViewBag.MobileNumber = mobileNumber;
+            ViewBag.FullName = fullName;
             return View();
         }
 
@@ -91,7 +91,7 @@ public class PublishController : Controller
             await pdfFile!.CopyToAsync(stream, cancellationToken);
 
         var relativePath = $"/uploads/publish/{fileName}";
-        var publish = new Publish(userId, mobileNumber, relativePath);
+        var publish = new Publish(userId, mobileNumber, relativePath, fullName);
         await _publishRepository.AddAsync(publish);
 
         TempData["PublishSuccess"] = true;

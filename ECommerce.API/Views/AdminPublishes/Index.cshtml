@@ -32,7 +32,7 @@
                             <tr>
                                 <td>@item.Id</td>
                                 <td>@item.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
-                                <td>@(item.User?.FullName ?? "—")</td>
+                                <td>@(item.FullName ?? item.User?.FullName ?? "—")</td>
                                 <td>@(item.User?.Email ?? "—")</td>
                                 <td>@item.MobileNumber</td>
                                 <td>

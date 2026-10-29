@@ -408,7 +408,7 @@
 
                 <form role="search" method="get" class="form-group" asp-controller="Home" asp-action="Shop">
                     <input type="search" id="search-form" class="form-control border-0 border-bottom"
-                        placeholder="@L("Search by product, author, or date...", "ابحث باسم المنتج أو المؤلف أو التاريخ...")" value="@(ViewBag.Search ?? "")" name="s" />
+                        placeholder="@L("Search by book name, author, or year...", "ابحث باسم الكتاب أو المؤلف أو سنة النشر...")" value="@(ViewBag.Search ?? "")" name="s" />
                     <button type="submit" class="search-submit border-0 position-absolute bg-white"
                         style="top: 15px;right: 15px;" aria-label="@L("Search", "بحث")">
                         <svg class="search" width="24" height="24" aria-hidden="true">
@@ -416,15 +416,6 @@
                         </svg>
                     </button>
                 </form>
-                <h5 class="cat-list-title">@L("Pages", "الصفحات")</h5>
-                <ul class="cat-list">
-                    <li class="cat-list-item">
-                        <a asp-controller="Home" asp-action="Index" title="@L("Home", "الرئيسية")">@L("Home", "الرئيسية")</a>
-                    </li>
-                    <li class="cat-list-item">
-                        <a asp-controller="Home" asp-action="Shop" title="@L("Shop", "المتجر")">@L("Shop", "المتجر")</a>
-                    </li>
-                </ul>
             </div>
         </div>
         @{
@@ -442,7 +433,7 @@
                     <li><a class="site-header__link @GetActiveClass("Home", "Blog")" asp-controller="Home" asp-action="Blog">@L("Blog", "مقالات")</a></li>
                     <li><a class="site-header__link @GetActiveClass("Home", "Podcast")" asp-controller="Home" asp-action="Podcast">@L("Podcast", "بودكاست")</a></li>
                     <li><a class="site-header__link @GetActiveClass("Home", "About")" asp-controller="Home" asp-action="About">@L("About Us", "من نحن")</a></li>
-                    <li><a class="site-header__link @GetActiveClass("Home", "Publish")" asp-controller="Home" asp-action="Publish">@L("Publish", "انشر كتابك")</a></li>
+                    <li><a class="site-header__link @GetActiveClass("Publish", "Index")" asp-controller="Publish" asp-action="Index">@L("Publish", "انشر كتابك")</a></li>
                     @await Component.InvokeAsync("AdminNav", new { section = "main" })
                 </ul>
 
@@ -497,7 +488,7 @@
                         <li><a class="site-header__link @GetActiveClass("Home", "Blog")" asp-controller="Home" asp-action="Blog">@L("Blog", "مقالات")</a></li>
                         <li><a class="site-header__link @GetActiveClass("Home", "Podcast")" asp-controller="Home" asp-action="Podcast">@L("Podcast", "بودكاست")</a></li>
                         <li><a class="site-header__link @GetActiveClass("Home", "About")" asp-controller="Home" asp-action="About">@L("About Us", "من نحن")</a></li>
-                        <li><a class="site-header__link @GetActiveClass("Home", "Publish")" asp-controller="Home" asp-action="Publish">@L("Publish", "انشر كتابك")</a></li>
+                        <li><a class="site-header__link @GetActiveClass("Publish", "Index")" asp-controller="Publish" asp-action="Index">@L("Publish", "انشر كتابك")</a></li>
                         @await Component.InvokeAsync("AdminNav", new { section = "main" })
                     </ul>
                     <ul class="site-header__utils">
@@ -561,7 +552,7 @@
                                         class="footer-page-link text-white text-decoration-none">@L("Blog", "مقالات")</a></li>
                                 <li><a asp-controller="Contact" asp-action="Index"
                                         class="footer-page-link text-white text-decoration-none">@L("Contact", "تواصل معنا")</a></li>
-                                <li><a asp-controller="Home" asp-action="Publish"
+                                <li><a asp-controller="Publish" asp-action="Index"
                                         class="footer-page-link text-white text-decoration-none">@L("Publish", "انشر كتابك")</a></li>
                             </ul>
                         </div>

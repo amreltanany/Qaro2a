@@ -401,6 +401,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 552,
                             Price = 400m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -417,6 +418,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 506,
                             Price = 420m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -433,6 +435,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 306,
                             Price = 260m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -449,6 +452,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 368,
                             Price = 300m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -465,6 +469,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 240,
                             Price = 330m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -481,6 +486,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 166,
                             Price = 130m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -497,6 +503,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 272,
                             Price = 240m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -513,6 +520,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 458,
                             Price = 350m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -529,6 +537,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 242,
                             Price = 200m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -545,6 +554,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 982,
                             Price = 875m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -561,6 +571,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 125,
                             Price = 120m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -577,6 +588,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 135,
                             Price = 165m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -593,6 +605,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 184,
                             Price = 180m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -609,6 +622,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 172,
                             Price = 180m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -625,6 +639,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 360,
                             Price = 400m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -641,6 +656,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 248,
                             Price = 230m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -657,6 +673,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 364,
                             Price = 400m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -673,6 +690,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 430,
                             Price = 455m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -689,6 +707,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 198,
                             Price = 200m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -705,6 +724,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 578,
                             Price = 490m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -721,6 +741,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 302,
                             Price = 260m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -737,6 +758,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 420,
                             Price = 435m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -753,6 +775,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 224,
                             Price = 180m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -769,6 +792,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 372,
                             Price = 300m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -785,6 +809,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 1534,
                             Price = 1250m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -801,6 +826,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 312,
                             Price = 250m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -817,6 +843,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 187,
                             Price = 200m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -833,6 +860,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 216,
                             Price = 200m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -849,6 +877,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 254,
                             Price = 230m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -865,6 +894,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 272,
                             Price = 260m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -881,6 +911,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 156,
                             Price = 165m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -897,6 +928,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 368,
                             Price = 300m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -913,6 +945,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 448,
                             Price = 420m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -929,6 +962,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 136,
                             Price = 165m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -945,6 +979,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 112,
                             Price = 130m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -961,6 +996,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Pages = 1098,
                             Price = 990m,
                             PublishDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Size = "14×20",
                             Stock = 10,
                             TopRated = false
                         },
@@ -1005,6 +1041,9 @@ namespace ECommerce.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MobileNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1014,7 +1053,6 @@ namespace ECommerce.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -1307,8 +1345,7 @@ namespace ECommerce.Infrastructure.Migrations
                     b.HasOne("ECommerce.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });

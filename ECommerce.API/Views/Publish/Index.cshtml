@@ -36,6 +36,10 @@
                     <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
                     <div class="mb-3">
+                        <label for="fullName" class="form-label">@L("Your name", "اسمك")</label>
+                        <input type="text" class="form-control" id="fullName" name="fullName" value="@(ViewBag.FullName as string)" required minlength="2" maxlength="100" autocomplete="name" />
+                    </div>
+                    <div class="mb-3">
                         <label for="mobileNumber" class="form-label">@L("Mobile number", "رقم الهاتف")</label>
                         <input type="tel" class="form-control" id="mobileNumber" name="mobileNumber"
                                value="@mobile" required maxlength="30" placeholder="+20 ..." />

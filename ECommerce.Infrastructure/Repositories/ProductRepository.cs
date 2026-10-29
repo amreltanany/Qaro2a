@@ -30,17 +30,19 @@ namespace ECommerce.Infrastructure.Repositories
 
             if (!string.IsNullOrWhiteSpace(queryParameters.Search))
             {
-                var search = queryParameters.Search.Trim();
-                var searchDate = DateTime.TryParse(search, out var parsed) ? parsed.Date : (DateTime?)null;
-
-                query = searchDate.HasValue
-                    ? query.Where(p =>
-                        p.Name.Contains(search) ||
-                        p.Author.Contains(search) ||
-                        (p.PublishDate >= searchDate.Value && p.PublishDate < searchDate.Value.AddDays(1)))
-                    : query.Where(p =>
-                        p.Name.Contains(search) ||
-                        p.Author.Contains(search));
+                // Arabic-friendly search: hamza / ta marbuta / diacritics are ignored, every word must match the
+                // book name, author, category or ISBN, and a 4-digit number matches the publish year (2026, 1950...).
+                // The catalogue is small, so the match runs in memory on a thin projection and the page query filters by id.
+                var words = Normalize(queryParameters.Search).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                var candidates = await _context.Products.AsNoTracking()
+                    .Select(p => new { p.Id, p.Name, p.Author, p.Isbn, p.PublishDate.Year, Category = p.Category != null ? p.Category.Name : string.Empty })
+                    .ToListAsync();
+                var ids = candidates.Where(c =>
+                {
+                    var hay = Normalize(c.Name + ' ' + c.Author + ' ' + c.Category + ' ' + c.Isbn);
+                    return words.All(w => (w.Length == 4 && w.All(char.IsDigit) && int.Parse(w) == c.Year) || hay.Contains(w));
+                }).Select(c => c.Id).ToList();
+                query = query.Where(p => ids.Contains(p.Id));
             }
 
             if (queryParameters.PublishDate.HasValue)
@@ -101,6 +103,26 @@ namespace ECommerce.Infrastructure.Repositories
                     Size = p.Size
                 })
                 .ToListAsync();
+        }
+
+        // lower-case, Arabic-Indic digits to 0-9, no diacritics / tatweel, and one spelling for look-alike letters
+        private static string Normalize(string? s)
+        {
+            if (string.IsNullOrWhiteSpace(s)) return string.Empty;
+            var sb = new System.Text.StringBuilder(s.Length);
+            foreach (var ch in s.ToLowerInvariant())
+            {
+                if ((ch >= 'ً' && ch <= 'ٟ') || ch == 'ٰ' || ch == 'ـ') continue;
+                sb.Append(ch switch
+                {
+                    'أ' or 'إ' or 'آ' or 'ٱ' => 'ا',
+                    'ى' => 'ي', 'ئ' => 'ي', 'ؤ' => 'و', 'ة' => 'ه', 'ڤ' => 'ف', 'چ' => 'ج', 'گ' => 'ك', 'پ' => 'ب',
+                    >= '٠' and <= '٩' => (char)('0' + (ch - '٠')),
+                    >= '۰' and <= '۹' => (char)('0' + (ch - '۰')),
+                    _ => char.IsLetterOrDigit(ch) ? ch : ' '
+                });
+            }
+            return string.Join(' ', sb.ToString().Split(' ', StringSplitOptions.RemoveEmptyEntries));
         }
 
         public async Task<Product?> GetByIdAsync(int id) => await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
