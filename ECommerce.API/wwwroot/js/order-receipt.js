@@ -87,7 +87,6 @@
                 var holder = el('div', 'rcpt-capture'); var copy = buildPaper(card, T); copy.classList.add('is-static'); holder.appendChild(copy); document.body.appendChild(holder);
                 return h2c(copy, { backgroundColor: null, scale: 3, useCORS: true }).then(function (canvas) {
                     holder.remove();
-                    paper.classList.add('is-torn'); // the tear-off animation plays while the file is saved
                     canvas.toBlob(function (blob) {
                         var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'receipt-order-' + card.dataset.orderId + '.png';
                         document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
