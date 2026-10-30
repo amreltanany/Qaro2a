@@ -199,3 +199,10 @@ body .product-card .shop-card-actions .button.shop-cart-animate.loading span.sho
 .cart-fab i { line-height: 1; }
 .cart-fab .site-header__badge { top: -3px; inset-inline-end: -3px; }
 @media (max-width: 575.98px) { .cart-fab { left: 12px; width: 52px; height: 52px; font-size: 1.4rem; } }
+
+/* out of stock: a red delivery truck where the quantity stepper normally sits */
+.shop-oos-truck-wrap { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; width: 46px; color: #d62839; }
+.shop-oos-truck { display: block; width: 100%; height: auto; filter: drop-shadow(0 2px 3px rgba(214, 40, 57, .25)); }
+.product-card .shop-card-actions--out-of-stock { gap: 8px; flex-wrap: nowrap; }
+.product-card .shop-card-actions--out-of-stock .shop-out-of-stock-btn { flex: 0 1 auto; min-width: 0; padding-inline: .9rem; white-space: nowrap; }
+.product-card .shop-card-actions--out-of-stock { min-height: 45px; align-items: center; }

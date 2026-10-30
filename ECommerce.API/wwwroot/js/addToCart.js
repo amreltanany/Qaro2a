@@ -104,6 +104,8 @@ function setAvailable(btn, n) {
     var label = row.getAttribute('data-out-label') || 'Out of stock';
     box.remove(); btn.remove();
     row.classList.add('shop-card-actions--out-of-stock');
+    var truck = document.createElement('span'); truck.className = 'shop-oos-truck-wrap'; truck.title = label;
+    truck.innerHTML = '<svg class="shop-oos-truck" viewBox="0 0 120 70" aria-hidden="true" focusable="false"><g fill="currentColor"><rect x="2" y="22" width="34" height="5" rx="2.5"/><rect x="9" y="33" width="30" height="5" rx="2.5"/><rect x="14" y="44" width="26" height="5" rx="2.5"/><path d="M30 10h52l-2 40H26z"/><path d="M86 22h16l10 14v16h-26z"/><rect x="20" y="52" width="96" height="8" rx="2"/></g><path d="M92 27h8l6 8H92z" fill="#fff"/><g fill="currentColor" stroke="#fff" stroke-width="3"><circle cx="42" cy="58" r="9"/><circle cx="96" cy="58" r="9"/></g><g fill="#fff"><circle cx="42" cy="58" r="3.4"/><circle cx="96" cy="58" r="3.4"/></g></svg>'; row.appendChild(truck);
     var pill = document.createElement('button');
     pill.type = 'button'; pill.className = 'shop-out-of-stock-btn'; pill.disabled = true;
     pill.innerHTML = '<span></span>'; pill.firstChild.textContent = label;
