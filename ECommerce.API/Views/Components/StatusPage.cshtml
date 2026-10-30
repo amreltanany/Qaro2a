@@ -2,6 +2,7 @@
     var isArabic = string.Equals(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "ar", StringComparison.OrdinalIgnoreCase);
     string L(string en, string ar) => isArabic ? ar : en;
     var code = ViewData["Code"] is int c ? c : 404;
+    var is404 = code == 404;
     var title = code switch
     {
         403 => L("You don't have access to this page", "مش مسموح لك بدخول الصفحة دي"),
@@ -11,31 +12,62 @@
     var text = code switch
     {
         403 => L("Please log in with an account that has access.", "سجّل الدخول بحساب له صلاحية الدخول."),
-        404 => L("The link may be old or mistyped. You can head back to the shop and find your next read.", "ممكن يكون الرابط قديم أو فيه خطأ. تقدر ترجع للمتجر وتلاقي كتابك الجاي."),
+        404 => L("The page you are looking for is missing, but here's a book for you.", "الصفحة اللي بتدور عليها مش موجودة، بس عندنا كتب كتير تستاهل."),
         _ => L("We could not complete your request right now. Please try again in a moment.", "ماقدرناش نكمّل طلبك دلوقتي. حاول تاني بعد شوية.")
     };
     ViewData["Title"] = title;
+    var arrow = isArabic ? "←" : "→";
 }
 
 <section class="status-page">
-    <div class="container text-center">
-        <div class="status-page__code" aria-hidden="true">@code</div>
-        <h1 class="status-page__title">@title</h1>
+    <div class="status-card">
+        @if (is404)
+        {
+            <div class="status-404" role="img" aria-label="404">
+                <span class="status-404__digit" aria-hidden="true">4</span>
+                <svg class="status-404__book" viewBox="0 0 160 170" aria-hidden="true">
+                    <!-- torn page scraps that float away -->
+                    <g class="scrap scrap--a"><path d="M24 30 l16 -6 l8 10 l-6 9 l-15 -2 z" fill="#fff" stroke="#0270B8" stroke-width="3" stroke-linejoin="round" /><path d="M30 31 l9 -3 M31 36 l12 1" stroke="#9fb7cf" stroke-width="2" stroke-linecap="round" /></g>
+                    <g class="scrap scrap--b"><path d="M112 20 l20 -4 l7 12 l-9 10 l-16 -4 z" fill="#fff" stroke="#0270B8" stroke-width="3" stroke-linejoin="round" /><path d="M118 22 l12 -2 M119 28 l14 2" stroke="#9fb7cf" stroke-width="2" stroke-linecap="round" /></g>
+                    <circle class="crumb" cx="70" cy="22" r="2.2" fill="#00346E" /><circle class="crumb crumb--2" cx="96" cy="34" r="1.8" fill="#0270B8" /><circle class="crumb crumb--3" cx="52" cy="40" r="1.6" fill="#00346E" />
+                    <!-- the open book: cover, left page, right page with a bitten corner -->
+                    <path d="M12 66 V134 C38 124 62 124 80 134 C98 124 122 124 148 134 V66" fill="#00346E" />
+                    <path d="M80 62 C62 52 36 52 18 60 V126 C38 118 62 118 80 128 Z" fill="#fff" stroke="#0270B8" stroke-width="4" stroke-linejoin="round" />
+                    <path d="M80 62 C98 52 124 52 142 60 V104 L130 108 L136 118 L122 118 L124 124 C106 120 92 122 80 128 Z" fill="#fff" stroke="#0270B8" stroke-width="4" stroke-linejoin="round" />
+                    <path d="M80 62 V128" stroke="#0270B8" stroke-width="3" />
+                    <path d="M30 76 C42 72 56 72 68 76 M30 88 C42 84 56 84 68 88 M30 100 C42 96 56 96 68 100 M92 76 C104 72 118 72 130 76 M92 88 C104 84 118 84 130 88" fill="none" stroke="#b9c9db" stroke-width="3" stroke-linecap="round" />
+                </svg>
+                <span class="status-404__digit" aria-hidden="true">4</span>
+            </div>
+        }
+        else
+        {
+            <div class="status-page__code" aria-hidden="true">@code</div>
+        }
+        <h1 class="status-page__title">@(is404 ? L("Page not found", "الصفحة مش موجودة") : title)</h1>
         <p class="status-page__text">@text</p>
-        <div class="status-page__actions">
-            <a asp-controller="Home" asp-action="Shop" class="status-page__btn status-page__btn--dark">@L("Browse the shop", "تصفّح المتجر")</a>
-            <a asp-controller="Home" asp-action="Index" class="status-page__btn">@L("Back to home", "الرئيسية")</a>
-        </div>
+        <a asp-controller="Home" asp-action="Shop" class="status-page__go">@(is404 ? L("Take it and go back to the shop", "خدها وارجع للمتجر") : L("Browse the shop", "تصفّح المتجر")) <span aria-hidden="true">@arrow</span></a>
+        <a asp-controller="Home" asp-action="Index" class="status-page__home">@L("Back to home", "الرئيسية")</a>
     </div>
 </section>
 
 <style>
-    .status-page { padding: 9rem 0 6rem; background: linear-gradient(180deg, #f7f3eb 0%, #fff 100%); }
-    .status-page__code { font-family: "Inter", system-ui, sans-serif; font-size: clamp(5rem, 16vw, 9rem); font-weight: 800; line-height: 1; letter-spacing: -0.04em; color: #00346e; opacity: 0.9; }
-    .status-page__title { margin: 1rem 0 0.5rem; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; color: #00346e; }
-    .status-page__text { max-width: 34rem; margin: 0 auto 2rem; color: #7a6d5d; line-height: 1.9; }
-    .status-page__actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .status-page__btn { padding: 0.8rem 1.6rem; border-radius: 14px; background: #fff; color: #00346e; font-weight: 700; text-decoration: none; box-shadow: 0 8px 18px -8px rgba(98, 74, 42, 0.4), inset 0 1px 0 #fff; transition: transform 0.2s ease; }
-    .status-page__btn:hover { transform: translateY(-2px); }
-    .status-page__btn--dark { background: linear-gradient(180deg, #00346e, #00346e); color: #fff; }
+    .status-page { padding: 7.5rem 1rem 4rem; background: #f7f3eb; min-height: 70vh; display: flex; align-items: center; justify-content: center; }
+    .status-card { width: min(100%, 940px); padding: clamp(2rem, 6vw, 4.5rem) 1.5rem clamp(2rem, 5vw, 3.5rem); border-radius: 26px; background: #fff; text-align: center; box-shadow: 0 30px 60px -30px rgba(0, 52, 110, .35), 0 8px 24px -12px rgba(0, 52, 110, .18); animation: status-in .6s cubic-bezier(.22, 1, .36, 1) both; }
+    .status-404 { display: flex; align-items: flex-end; justify-content: center; gap: clamp(.2rem, 1.5vw, 1rem); direction: ltr; }
+    .status-404__digit { font-family: var(--font-heading); font-weight: 700; font-size: clamp(6rem, 17vw, 10.5rem); line-height: .8; color: #00346e; letter-spacing: -.02em; }
+    .status-404__book { width: clamp(8.5rem, 27vw, 16rem); height: auto; overflow: visible; margin-bottom: -.7rem; }
+    .scrap { transform-box: fill-box; transform-origin: center; animation: scrap-float 4.8s ease-in-out infinite; }
+    .scrap--b { animation-duration: 5.6s; animation-delay: -1.4s; }
+    .crumb { animation: scrap-float 3.6s ease-in-out infinite; }
+    .crumb--2 { animation-delay: -1s; } .crumb--3 { animation-delay: -2s; }
+    .status-page__code { font-family: var(--font-heading); font-size: clamp(5rem, 16vw, 9rem); font-weight: 700; line-height: 1; letter-spacing: -.03em; color: #00346e; }
+    .status-page__title { margin: 1.4rem 0 .5rem; font-size: clamp(1.2rem, 2.6vw, 1.7rem); font-weight: 600; color: #00346e; }
+    .status-page__text { max-width: 30rem; margin: 0 auto 1.6rem; color: #5a6b82; line-height: 1.9; }
+    .status-page__go { display: inline-flex; align-items: center; gap: .5rem; padding: .8rem 1.7rem; border-radius: 999px; background: #0270b8; color: #fff; font-weight: 600; text-decoration: none; box-shadow: 0 12px 22px -10px rgba(2, 112, 184, .7); transition: background .2s ease, transform .2s ease; }
+    .status-page__go:hover { background: #00346e; color: #fff; transform: translateY(-2px); }
+    .status-page__home { display: block; margin-top: 1rem; color: #5a6b82; font-size: .9rem; text-decoration: none; }
+    .status-page__home:hover { color: #0270b8; }
+    @@keyframes status-in { from { opacity: 0; transform: translateY(18px) scale(.985); } to { opacity: 1; transform: none; } }
+    @@keyframes scrap-float { 0%, 100% { transform: translate(0, 0) rotate(0); } 50% { transform: translate(5px, -9px) rotate(7deg); } }
 </style>
