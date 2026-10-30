@@ -8,6 +8,7 @@
     var maxQty = Math.Max(1, Math.Min(Model.Stock, 10));
     var shortText = Model.Description ?? string.Empty;
     var firstPara = shortText.Replace("\r", "").Split('\n', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? string.Empty;
+    ViewData["Branch"] = "shop";
     ViewData["Title"] = Model.Name;
     ViewData["SeoTitle"] = $"{Model.Name} — {Model.Author} | {L("Qaro2a", "قروءه")}";
     ViewData["MetaDescription"] = firstPara.Length > 160 ? firstPara.Substring(0, 157) + "..." : firstPara;

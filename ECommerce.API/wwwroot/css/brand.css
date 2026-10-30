@@ -1,4 +1,4 @@
-/* Qaro2a brand identity v1.0 — loaded after every other stylesheet.
+﻿/* Qaro2a brand identity v1.0 — loaded after every other stylesheet.
    Core palette: Qaro2a Blue (mark, headings, buttons, links), Deep Navy (text, dark backgrounds), Paper Beige (secondary background), White (base).
    Branch colours: Bookstore green #70B802 (dark #518601 for text), Podcast gold #E8AC00, Publishing burgundy #670E30.
    Type: Readex Pro for headlines, IBM Plex Sans Arabic for body and captions. */
@@ -92,4 +92,79 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 /* the basket fills white while adding, so the tick is drawn in the button colour (navy) to stay visible */
 .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate.loading,
 .product-card .shop-card-actions .button.shop-cart-animate.loading { --tick: var(--brand-navy); }
+
+
+/* ================= branch palettes (brand guide p.6-9) =================
+   Each page family uses its branch colour for buttons, accents and small elements. Dark shades carry text,
+   light shades carry backgrounds; the logo and the core blue/navy headings stay as they are. */
+body[data-branch="shop"] {      /* Bookstore green #70B802 */
+    --b-solid: #518601; --b-solid-hover: #426C01; --b-on-solid: #fff; --b-text: #518601; --b-tint: #E7F5CF; --b-accent: #70B802; --b-line: #cfe6a3;
+}
+body[data-branch="publish"] {   /* Publishing burgundy #670E30 */
+    --b-solid: #670E30; --b-solid-hover: #510B26; --b-on-solid: #fff; --b-text: #670E30; --b-tint: #F6E3EA; --b-accent: #AA174F; --b-line: #e4bccb;
+}
+body[data-branch="podcast"] {   /* Podcast gold #E8AC00 (dark #9C7300 for text on light) */
+    --b-solid: #E8AC00; --b-solid-hover: #FFBE02; --b-on-solid: #00346E; --b-text: #9C7300; --b-tint: #FFF4D1; --b-accent: #E8AC00; --b-line: #f3d98a;
+}
+body[data-branch] {
+    --bs-link-color: var(--b-text); --bs-link-hover-color: var(--b-solid-hover);
+    --swiper-theme-color: var(--b-accent);
+}
+body[data-branch] .btn-primary, body[data-branch] .btn-primary:disabled {
+    --bs-btn-bg: var(--b-solid); --bs-btn-border-color: var(--b-solid); --bs-btn-color: var(--b-on-solid);
+    --bs-btn-hover-bg: var(--b-solid-hover); --bs-btn-hover-border-color: var(--b-solid-hover); --bs-btn-hover-color: var(--b-on-solid);
+    --bs-btn-active-bg: var(--b-solid-hover); --bs-btn-active-border-color: var(--b-solid-hover); --bs-btn-active-color: var(--b-on-solid);
+}
+body[data-branch] .btn-outline-primary {
+    --bs-btn-color: var(--b-text); --bs-btn-border-color: var(--b-solid);
+    --bs-btn-hover-bg: var(--b-solid); --bs-btn-hover-border-color: var(--b-solid); --bs-btn-hover-color: var(--b-on-solid);
+    --bs-btn-active-bg: var(--b-solid-hover); --bs-btn-active-border-color: var(--b-solid-hover); --bs-btn-active-color: var(--b-on-solid);
+}
+body[data-branch] .form-control:focus, body[data-branch] .form-select:focus { border-color: var(--b-accent); box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--b-accent) 25%, transparent); }
+body[data-branch] .form-check-input:checked { background-color: var(--b-solid); border-color: var(--b-solid); }
+body[data-branch] :focus-visible { outline-color: var(--b-accent); }
+
+/* ---- shop (green) ---- */
+body[data-branch="shop"] .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate,
+body[data-branch="shop"] .product-card .shop-card-actions .button.shop-cart-animate { background: var(--b-solid); box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 4px 10px -3px rgba(81, 134, 1, .5); }
+body[data-branch="shop"] .product-card .shop-card-actions .button.shop-cart-animate:hover,
+body[data-branch="shop"] .product-card .shop-card-actions .button.shop-cart-animate:focus-visible,
+body[data-branch="shop"] .product-card .shop-card-actions .button.shop-cart-animate.loading,
+body[data-branch="shop"] .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:hover:not(.loading),
+body[data-branch="shop"] .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate.loading { background: var(--b-solid-hover); --tick: var(--b-solid-hover); }
+body[data-branch="shop"] .product-card .shop-card-badge { background: var(--b-tint); color: var(--b-solid-hover); }
+body[data-branch="shop"] .product-card .shop-card-author-chip { background: var(--b-tint); color: var(--b-solid-hover); }
+body[data-branch="shop"] .product-card .shop-card-author-chip:hover, body[data-branch="shop"] .product-card .shop-card-category-chip:hover { background: var(--b-solid); color: #fff; }
+body[data-branch="shop"] .product-card .shop-card-title-link:hover { color: var(--b-solid); }
+body[data-branch="shop"] .price-range__fill { background: linear-gradient(90deg, #70B802, #518601); }
+body[data-branch="shop"] .shop-filter-sidebar.card { border-color: var(--b-line); }
+.shop-toprated-switch { display: flex; align-items: center; gap: .6rem; padding-inline-start: 0; margin: 0; }
+.shop-toprated-switch .form-check-input { float: none; margin: 0; width: 2.6rem; height: 1.4rem; cursor: pointer; }
+.shop-toprated-switch .form-check-label { font-weight: 600; color: var(--brand-navy); cursor: pointer; }
+body[data-branch="shop"] .pd__cta, body[data-branch="shop"] .checkout-place { background: var(--b-solid); }
+body[data-branch="shop"] .pd__cta:hover:not(.pd__cta--off), body[data-branch="shop"] .checkout-place:hover { background: var(--b-solid-hover); }
+body[data-branch="shop"] .pd__eyebrow, body[data-branch="shop"] .pd__crumbs a { color: var(--b-text); }
+body[data-branch="shop"] .pd__eyebrow { background: var(--b-tint); }
+
+/* ---- publish (burgundy) ---- */
+body[data-branch="publish"] h2 { color: var(--b-solid); }
+body[data-branch="publish"] .pub-drop { border-color: var(--b-line); background: linear-gradient(180deg, #fff 0%, var(--b-tint) 100%); }
+body[data-branch="publish"] .pub-drop:hover, body[data-branch="publish"] .pub-drop.is-over { border-color: var(--b-solid); box-shadow: 0 10px 28px -12px rgba(103, 14, 48, .35); }
+body[data-branch="publish"] .pub-drop.is-done { border-color: var(--b-solid); background: linear-gradient(180deg, #fff 0%, var(--b-tint) 100%); }
+body[data-branch="publish"] .pub-drop__title, body[data-branch="publish"] .pub-file__status { color: var(--b-solid); }
+body[data-branch="publish"] .pub-file__bar i { background: var(--b-accent); }
+body[data-branch="publish"] .pub-ball { color: var(--b-solid); border-color: var(--b-line); }
+body[data-branch="publish"] .pub-hoop rect, body[data-branch="publish"] .pub-hoop ellipse, body[data-branch="publish"] .pub-hoop path { stroke: var(--b-solid); }
+body[data-branch="publish"] .pub-file__remove:hover, body[data-branch="publish"] .pub-file__remove:focus-visible { background: var(--b-solid); color: #fff; }
+
+/* ---- podcast (gold) ---- */
+body[data-branch="podcast"] .podcast-page h1 { position: relative; display: inline-block; padding-bottom: .6rem; color: #fff; }
+body[data-branch="podcast"] .podcast-page h1::after { content: ""; position: absolute; inset-inline: 22%; bottom: 0; height: 4px; border-radius: 4px; background: var(--b-solid); }
+body[data-branch="podcast"] .podcast-page p { color: #FFCB36; }
+body[data-branch="podcast"] .podcast-page .ratio { box-shadow: 0 0 0 2px transparent, 0 14px 30px -14px rgba(0, 0, 0, .6) !important; transition: box-shadow .25s ease, transform .25s ease; }
+body[data-branch="podcast"] .podcast-page .ratio:hover { box-shadow: 0 0 0 3px var(--b-solid), 0 18px 34px -14px rgba(0, 0, 0, .6) !important; transform: translateY(-3px); }
+body[data-branch="shop"] .price-range__track input[type="range"]::-webkit-slider-thumb { background: var(--b-solid); }
+body[data-branch="shop"] .price-range__track input[type="range"]::-moz-range-thumb { background: var(--b-solid); }
+body[data-branch="shop"] .shop-filter-toggle__icon { background: var(--b-solid) !important; }
+body[data-branch="shop"] .price-range__values b { color: var(--b-text); }
 

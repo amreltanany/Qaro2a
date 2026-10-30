@@ -2,6 +2,7 @@
     var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
     var isArabic = string.Equals(currentCulture, "ar", StringComparison.OrdinalIgnoreCase);
     string L(string en, string ar) => isArabic ? ar : en;
+    ViewData["Branch"] = "publish";
     ViewData["Title"] = L("Publish", "انشر كتابك");
     ViewData["SeoTitle"] = L(
         "Publish Your Book with Qaro2a",

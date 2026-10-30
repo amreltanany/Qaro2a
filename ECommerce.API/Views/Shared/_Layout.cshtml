@@ -258,7 +258,7 @@
     <link rel="stylesheet" type="text/css" href="~/css/brand.css" asp-append-version="true">
 </head>
 
-<body class="@bodyPageClass">
+<body class="@bodyPageClass" data-branch="@(ViewData["Branch"] as string)">
 
     @if (isHomeIndex)
     {

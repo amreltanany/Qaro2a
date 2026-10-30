@@ -24,6 +24,8 @@
     var minPriceValue = ViewBag.MinPrice;
     var maxPriceValue = ViewBag.MaxPrice;
     var selectedCategoryId = ViewBag.CategoryId as int?;
+    var topRatedOnly = ViewBag.TopRated is bool tr && tr;
+    ViewData["Branch"] = "shop";
     var categoryTitle = (!isSearch && string.IsNullOrWhiteSpace(authorValue) && selectedCategoryId.HasValue) ? categories.FirstOrDefault(c => c.Id == selectedCategoryId.Value)?.Name : null;
     var isCategoryPage = !string.IsNullOrWhiteSpace(categoryTitle);
     var isAuthorPage = !string.IsNullOrWhiteSpace(authorValue) && string.IsNullOrWhiteSpace(searchTerm);
@@ -32,6 +34,7 @@
         || minPriceValue != null
         || maxPriceValue != null
         || selectedCategoryId.HasValue
+        || topRatedOnly
         || !string.IsNullOrWhiteSpace(sortBy);
 }
 
@@ -138,6 +141,11 @@
                                     }
                                 }
                             </select>
+                        </div>
+
+                        <div class="form-check form-switch shop-toprated-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="topRated" name="topRated" value="true" @(topRatedOnly ? "checked" : null) />
+                            <label class="form-check-label" for="topRated">@L("Top rated only", "الأعلى تقييمًا فقط")</label>
                         </div>
 
                         <div>

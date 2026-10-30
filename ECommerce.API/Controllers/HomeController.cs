@@ -62,7 +62,8 @@ public class HomeController : Controller
         decimal? minPrice = null,
         decimal? maxPrice = null,
         int? categoryId = null,
-        string? sortBy = null)
+        string? sortBy = null,
+        bool topRated = false)
     {
         // hostile or silly input: keep text short and prices inside what the database column can hold
         static string? Clip(string? v, int max = 100) { v = v?.Trim(); return string.IsNullOrEmpty(v) ? null : (v.Length > max ? v[..max] : v); }
@@ -78,7 +79,8 @@ public class HomeController : Controller
             Author = string.IsNullOrWhiteSpace(author) ? null : author.Trim(),
             MinPrice = minPrice,
             MaxPrice = maxPrice,
-            CategoryId = categoryId
+            CategoryId = categoryId,
+            TopRatedOnly = topRated
         };
         var products = (await _productService.GetAllAsync(query)).ToList();
         var priciest = (await _productService.GetAllAsync(new QueryParameters { PageNumber = 1, PageSize = 1, SortBy = "price_desc" })).FirstOrDefault();
@@ -91,6 +93,7 @@ public class HomeController : Controller
         ViewBag.MinPrice = minPrice;
         ViewBag.MaxPrice = maxPrice;
         ViewBag.CategoryId = categoryId;
+        ViewBag.TopRated = topRated;
         return View("/Views/Components/Shop.cshtml", products);
     }
   
