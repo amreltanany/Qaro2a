@@ -181,7 +181,7 @@ body[data-branch="shop"] .price-range__values b { color: var(--b-text); }
 body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate,
 body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:hover,
 body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:focus-visible,
-body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate.loading { width: 42px !important; min-width: 42px !important; height: 42px; min-height: 42px !important; }
+body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate.loading { width: 50px !important; min-width: 50px !important; height: 45px !important; min-height: 45px !important; }
 body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:hover:not(.loading) .shop-cart-idle,
 body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:focus-visible:not(.loading) .shop-cart-idle { opacity: 1 !important; transform: none !important; }
 body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:hover:not(.loading) span.shop-cart-label,
