@@ -125,9 +125,10 @@
                                             <a href="/Home/Author/@Uri.EscapeDataString(product.Author.Trim().Replace(" ", "-"))" class="shop-card-author-chip">@product.Author</a>
                                         </div>
                                     </div>
-                                    <div class="shop-card-actions @(product.Stock > 0 ? null : "shop-card-actions--out-of-stock")" data-out-label="@L("Out of stock", "غير متوفر")">
+                                    @{ var buyable = product.Stock > 0 || ((ViewBag.MyCartProducts as HashSet<int>)?.Contains(product.Id) ?? false); }
+<div class="shop-card-actions @(buyable ? null : "shop-card-actions--out-of-stock")" data-out-label="@L("Out of stock", "غير متوفر")">
                                         <p class="shop-card-price mb-0" dir="ltr">@product.Price.ToString("N0") <span class="shop-card-currency">EGP</span></p>
-                                        @if (product.Stock > 0)
+                                        @if (buyable)
                                         {
                                             <div class="shop-qty" data-max="@product.Stock" role="group" aria-label="@L("Quantity", "الكمية")">
                                                 <button type="button" class="shop-qty__btn" data-qty-step="-1" aria-label="@L("Decrease quantity", "تقليل الكمية")" disabled>&minus;</button>

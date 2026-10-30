@@ -40,6 +40,14 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    // books this visitor already holds in the cart (user or guest cookie): their cards stay usable even when no copy is left for others
+    private async Task<HashSet<int>> MyCartProductIdsAsync()
+    {
+        var key = GetUserId() ?? CartOwner.GuestKey(HttpContext, false);
+        if (string.IsNullOrEmpty(key)) return new HashSet<int>();
+        return (await _cartItemRepository.GetByUserIdAsync(key)).Select(c => c.ProductId).ToHashSet();
+    }
+
     private string? GetUserId() =>
         UserClaimsHelper.GetUserId(User)
         ?? UserClaimsHelper.GetUserIdFromJwtString(Request.Cookies["token"]);
@@ -53,6 +61,7 @@ public class HomeController : Controller
             TopRatedOnly = true,
             SortBy = "publishdate_desc"
         });
+        ViewBag.MyCartProducts = await MyCartProductIdsAsync();
         return View(products);
     }
     public async Task<IActionResult> Shop(
@@ -94,6 +103,7 @@ public class HomeController : Controller
         ViewBag.MaxPrice = maxPrice;
         ViewBag.CategoryId = categoryId;
         ViewBag.TopRated = topRated;
+        ViewBag.MyCartProducts = await MyCartProductIdsAsync();
         return View("/Views/Components/Shop.cshtml", products);
     }
   
