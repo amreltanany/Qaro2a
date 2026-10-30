@@ -37,7 +37,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({ productId: productId, quantity: qty })
             })
                 .then(function (res) {
-                    if (res.ok && cardQty) { cardQty.textContent = '1'; syncQty(cardQty.closest('.shop-qty')); } // back to 1 for the next add
+                    if (res.ok && cardQty) { // what is left in stock after this add (the server reserves it), and back to 1 for the next add
+                        var left = (parseInt(cardQty.closest('.shop-qty').getAttribute('data-max'), 10) || 0) - qty;
+                        setAvailable(addedBtn, left);
+                        if (left > 0) { cardQty.textContent = '1'; syncQty(cardQty.closest('.shop-qty')); }
+                    }
                     if (res.ok && window.updateCartBadge) {
                         // refresh the header badge with the new total
                         fetch('/api/Cart', { credentials: 'same-origin', headers: token ? { 'Authorization': 'Bearer ' + token } : {} })
@@ -50,7 +54,12 @@ document.addEventListener('DOMContentLoaded', function () {
                             var msg = (body && (body.message || (body.Errors && body.Errors.Message)))
                                 ? (body.message || body.Errors.Message)
                                 : 'Failed to add to cart.';
-                            showError(msg);
+                            var m = /Available:\s*(\d+)/i.exec(msg || '');
+                            if (m && cardQty) {
+                                var avail = parseInt(m[1], 10);
+                                setAvailable(addedBtn, avail);
+                                if (avail > 0) showError(msg); // the card is corrected silently when nothing is left
+                            } else { showError(msg); }
                         }).catch(function () { showError('Failed to add to cart.'); });
                     }
                 })
@@ -79,3 +88,24 @@ document.addEventListener('click', function (e) {
     out.textContent = String(next);
     syncQty(box);
 });
+
+// Keep the card in line with the real stock: fewer left than the stepper allows, or nothing left at all.
+function setAvailable(btn, n) {
+    var row = btn && btn.closest('.shop-card-actions'); if (!row) return;
+    var box = row.querySelector('.shop-qty'); if (!box) return;
+    if (n > 0) {
+        box.setAttribute('data-max', String(n));
+        var out = box.querySelector('.shop-qty__val');
+        if ((parseInt(out.textContent, 10) || 1) > n) out.textContent = String(n);
+        syncQty(box);
+        return;
+    }
+    // nothing left: swap the stepper and the cart button for the same 'Out of stock' pill the page shows on load
+    var label = row.getAttribute('data-out-label') || 'Out of stock';
+    box.remove(); btn.remove();
+    row.classList.add('shop-card-actions--out-of-stock');
+    var pill = document.createElement('button');
+    pill.type = 'button'; pill.className = 'shop-out-of-stock-btn'; pill.disabled = true;
+    pill.innerHTML = '<span></span>'; pill.firstChild.textContent = label;
+    row.appendChild(pill);
+}

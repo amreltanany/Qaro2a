@@ -186,3 +186,9 @@ body .shop-products-row .product-card .shop-card-actions .button.shop-cart-anima
 body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:focus-visible:not(.loading) .shop-cart-idle { opacity: 1 !important; transform: none !important; }
 body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:hover:not(.loading) span.shop-cart-label,
 body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:focus-visible:not(.loading) span.shop-cart-label { opacity: 0 !important; }
+
+/* the cart button is an icon-only circle: its text label never shows, not even while the add animation runs */
+body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate span.shop-cart-label,
+body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:hover span.shop-cart-label,
+body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate.loading span.shop-cart-label,
+body .product-card .shop-card-actions .button.shop-cart-animate.loading span.shop-cart-label { opacity: 0 !important; visibility: hidden !important; }
