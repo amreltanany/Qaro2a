@@ -19,7 +19,9 @@ document.addEventListener('DOMContentLoaded', function () {
             var productName = this.getAttribute('data-product-name');
             var qtySel = this.getAttribute('data-qty-input');
             var qtyEl = qtySel ? document.querySelector(qtySel) : null;
-            var qty = qtyEl ? Math.max(1, parseInt(qtyEl.value, 10) || 1) : 1;
+            var cardQty = this.closest('.shop-card-actions') && this.closest('.shop-card-actions').querySelector('.shop-qty__val');
+            var qty = qtyEl ? Math.max(1, parseInt(qtyEl.value, 10) || 1) : (cardQty ? Math.max(1, parseInt(cardQty.textContent, 10) || 1) : 1);
+            var addedBtn = this;
             var userId = (typeof localStorage !== 'undefined' && localStorage.getItem('userId')) ||
                 (document.querySelector('meta[name="user-id"]') && document.querySelector('meta[name="user-id"]').getAttribute('content')) || 'guest';
 
@@ -35,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({ productId: productId, quantity: qty })
             })
                 .then(function (res) {
+                    if (res.ok && cardQty) { cardQty.textContent = '1'; syncQty(cardQty.closest('.shop-qty')); } // back to 1 for the next add
                     if (res.ok && window.updateCartBadge) {
                         // refresh the header badge with the new total
                         fetch('/api/Cart', { credentials: 'same-origin', headers: token ? { 'Authorization': 'Bearer ' + token } : {} })
@@ -57,4 +60,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
     });
+});
+
+// + / - on the product cards (delegated: works for the looped copies in the home slider too)
+function syncQty(box) {
+    if (!box) return;
+    var v = parseInt(box.querySelector('.shop-qty__val').textContent, 10) || 1, max = parseInt(box.getAttribute('data-max'), 10) || 1;
+    box.querySelector('[data-qty-step="-1"]').disabled = v <= 1;
+    box.querySelector('[data-qty-step="1"]').disabled = v >= max;
+}
+document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-qty-step]');
+    if (!b) return;
+    e.preventDefault();
+    var box = b.closest('.shop-qty'), out = box.querySelector('.shop-qty__val');
+    var max = parseInt(box.getAttribute('data-max'), 10) || 1;
+    var next = Math.min(max, Math.max(1, (parseInt(out.textContent, 10) || 1) + parseInt(b.getAttribute('data-qty-step'), 10)));
+    out.textContent = String(next);
+    syncQty(box);
 });

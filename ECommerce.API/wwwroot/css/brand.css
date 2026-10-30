@@ -168,3 +168,21 @@ body[data-branch="shop"] .price-range__track input[type="range"]::-moz-range-thu
 body[data-branch="shop"] .shop-filter-toggle__icon { background: var(--b-solid) !important; }
 body[data-branch="shop"] .price-range__values b { color: var(--b-text); }
 
+
+/* ---- quantity stepper on the cards: price | - 1 + | cart (the cart button stays a circle, no hover growth) ---- */
+.product-card .shop-card-actions { gap: 8px; flex-wrap: nowrap; }
+.product-card .shop-card-actions .shop-card-price { flex: 0 1 auto; min-width: 0; white-space: nowrap; }
+.shop-qty { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border: 1px solid var(--b-line, #d9d0bc); border-radius: 999px; background: #fff; direction: ltr; flex: 0 0 auto; }
+.shop-qty__btn { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; background: var(--b-tint, #e8e1d2); color: var(--brand-navy); font-size: 1.05rem; font-weight: 700; line-height: 1; cursor: pointer; transition: background .2s ease, color .2s ease, transform .15s ease; }
+.shop-qty__btn:hover:not(:disabled), .shop-qty__btn:focus-visible { background: var(--b-solid, #0270b8); color: var(--b-on-solid, #fff); }
+.shop-qty__btn:active:not(:disabled) { transform: scale(.88); }
+.shop-qty__btn:disabled { opacity: .35; cursor: not-allowed; }
+.shop-qty__val { min-width: 20px; text-align: center; font-weight: 700; font-size: .9rem; color: var(--brand-navy); font-variant-numeric: tabular-nums; }
+body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate,
+body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:hover,
+body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:focus-visible,
+body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate.loading { width: 42px !important; min-width: 42px !important; height: 42px; min-height: 42px !important; }
+body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:hover:not(.loading) .shop-cart-idle,
+body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:focus-visible:not(.loading) .shop-cart-idle { opacity: 1 !important; transform: none !important; }
+body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:hover:not(.loading) span.shop-cart-label,
+body .shop-products-row .product-card .shop-card-actions .button.shop-cart-animate:focus-visible:not(.loading) span.shop-cart-label { opacity: 0 !important; }

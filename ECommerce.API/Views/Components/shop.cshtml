@@ -231,6 +231,11 @@
                                             <p class="shop-card-price mb-0" dir="ltr">@product.Price.ToString("N0") <span class="shop-card-currency">EGP</span></p>
                                             @if (product.Stock > 0)
                                             {
+                                                <div class="shop-qty" data-max="@product.Stock" role="group" aria-label="@L("Quantity", "الكمية")">
+                                                    <button type="button" class="shop-qty__btn" data-qty-step="-1" aria-label="@L("Decrease quantity", "تقليل الكمية")" disabled>&minus;</button>
+                                                    <output class="shop-qty__val" aria-live="polite">1</output>
+                                                    <button type="button" class="shop-qty__btn" data-qty-step="1" aria-label="@L("Increase quantity", "زيادة الكمية")"@(product.Stock > 1 ? "" : " disabled")>+</button>
+                                                </div>
                                                 <button type="button" class="button btn-add-cart shop-cart-animate" data-product-id="@product.Id" data-product-name="@product.Name" aria-label="@L("Add to cart", "أضف إلى السلة")">
                                                     <i class="bi bi-cart3 shop-cart-idle" aria-hidden="true"></i>
                                                     <span class="shop-cart-label">
