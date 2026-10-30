@@ -42,13 +42,14 @@
     function sync(box) {
         if (!box) return;
         var row = box.closest('.shop-card-actions'), minus = box.querySelector('[data-qty-step="-1"]'), v = val(box);
+        minus.removeAttribute('title'); minus.removeAttribute('data-qt'); // no tooltip bubble on the stepper (the aria-label is kept for screen readers)
         if (!minus.hasAttribute('data-minus-label')) minus.setAttribute('data-minus-label', minus.getAttribute('aria-label') || '');
         if (row && lines[pidOf(row)] && v <= 1) {
             // the book is in the cart and the number is 1: the minus becomes a red x that takes it out of the cart
             minus.disabled = false; minus.classList.add('is-remove'); minus.innerHTML = '&times;';
-            minus.setAttribute('aria-label', box.getAttribute('data-remove-label') || 'Remove from cart'); minus.title = minus.getAttribute('aria-label');
+            minus.setAttribute('aria-label', box.getAttribute('data-remove-label') || 'Remove from cart');
         } else {
-            minus.classList.remove('is-remove'); minus.innerHTML = '&minus;'; minus.removeAttribute('title');
+            minus.classList.remove('is-remove'); minus.innerHTML = '&minus;'; 
             minus.setAttribute('aria-label', minus.getAttribute('data-minus-label')); minus.disabled = v <= 1;
         }
         box.querySelector('[data-qty-step="1"]').disabled = v >= cap(box);
