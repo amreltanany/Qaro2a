@@ -41,8 +41,17 @@
     function cap(box) { return Math.max(1, parseInt(box.getAttribute('data-max'), 10) || 1); }
     function sync(box) {
         if (!box) return;
-        box.querySelector('[data-qty-step="-1"]').disabled = val(box) <= 1;
-        box.querySelector('[data-qty-step="1"]').disabled = val(box) >= cap(box);
+        var row = box.closest('.shop-card-actions'), minus = box.querySelector('[data-qty-step="-1"]'), v = val(box);
+        if (!minus.hasAttribute('data-minus-label')) minus.setAttribute('data-minus-label', minus.getAttribute('aria-label') || '');
+        if (row && lines[pidOf(row)] && v <= 1) {
+            // the book is in the cart and the number is 1: the minus becomes a red x that takes it out of the cart
+            minus.disabled = false; minus.classList.add('is-remove'); minus.innerHTML = '&times;';
+            minus.setAttribute('aria-label', box.getAttribute('data-remove-label') || 'Remove from cart'); minus.title = minus.getAttribute('aria-label');
+        } else {
+            minus.classList.remove('is-remove'); minus.innerHTML = '&minus;'; minus.removeAttribute('title');
+            minus.setAttribute('aria-label', minus.getAttribute('data-minus-label')); minus.disabled = v <= 1;
+        }
+        box.querySelector('[data-qty-step="1"]').disabled = v >= cap(box);
     }
     window.syncQty = sync;
     function setVal(box, v) { box.querySelector('.shop-qty__val').textContent = String(Math.min(cap(box), Math.max(1, v))); sync(box); }
@@ -99,6 +108,15 @@
             .catch(function () { showError(failMsg); });
     }
 
+    // take the book out of the cart (the red x that replaces the minus when the number is 1)
+    function removeLine(row) {
+        var pid = pidOf(row), line = lines[pid]; if (!line) return;
+        clearTimeout(timers[pid]);
+        fetch('/api/Cart/items/' + line.id, { method: 'DELETE', credentials: 'same-origin', headers: headers(false) })
+            .then(function (res) { if (res.ok || res.status === 204) { delete lines[pid]; return loadCart().then(afterCart); } return failed(row, res); })
+            .catch(function () { showError(failMsg); });
+    }
+
     // ---------- the add button ----------
     function animate(btn) {
         if (btn.classList.contains('button') && !btn.classList.contains('loading')) {
@@ -149,6 +167,7 @@
         if (!b) return;
         e.preventDefault();
         var box = b.closest('.shop-qty'), row = box.closest('.shop-card-actions');
+        if (b.classList.contains('is-remove')) { removeLine(row); return; }
         setVal(box, val(box) + parseInt(b.getAttribute('data-qty-step'), 10));
         var pid = pidOf(row);
         if (lines[pid]) { clearTimeout(timers[pid]); timers[pid] = setTimeout(function () { putQty(row); }, 350); } // in the cart already: the cart follows the number
