@@ -97,6 +97,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 /* ================= branch palettes (brand guide p.6-9) =================
    Each page family uses its branch colour for buttons, accents and small elements. Dark shades carry text,
    light shades carry backgrounds; the logo and the core blue/navy headings stay as they are. */
+/* pages without a branch (account, register, login, about...) use the core blue; without this the empty data-branch left every --b-* variable undefined (invisible check marks, unstyled buttons) */
+body {
+    --b-solid: var(--brand-blue); --b-solid-hover: #025a94; --b-on-solid: #fff; --b-text: var(--brand-blue); --b-tint: #e3f0f9; --b-accent: var(--brand-blue); --b-line: #bcd8ec;
+}
 body[data-branch="shop"] {      /* Bookstore green #70B802 */
     --b-solid: #518601; --b-solid-hover: #426C01; --b-on-solid: #fff; --b-text: #518601; --b-tint: #E7F5CF; --b-accent: #70B802; --b-line: #cfe6a3;
 }
@@ -210,3 +214,33 @@ body .product-card .shop-card-actions .button.shop-cart-animate.loading span.sho
 /* the minus turns into a red x (remove from cart) when the book is in the cart and the number is 1 */
 .shop-qty__btn.is-remove { background: #fde8e6; color: #c0392b; font-size: 1.25rem; }
 .shop-qty__btn.is-remove:hover:not(:disabled), .shop-qty__btn.is-remove:focus-visible { background: #c0392b; color: #fff; }
+
+/* ---- mobile (<= 860px, the width where the header turns into the burger) ---- */
+@media (max-width: 860px) {
+    /* the bar is a white pill from the first pixel, so the dark logo is visible over the pale hero */
+    .site-header { --bar-bg: #fff; --bar-fg: var(--sh-navy); --bar-shadow: 0 10px 30px rgba(10, 10, 11, .16); --logo-light: 0; --logo-dark: 1; --shoulder: 1; }
+
+    /* home: the two intro texts give way to the page links */
+    .home-brand-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .home-brand-tagline { display: none; }
+    .home-quick { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 auto; max-width: 28rem; }
+}
+.home-quick { display: none; }
+@media (max-width: 860px) {
+    .home-quick { display: grid; }
+    .home-quick__item { --q: var(--brand-blue); --q-bg: #e3f0f9; display: flex; align-items: center; justify-content: center; gap: .6rem; min-height: 3.6rem; padding: .7rem 1rem; border-radius: 1rem; border: 1px solid color-mix(in srgb, var(--q) 28%, #fff); background: var(--q-bg); color: var(--q); font-weight: 700; font-size: 1.02rem; text-decoration: none; box-shadow: 0 6px 16px -10px color-mix(in srgb, var(--q) 70%, transparent); transition: transform .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease; }
+    .home-quick__item i { font-size: 1.25rem; line-height: 1; }
+    .home-quick__item:hover, .home-quick__item:focus-visible { background: var(--q); color: #fff; transform: translateY(-2px); }
+    .home-quick__item:active { transform: scale(.97); }
+    .home-quick__item--wide { grid-column: 1 / -1; }
+    .home-quick__item[data-tone="shop"] { --q: var(--brand-green-dark); --q-bg: #E7F5CF; }
+    .home-quick__item[data-tone="podcast"] { --q: var(--brand-gold-dark); --q-bg: #FFF4D1; }
+    .home-quick__item[data-tone="publish"] { --q: var(--brand-burgundy); --q-bg: #F6E3EA; }
+    .home-quick__item[data-tone="about"], .home-quick__item[data-tone="blog"] { --q: var(--brand-navy); --q-bg: #e3edf7; }
+}
+
+/* phones: the price stacks (number over EGP) so price + stepper + cart button always fit inside the card */
+@media (max-width: 575.98px) {
+    body .product-card .shop-card-actions .shop-card-price { display: inline-flex; flex-direction: column; align-items: center; line-height: 1.05; flex: 0 0 auto; min-width: 0; font-size: 1.15rem; }
+    body .product-card .shop-card-actions .shop-card-price .shop-card-currency { font-size: .62rem; margin: 0; }
+}

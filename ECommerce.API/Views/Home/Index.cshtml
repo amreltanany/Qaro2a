@@ -73,6 +73,13 @@
         <p class="home-brand-tagline mb-0" data-aos="fade-up" data-aos-delay="150">
             @L("Your literary hub for Arabic books, podcast episodes, and publishing.", "منصتك الأدبية للكتب العربية وحلقات البودكاست والنشر — قروءه وقروءة في مكان واحد.")
         </p>
+        <nav class="home-quick" aria-label="@L("Main pages", "الصفحات الرئيسية")">
+            <a class="home-quick__item" data-tone="shop" asp-controller="Home" asp-action="Shop"><i class="bi bi-book" aria-hidden="true"></i><span>@L("Shop", "المتجر")</span></a>
+            <a class="home-quick__item" data-tone="podcast" asp-controller="Home" asp-action="Podcast"><i class="bi bi-mic" aria-hidden="true"></i><span>@L("Podcast", "بودكاست")</span></a>
+            <a class="home-quick__item" data-tone="blog" asp-controller="Home" asp-action="Blog"><i class="bi bi-journal-text" aria-hidden="true"></i><span>@L("Blog", "مقالات")</span></a>
+            <a class="home-quick__item" data-tone="about" asp-controller="Home" asp-action="About"><i class="bi bi-info-circle" aria-hidden="true"></i><span>@L("About Us", "من نحن")</span></a>
+            <a class="home-quick__item home-quick__item--wide" data-tone="publish" asp-controller="Publish" asp-action="Index"><i class="bi bi-pencil-square" aria-hidden="true"></i><span>@L("Publish your book", "انشر كتابك")</span></a>
+        </nav>
     </div>
 </section>
 
