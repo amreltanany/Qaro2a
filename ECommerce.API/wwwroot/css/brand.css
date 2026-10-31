@@ -244,3 +244,20 @@ body .product-card .shop-card-actions .button.shop-cart-animate.loading span.sho
     body .product-card .shop-card-actions .shop-card-price { display: inline-flex; flex-direction: column; align-items: center; line-height: 1.05; flex: 0 0 auto; min-width: 0; font-size: 1.15rem; }
     body .product-card .shop-card-actions .shop-card-price .shop-card-currency { font-size: .62rem; margin: 0; }
 }
+
+/* ---- shop pager: previous / page numbers / next page ---- */
+#shopGrid { scroll-margin-top: 6rem; }
+.shop-pager { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .75rem; margin: 2.2rem 0 .5rem; }
+.shop-pager__nums { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .4rem; margin: 0; padding: 0; list-style: none; }
+.shop-pager__num { display: grid; place-items: center; min-width: 2.5rem; height: 2.5rem; padding: 0 .5rem; border-radius: 50%; border: 1px solid var(--b-line); background: #fff; color: var(--brand-navy); font-weight: 700; text-decoration: none; transition: background .2s ease, color .2s ease, transform .15s ease; }
+a.shop-pager__num:hover, a.shop-pager__num:focus-visible { background: var(--b-tint); color: var(--b-text); transform: translateY(-2px); }
+.shop-pager__num.is-current { background: var(--b-solid); border-color: var(--b-solid); color: var(--b-on-solid); }
+.shop-pager__gap { color: var(--brand-muted); padding: 0 .1rem; }
+.shop-pager__step { display: inline-flex; align-items: center; gap: .5rem; min-height: 2.5rem; padding: .45rem 1.1rem; border-radius: 999px; background: var(--b-solid); color: var(--b-on-solid); font-weight: 700; text-decoration: none; transition: background .2s ease, transform .15s ease; }
+.shop-pager__step i { font-size: 1.1rem; line-height: 1; }
+.shop-pager__step:hover, .shop-pager__step:focus-visible { background: var(--b-solid-hover); color: var(--b-on-solid); transform: translateY(-2px); }
+@media (max-width: 575.98px) {
+    .shop-pager { gap: .6rem; }
+    .shop-pager__nums { order: -1; width: 100%; }
+    .shop-pager__step span { font-size: .95rem; }
+}

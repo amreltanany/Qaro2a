@@ -81,7 +81,7 @@ public class HomeController : Controller
         var query = new QueryParameters
         {
             PageNumber = 1,
-            PageSize = 50,
+            PageSize = 50, // the repository caps a page at 50; the shop pages (25 books each) are cut from the full result below
             Search = string.IsNullOrWhiteSpace(s) ? null : s.Trim(),
             SortBy = string.IsNullOrWhiteSpace(sortBy) ? null : sortBy.Trim(),
             PublishDate = publishDate,
@@ -91,7 +91,21 @@ public class HomeController : Controller
             CategoryId = categoryId,
             TopRatedOnly = topRated
         };
-        var products = (await _productService.GetAllAsync(query)).ToList();
+        const int shopPageSize = 25;
+        var all = new List<ECommerce.Application.DTOs.Product.ProductResponseDto>();
+        for (var n = 1; n <= 200; n++)
+        {
+            query.PageNumber = n;
+            var chunk = (await _productService.GetAllAsync(query)).ToList();
+            all.AddRange(chunk);
+            if (chunk.Count < query.PageSize) break;
+        }
+        var totalPages = Math.Max(1, (int)Math.Ceiling(all.Count / (double)shopPageSize));
+        var page = int.TryParse(Request.Query["page"], out var pn) ? Math.Clamp(pn, 1, totalPages) : 1;
+        var products = all.Skip((page - 1) * shopPageSize).Take(shopPageSize).ToList();
+        ViewBag.Page = page;
+        ViewBag.TotalPages = totalPages;
+        ViewBag.TotalBooks = all.Count;
         var priciest = (await _productService.GetAllAsync(new QueryParameters { PageNumber = 1, PageSize = 1, SortBy = "price_desc" })).FirstOrDefault();
         ViewBag.PriceCeil = priciest == null ? 1000 : (int)(Math.Ceiling(priciest.Price / 50m) * 50m);
         ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();

@@ -191,7 +191,7 @@
                 }
                 else
                 {
-                    <div class="row g-4 py-1 shop-products-row" data-aos="fade-up" data-aos-delay="600">
+                    <div id="shopGrid" class="row g-4 py-1 shop-products-row" data-aos="fade-up" data-aos-delay="600">
                         @foreach (var product in Model)
                         {
                             <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
@@ -264,6 +264,41 @@
                             </div>
                         }
                     </div>
+                        var curPage = ViewBag.Page is int cp ? cp : 1;
+                        var lastPage = ViewBag.TotalPages is int tp ? tp : 1;
+                        string PageUrl(int p)
+                        {
+                            var q = Context.Request.Query.Where(k => !string.Equals(k.Key, "page", StringComparison.OrdinalIgnoreCase)).ToDictionary(k => k.Key, k => (string?)k.Value.ToString());
+                            if (p > 1) q["page"] = p.ToString();
+                            return Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(Context.Request.Path, q) + "#shopGrid";
+                        }
+                        var shown = new SortedSet<int> { 1, lastPage, curPage, curPage - 1, curPage + 1 };
+                        if (lastPage <= 7) { shown = new SortedSet<int>(Enumerable.Range(1, lastPage)); }
+                        var prevIcon = isArabic ? "bi-arrow-right" : "bi-arrow-left";
+                        var nextIcon = isArabic ? "bi-arrow-left" : "bi-arrow-right";
+                    if (lastPage > 1)
+                    {
+                        <nav class="shop-pager" aria-label="@L("Pages", "الصفحات")">
+                            @if (curPage > 1)
+                            {
+                                <a class="shop-pager__step" href="@PageUrl(curPage - 1)" rel="prev" aria-label="@L("Previous page", "الصفحة السابقة")"><i class="bi @prevIcon" aria-hidden="true"></i><span>@L("Previous page", "الصفحة السابقة")</span></a>
+                            }
+                            <ul class="shop-pager__nums">
+                                @{ var prev = 0; }
+                                @foreach (var p in shown.Where(x => x >= 1 && x <= lastPage))
+                                {
+                                    if (prev != 0 && p - prev > 1) { <li class="shop-pager__gap" aria-hidden="true">…</li> }
+                                    prev = p;
+                                    if (p == curPage) { <li><span class="shop-pager__num is-current" aria-current="page">@p</span></li> }
+                                    else { <li><a class="shop-pager__num" href="@PageUrl(p)" aria-label="@L("Page", "صفحة") @p">@p</a></li> }
+                                }
+                            </ul>
+                            @if (curPage < lastPage)
+                            {
+                                <a class="shop-pager__step shop-pager__step--next" href="@PageUrl(curPage + 1)" rel="next" aria-label="@L("Next page", "الصفحة التالية")"><span>@L("Next page", "الصفحة التالية")</span><i class="bi @nextIcon" aria-hidden="true"></i></a>
+                            }
+                        </nav>
+                    }
                 }
             </div>
         </div>
