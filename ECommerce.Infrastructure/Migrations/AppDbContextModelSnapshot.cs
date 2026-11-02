@@ -313,7 +313,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Description = "رواية فانتازيا بأبعاد فلسفية ونفسية. بين «عبّار» و«فارق» تجد نفسك في رحلة تواجه فيها كل ما تهرب منه، بلا سبيل للفرار من الحقيقة. رحلة مليئة بالخبايا والأسرار بين الحقيقة والزيف، والتعلّق والهروب، هدفها الوصول إلى الحقيقة وحدها.",
                             ImageUrl = "/images/products/baad-fariq.webp",
                             Name = "بعد فارق",
-                            Price = 130m,
+                            Price = 250m,
                             PublishDate = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
                             Stock = 10,
                             TopRated = true
@@ -327,7 +327,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Description = "تجربة فانتازيا ليست بعيدة عن واقعنا؛ فالحياة مليئة باختبارات سهلة وصعبة، وما يبدو سهلًا قد يحمل جوهر الصعوبة. بين الاختيارات ومعرفة الحقيقة التي تتغيّر مع زيادة الوعي تتشكّل رحلتنا في «أرخبيل الملوك»: رحلة عالية المخاطر بين البقاء والتحرر، تجمع الحركة المكثفة بالأسئلة الفلسفية العميقة.",
                             ImageUrl = "/images/products/arkhabil-el-molouk.webp",
                             Name = "أرخبيل الملوك",
-                            Price = 130m,
+                            Price = 200m,
                             PublishDate = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
                             Stock = 10,
                             TopRated = true
@@ -341,7 +341,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Description = "بين أعباء الحياة وسباتها المستمر والتوغل في أحلام الآخرين، نفقد جزءًا من أرواحنا ونغدو أحياءً بأجساد هامدة. لكن ماذا لو قررت كسر هذه الدائرة وبدأت رحلتك وفق قواعدك وأحلامك؟ رحلة تكون فيها البطل، تبحث خلالها عن معنى لحياتك وعن ذاتك الحقيقية.",
                             ImageUrl = "/images/products/tayf-najah.webp",
                             Name = "طيف نجاة",
-                            Price = 130m,
+                            Price = 250m,
                             PublishDate = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
                             Stock = 10,
                             TopRated = true
@@ -355,7 +355,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Description = "تنقلب حياة طبيب نفسي ناجح بعد وفاة والدته، الرسامة الشهيرة المنعزلة، حين يكتشف بالصدفة تسجيلات قديمة ودفاتر تخفي أسرارًا لم يعرفها عنها من قبل. رواية عن الفقد والذاكرة، وعمّا تخبئه اللوحات خلف ألوانها.",
                             ImageUrl = "/images/products/lawha-akhira.webp",
                             Name = "لوحة أخيرة",
-                            Price = 130m,
+                            Price = 200m,
                             PublishDate = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
                             Stock = 10,
                             TopRated = true
@@ -369,7 +369,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Description = "ليست مجموعة قصص وحسب، بل نسيج متشابك بين الدراما والفانتازيا: رحلة بخمس تجارب مختلفة مع الشعور بالذنب، حين يتحول من سؤال بريء ينم عن رغبة صاحبه في أن يصبح شخصًا أفضل إلى حلقة مفرغة لا تنتهي من شعور يأكله ببطء. ليس بالضرورة أن تدخل حلقة الذنب بقرار واعٍ.",
                             ImageUrl = "/images/products/halaqat-al-dhanb.webp",
                             Name = "حلقة الذنب",
-                            Price = 130m,
+                            Price = 250m,
                             PublishDate = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
                             Stock = 10,
                             TopRated = true
@@ -383,7 +383,7 @@ namespace ECommerce.Infrastructure.Migrations
                             Description = "كل مرة تتعرض فيها للرفض وتنغلق على نفسك وتسألها: لماذا اخترت أن أكون في هذا المكان؟ تجد إجابة واحدة في انتظارك كل مرة. رواية عن الرفض والإصرار، وعن البحث عن مكانك الحقيقي.",
                             ImageUrl = "/images/products/talabak-marfoud.webp",
                             Name = "طلبك مرفوض",
-                            Price = 130m,
+                            Price = 200m,
                             PublishDate = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
                             Stock = 10,
                             TopRated = true
