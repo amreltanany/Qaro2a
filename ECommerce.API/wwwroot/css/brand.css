@@ -261,3 +261,5 @@ a.shop-pager__num:hover, a.shop-pager__num:focus-visible { background: var(--b-t
     .shop-pager__nums { order: -1; width: 100%; }
     .shop-pager__step span { font-size: .95rem; }
 }
+
+.shop-result-count { display: inline-block; padding: .25rem .9rem; border-radius: 999px; background: var(--b-tint); color: var(--b-text); font-weight: 700; }

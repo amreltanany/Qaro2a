@@ -49,7 +49,12 @@
             <div class="col-md-6 text-center" data-aos="fade-up" data-aos-delay="300">
                 @if (isSearch)
                 {
+                        var found = ViewBag.TotalBooks is int tb ? tb : Model.Count;
+                        var foundText = isArabic
+                            ? (found == 0 ? "لا توجد كتب مطابقة" : found == 1 ? "ظهر كتاب واحد" : found == 2 ? "ظهر كتابان" : found <= 10 ? $"ظهرت {found} كتب" : $"ظهر {found} كتابًا")
+                            : (found == 0 ? "No matching books" : found == 1 ? "1 book found" : $"{found} books found");
                     <p class="mb-2">@L("Results for", "نتائج البحث عن") &quot;@searchTerm&quot;</p>
+                    <p class="shop-result-count mb-2">@foundText</p>
                     <div class="shop-back-wrapper">
                         <a href="/Home/Shop" class="btn btn-outline-secondary btn-sm">
                             <i class="bi bi-arrow-left me-1"></i>@L("Back to Shop", "العودة إلى المتجر")
