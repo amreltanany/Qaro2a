@@ -24,10 +24,22 @@ namespace ECommerce.API.Controllers
 
         public async Task<IActionResult> Index(int page = 1, string? search = null, CancellationToken cancellationToken = default)
         {
-            var query = new QueryParameters { PageNumber = page, PageSize = 10, Search = search };
-            var products = await _productService.GetAllAsync(query);
+            // the repository caps a page at 50, so read every match and cut the dashboard pages (25 rows) here
+            const int rowsPerPage = 25;
+            var all = new List<ProductResponseDto>();
+            for (var n = 1; n <= 200; n++)
+            {
+                var chunk = (await _productService.GetAllAsync(new QueryParameters { PageNumber = n, PageSize = 50, Search = search })).ToList();
+                all.AddRange(chunk);
+                if (chunk.Count < 50) break;
+            }
+            var totalPages = Math.Max(1, (int)Math.Ceiling(all.Count / (double)rowsPerPage));
+            page = Math.Clamp(page, 1, totalPages);
             ViewBag.Search = search;
-            return View(products);
+            ViewBag.Page = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.Total = all.Count;
+            return View(all.Skip((page - 1) * rowsPerPage).Take(rowsPerPage).ToList());
         }
 
         [HttpGet]
