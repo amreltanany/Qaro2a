@@ -24,6 +24,7 @@ public class AppDbContext : IdentityDbContext<User>
     public DbSet<Publish> Publishes => Set<Publish>();
     public DbSet<WishlistItem> WishlistItems => Set<WishlistItem>();
     public DbSet<Contact> Contacts => Set<Contact>();
+    public DbSet<ProductRating> ProductRatings => Set<ProductRating>();
 
     private static readonly DateTime SeedDate = new DateTime(2026, 10, 29, 0, 0, 0, DateTimeKind.Utc);
 
@@ -93,6 +94,13 @@ public class AppDbContext : IdentityDbContext<User>
             .ToTable("Publish");
         modelBuilder.Entity<Contact>()
             .ToTable("Contact");
+        modelBuilder.Entity<ProductRating>(e =>
+        {
+            e.ToTable("ProductRating");
+            e.Property(r => r.OwnerKey).HasMaxLength(80).IsRequired();
+            e.HasIndex(r => new { r.ProductId, r.OwnerKey }).IsUnique(); // one rating per visitor and book
+            e.HasOne(r => r.Product).WithMany().HasForeignKey(r => r.ProductId).OnDelete(DeleteBehavior.Cascade);
+        });
         modelBuilder.Entity<Publish>()
             .HasOne(p => p.User)
             .WithMany()

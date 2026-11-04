@@ -1,0 +1,21 @@
+@model int
+@{
+    var isArabic = string.Equals(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "ar", StringComparison.OrdinalIgnoreCase);
+    var sums = ViewBag.Ratings as Dictionary<int, (double Avg, int Count)>;
+    var mineMap = ViewBag.MyRatings as Dictionary<int, int>;
+    var avg = 0d; var count = 0; var mine = 0;
+    if (sums != null && sums.TryGetValue(Model, out var s)) { avg = s.Avg; count = s.Count; }
+    if (mineMap != null && mineMap.TryGetValue(Model, out var m)) mine = m;
+    var shown = Math.Round(avg * 2) / 2d;
+}
+<div class="rate@(mine > 0 ? " rate--mine" : "")" data-product-id="@Model" data-avg="@avg.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)" data-count="@count" data-mine="@mine"
+     data-rate-label="@(isArabic ? "قيّم الكتاب" : "Rate this book")" data-thanks="@(isArabic ? "شكرًا لتقييمك" : "Thanks for rating")">
+    <span class="rate__stars" role="group" aria-label="@(isArabic ? "تقييم الكتاب" : "Book rating")">
+        @for (var i = 1; i <= 5; i++)
+        {
+            var icon = shown >= i ? "bi-star-fill" : (shown >= i - 0.5 ? "bi-star-half" : "bi-star");
+            <button type="button" class="rate__star" data-stars="@i" aria-label="@(isArabic ? $"{i} من 5 نجوم" : $"{i} of 5 stars")"><i class="bi @icon" aria-hidden="true"></i></button>
+        }
+    </span>
+    <span class="rate__text">@(count == 0 ? (isArabic ? "قيّم الكتاب" : "Rate this book") : $"{avg.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)} ({count})")</span>
+</div>

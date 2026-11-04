@@ -263,3 +263,16 @@ a.shop-pager__num:hover, a.shop-pager__num:focus-visible { background: var(--b-t
 }
 
 .shop-result-count { display: inline-block; padding: .25rem .9rem; border-radius: 999px; background: var(--b-tint); color: var(--b-text); font-weight: 700; }
+
+/* ---- star ratings ---- */
+.rate { display: flex; align-items: center; gap: .45rem; margin-top: .4rem; }
+.rate__stars { display: inline-flex; direction: ltr; gap: 1px; }
+.rate__star { border: 0; background: none; padding: 1px; font-size: 1.05rem; line-height: 1; color: var(--brand-gold); cursor: pointer; transition: transform .12s ease; }
+.rate__star:hover { transform: scale(1.18); }
+.rate__star:focus-visible { outline: 2px solid var(--b-accent, var(--brand-blue)); outline-offset: 2px; border-radius: 4px; }
+.rate--mine .rate__star { color: #d99700; }
+.rate__text { font-size: .8rem; color: var(--brand-muted); font-variant-numeric: tabular-nums; }
+.pd__author + .rate { margin-top: .6rem; }
+.pd__author + .rate .rate__star { font-size: 1.3rem; }
+.pd__author + .rate .rate__text { font-size: .95rem; }
+.rate__text { direction: ltr; unicode-bidi: isolate; }

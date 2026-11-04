@@ -43,6 +43,7 @@
                 }
                 <h1 class="pd__title">@Model.Name</h1>
                 <a class="pd__author" href="/Home/Shop?author=@Uri.EscapeDataString(Model.Author)">@Model.Author</a>
+                <partial name="_Stars" model="Model.Id" />
 
                 <p class="pd__price" dir="ltr">@Model.Price.ToString("N0") <span>EGP</span></p>
 

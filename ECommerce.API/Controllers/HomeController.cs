@@ -19,6 +19,7 @@ public class HomeController : Controller
     private readonly ICartItemRepository _cartItemRepository;
     private readonly IWishlistItemRepository _wishlistItemRepository;
     private readonly ILogger<HomeController> _logger;
+    private readonly RatingStore _ratings;
 
     public HomeController(
         IProductService productService,
@@ -28,7 +29,8 @@ public class HomeController : Controller
         UserManager<User> userManager,
         ICartItemRepository cartItemRepository,
         IWishlistItemRepository wishlistItemRepository,
-        ILogger<HomeController> logger)
+        ILogger<HomeController> logger,
+        RatingStore ratings)
     {
         _productService = productService;
         _categoryService = categoryService;
@@ -38,6 +40,7 @@ public class HomeController : Controller
         _cartItemRepository = cartItemRepository;
         _wishlistItemRepository = wishlistItemRepository;
         _logger = logger;
+        _ratings = ratings;
     }
 
     // books this visitor already holds in the cart (user or guest cookie): their cards stay usable even when no copy is left for others
@@ -46,6 +49,14 @@ public class HomeController : Controller
         var key = GetUserId() ?? CartOwner.GuestKey(HttpContext, false);
         if (string.IsNullOrEmpty(key)) return new HashSet<int>();
         return (await _cartItemRepository.GetByUserIdAsync(key)).Select(c => c.ProductId).ToHashSet();
+    }
+
+    // star averages and this visitor's own ratings for the books on the page (read by Views/Shared/_Stars.cshtml)
+    private async Task LoadRatingsAsync(IEnumerable<int> productIds)
+    {
+        var ids = productIds.ToList();
+        ViewBag.Ratings = await _ratings.SummariesAsync(ids);
+        ViewBag.MyRatings = await _ratings.MineAsync(GetUserId() ?? CartOwner.GuestKey(HttpContext, false), ids);
     }
 
     private string? GetUserId() =>
@@ -62,6 +73,7 @@ public class HomeController : Controller
             SortBy = "publishdate_desc"
         });
         ViewBag.MyCartProducts = await MyCartProductIdsAsync();
+        await LoadRatingsAsync(products.Select(p => p.Id));
         return View(products);
     }
     public async Task<IActionResult> Shop(
@@ -118,6 +130,7 @@ public class HomeController : Controller
         ViewBag.CategoryId = categoryId;
         ViewBag.TopRated = topRated;
         ViewBag.MyCartProducts = await MyCartProductIdsAsync();
+        await LoadRatingsAsync(products.Select(p => p.Id));
         return View("/Views/Components/Shop.cshtml", products);
     }
   
@@ -160,6 +173,7 @@ public class HomeController : Controller
         })).Where(p => p.Id != product.Id).Take(4).ToList();
 
         ViewBag.Related = related;
+        await LoadRatingsAsync(related.Select(p => p.Id).Append(product.Id));
         return View("/Views/Components/ProductDetails.cshtml", product);
     }
 

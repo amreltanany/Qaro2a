@@ -231,6 +231,7 @@
                                             <div class="shop-card-meta">
                                                 <a href="/Home/Author/@Uri.EscapeDataString(product.Author.Trim().Replace(" ", "-"))" class="shop-card-author-chip">@product.Author</a>
                                             </div>
+                                            <partial name="_Stars" model="product.Id" />
                                         </div>
                                         @{ var buyable = product.Stock > 0 || ((ViewBag.MyCartProducts as HashSet<int>)?.Contains(product.Id) ?? false); }
 <div class="shop-card-actions @(buyable ? null : "shop-card-actions--out-of-stock")" data-out-label="@L("Out of stock", "غير متوفر")">
