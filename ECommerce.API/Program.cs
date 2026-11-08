@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection;
 using ECommerce.API.Helpers;
 using ECommerce.Application.DTOs.Product;
 using ECommerce.Application.Interfaces;
@@ -113,6 +114,22 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 #endregion
 
 #region Authentication / Authorization
+
+// Data-protection keys (they encrypt the admin session cookie, antiforgery tokens, TempData) must survive app restarts and deployments.
+// Under IIS with a default app pool identity there is no user profile, so without this the keys live in memory only and every restart
+// logs the admin out of the dashboard (the JWT cookie still works, so the site looks logged in without the Dashboard link).
+{
+    var keysPath = builder.Configuration["DataProtection:KeysPath"] ?? Path.Combine(builder.Environment.ContentRootPath, "App_Data", "DataProtection-Keys");
+    try
+    {
+        Directory.CreateDirectory(keysPath);
+        builder.Services.AddDataProtection().SetApplicationName("Qaro2a").PersistKeysToFileSystem(new DirectoryInfo(keysPath));
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"WARNING: data-protection key folder '{keysPath}' is not usable ({ex.Message}); keys stay in memory and sessions end on restart.");
+    }
+}
 builder.Services.AddIdentity<User, IdentityRole>(o =>
 {
     o.Lockout.MaxFailedAccessAttempts = 5;

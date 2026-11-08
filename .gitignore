@@ -363,3 +363,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 ECommerce.API/PrivateUploads/
+
+# data-protection keys are per machine, never committed
+**/App_Data/
