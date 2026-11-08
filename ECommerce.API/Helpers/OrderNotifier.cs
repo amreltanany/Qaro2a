@@ -25,7 +25,7 @@ public class OrderNotifier
     public void NewOrder(int orderId, int books, decimal total, string governorate)
     {
         if (!Enabled) return;
-        var title = $"🛒 طلب جديد #{orderId}";
+        var title = $"طلب جديد #{orderId}";   // the cart icon comes from the "shopping_cart" tag
         var message = $"{books} {(books >= 3 && books <= 10 ? "كتب" : "كتاب")} — {total:0.##} جنيه — {governorate}";
         _ = Task.Run(() => SendAsync(title, message));
     }
