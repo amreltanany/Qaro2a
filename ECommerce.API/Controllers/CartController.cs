@@ -14,11 +14,13 @@ namespace ECommerce.API.Controllers
     {
         private readonly ICartService _cartService;
         private readonly UserManager<User> _userManager;
+        private readonly OrderNotifier _notifier;
 
-        public CartController(ICartService cartService, UserManager<User> userManager)
+        public CartController(ICartService cartService, UserManager<User> userManager, OrderNotifier notifier)
         {
             _cartService = cartService;
             _userManager = userManager;
+            _notifier = notifier;
         }
 
         private string? ResolveUserId() =>
@@ -118,6 +120,7 @@ namespace ECommerce.API.Controllers
                 });
             }
 
+            var placed = (await _cartService.GetCartByUserIdAsync(key)).ToList();   // what is being ordered, for the owner's phone notification
             var orderId = await _cartService.CreateOrderFromCartAsync(
                 key,
                 userId,
@@ -127,6 +130,8 @@ namespace ECommerce.API.Controllers
                 OrderPricing.Find(Governorate)!.Key);
             // the confirmation page reads these once (TempData), so only the person who just ordered can open it
             TempData["PlacedOrderId"] = orderId;
+            var gov = OrderPricing.Find(Governorate)!;
+            _notifier.NewOrder(orderId, placed.Sum(i => i.Quantity), placed.Sum(i => i.Subtotal) + OrderPricing.FeeFor(gov), gov.Ar);
             return RedirectToAction("Placed", "Track");
         }
     }

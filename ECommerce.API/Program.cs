@@ -216,6 +216,8 @@ builder.Services.AddScoped<IProductImageFileService, ECommerce.API.Services.Prod
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ECommerce.API.Helpers.RatingStore>();
 builder.Services.AddScoped<ECommerce.API.Helpers.ContactSpamGuard>();
+builder.Services.AddHttpClient("ntfy");
+builder.Services.AddSingleton<ECommerce.API.Helpers.OrderNotifier>();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
