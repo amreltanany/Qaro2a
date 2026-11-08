@@ -54,6 +54,10 @@
             }
             <form asp-controller="Contact" asp-action="Send" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
               @Html.AntiForgeryToken()
+              <input type="hidden" name="_t" value="@(ViewBag.FormToken as string)" />
+              <div style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+                <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+              </div>
               <div asp-validation-summary="All" class="text-danger mb-2"></div>
               <div class="row gy-4">
 

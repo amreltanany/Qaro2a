@@ -158,6 +158,10 @@ builder.Services.AddRateLimiter(o =>
     o.AddPolicy("rating", ctx => System.Threading.RateLimiting.RateLimitPartition.GetFixedWindowLimiter(
         ctx.Connection.RemoteIpAddress?.ToString() ?? "unknown",
         _ => new System.Threading.RateLimiting.FixedWindowRateLimiterOptions { PermitLimit = 30, Window = TimeSpan.FromMinutes(1), QueueLimit = 0 }));
+    // contact form: 3 messages per 10 minutes per IP
+    o.AddPolicy("contact", ctx => System.Threading.RateLimiting.RateLimitPartition.GetFixedWindowLimiter(
+        ctx.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+        _ => new System.Threading.RateLimiting.FixedWindowRateLimiterOptions { PermitLimit = builder.Configuration.GetValue("Contact:PermitLimit", 3), Window = TimeSpan.FromMinutes(10), QueueLimit = 0 }));
     o.AddPolicy("track", ctx => System.Threading.RateLimiting.RateLimitPartition.GetFixedWindowLimiter(
         ctx.Connection.RemoteIpAddress?.ToString() ?? "unknown",
         _ => new System.Threading.RateLimiting.FixedWindowRateLimiterOptions { PermitLimit = 10, Window = TimeSpan.FromMinutes(1), QueueLimit = 0 }));
@@ -211,6 +215,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductImageFileService, ECommerce.API.Services.ProductImageFileService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ECommerce.API.Helpers.RatingStore>();
+builder.Services.AddScoped<ECommerce.API.Helpers.ContactSpamGuard>();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
