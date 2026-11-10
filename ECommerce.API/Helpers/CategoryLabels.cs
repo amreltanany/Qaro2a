@@ -14,6 +14,7 @@ namespace ECommerce.API.Helpers
             ["تاريخي وسير"] = "History & Biography",
             ["فكر وثقافة"] = "Thought & Culture",
             ["رعب"] = "Horror",
+            ["فانتازيا فلسفية"] = "Philosophical Fantasy",
         };
 
         public static string Localize(string? name, bool isArabic)

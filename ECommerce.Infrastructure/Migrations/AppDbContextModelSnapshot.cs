@@ -129,6 +129,12 @@ namespace ECommerce.Infrastructure.Migrations
                             Id = 9,
                             CreatedAt = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
                             Name = "رعب"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Name = "فانتازيا فلسفية"
                         });
                 });
 
@@ -308,7 +314,7 @@ namespace ECommerce.Infrastructure.Migrations
                         {
                             Id = 1,
                             Author = "نوران بسيوني",
-                            CategoryId = 1,
+                            CategoryId = 10,
                             CreatedAt = new DateTime(2026, 10, 29, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "رواية فانتازيا بأبعاد فلسفية ونفسية. بين «عبّار» و«فارق» تجد نفسك في رحلة تواجه فيها كل ما تهرب منه، بلا سبيل للفرار من الحقيقة. رحلة مليئة بالخبايا والأسرار بين الحقيقة والزيف، والتعلّق والهروب، هدفها الوصول إلى الحقيقة وحدها.",
                             ImageUrl = "/images/products/baad-fariq.webp",
