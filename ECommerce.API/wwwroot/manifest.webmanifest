@@ -1,0 +1,25 @@
+{
+  "id": "/?source=pwa",
+  "name": "قروءة — كتب وبودكاست ونشر",
+  "short_name": "قروءة",
+  "description": "متجر قروءة: كتب عربية، بودكاست، ونشر أدبي.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#00346E",
+  "theme_color": "#00346E",
+  "categories": ["books", "shopping", "education"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "المتجر", "short_name": "المتجر", "url": "/Home/Shop?source=pwa", "icons": [{ "src": "/icons/shortcut-96.png", "sizes": "96x96", "type": "image/png" }] },
+    { "name": "السلة", "short_name": "السلة", "url": "/Cart?source=pwa", "icons": [{ "src": "/icons/shortcut-96.png", "sizes": "96x96", "type": "image/png" }] },
+    { "name": "تتبّع طلبي", "short_name": "تتبّع", "url": "/Track?source=pwa", "icons": [{ "src": "/icons/shortcut-96.png", "sizes": "96x96", "type": "image/png" }] }
+  ]
+}

@@ -176,6 +176,13 @@
     <link rel="alternate" hreflang="x-default" href="@hreflangDefault" />
     <link rel="sitemap" type="application/xml" title="Sitemap" href="@($"{baseUrl}/sitemap.xml")" />
     <link rel="icon" type="image/png" href="~/logo/favicon-qaro2a.png" asp-append-version="true" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#00346E" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="قروءة" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -258,6 +265,7 @@
     <link rel="stylesheet" type="text/css" href="~/css/brand.css" asp-append-version="true">
     <script src="~/js/img-retry.js" asp-append-version="true"></script>
     <script src="~/js/rating.js" defer asp-append-version="true"></script>
+    <script src="~/js/pwa-register.js" defer asp-append-version="true"></script>
 </head>
 
 <body class="@bodyPageClass" data-branch="@(ViewData["Branch"] as string)">
