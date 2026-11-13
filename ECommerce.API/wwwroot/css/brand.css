@@ -124,6 +124,7 @@ body[data-branch] .btn-outline-primary {
     --bs-btn-hover-bg: var(--b-solid); --bs-btn-hover-border-color: var(--b-solid); --bs-btn-hover-color: var(--b-on-solid);
     --bs-btn-active-bg: var(--b-solid-hover); --bs-btn-active-border-color: var(--b-solid-hover); --bs-btn-active-color: var(--b-on-solid);
 }
+body[data-branch] .form-control:focus, body[data-branch] .form-select:focus { border-color: var(--b-accent); box-shadow: 0 0 0 .2rem rgba(112, 184, 2, .25); }
 body[data-branch] .form-control:focus, body[data-branch] .form-select:focus { border-color: var(--b-accent); box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--b-accent) 25%, transparent); }
 body[data-branch] .form-check-input:checked { background-color: var(--b-solid); border-color: var(--b-solid); }
 body[data-branch] :focus-visible { outline-color: var(--b-accent); }
@@ -228,7 +229,7 @@ body .product-card .shop-card-actions .button.shop-cart-animate.loading span.sho
 .home-quick { display: none; }
 @media (max-width: 860px) {
     .home-quick { display: grid; }
-    .home-quick__item { --q: var(--brand-blue); --q-bg: #e3f0f9; display: flex; align-items: center; justify-content: center; gap: .6rem; min-height: 3.6rem; padding: .7rem 1rem; border-radius: 1rem; border: 1px solid color-mix(in srgb, var(--q) 28%, #fff); background: var(--q-bg); color: var(--q); font-weight: 700; font-size: 1.02rem; text-decoration: none; box-shadow: 0 6px 16px -10px color-mix(in srgb, var(--q) 70%, transparent); transition: transform .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease; }
+    .home-quick__item { --q: var(--brand-blue); --q-bg: #e3f0f9; display: flex; align-items: center; justify-content: center; gap: .6rem; min-height: 3.6rem; padding: .7rem 1rem; border-radius: 1rem; border: 1px solid #cdd7e3; border: 1px solid color-mix(in srgb, var(--q) 28%, #fff); background: var(--q-bg); color: var(--q); font-weight: 700; font-size: 1.02rem; text-decoration: none; box-shadow: 0 6px 16px -10px rgba(0, 52, 110, .35); box-shadow: 0 6px 16px -10px color-mix(in srgb, var(--q) 70%, transparent); transition: transform .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease; }
     .home-quick__item i { font-size: 1.25rem; line-height: 1; }
     .home-quick__item:hover, .home-quick__item:focus-visible { background: var(--q); color: #fff; transform: translateY(-2px); }
     .home-quick__item:active { transform: scale(.97); }
@@ -290,3 +291,14 @@ a.shop-pager__num:hover, a.shop-pager__num:focus-visible { background: var(--b-t
 .footer-install-btn { display: inline-flex; align-items: center; gap: .5rem; margin-top: .9rem; padding: .5rem 1.1rem; border: 1px solid rgba(255,255,255,.55); border-radius: 999px; background: transparent; color: #fff; font-weight: 700; font-size: .95rem; cursor: pointer; transition: background .2s ease, color .2s ease, transform .15s ease; }
 .footer-install-btn:hover, .footer-install-btn:focus-visible { background: #E8AC00; border-color: #E8AC00; color: #00346E; transform: translateY(-2px); }
 .footer-install-btn[hidden] { display: none; }
+
+/* ---- iPhone (notch / home bar): fixed buttons and the full-screen overlay respect the safe areas ---- */
+body .video-overlay-toggle { right: calc(24px + env(safe-area-inset-right, 0px)); bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
+body .cart-fab { left: calc(18px + env(safe-area-inset-left, 0px)); }
+body .video-overlay-screen { padding-top: calc(24px + env(safe-area-inset-top, 0px)); padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
+
+/* iPhone zooms the whole page when an input under 16px gets focus: keep form fields at 16px on phones */
+@media (max-width: 860px) {
+    body .php-email-form input, body .php-email-form textarea, body .php-email-form select, body .php-email-form .form-control,
+    body .form-control, body .form-select { font-size: 16px !important; }
+}

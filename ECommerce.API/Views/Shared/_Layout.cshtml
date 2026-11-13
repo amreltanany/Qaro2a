@@ -177,12 +177,16 @@
     <link rel="sitemap" type="application/xml" title="Sitemap" href="@($"{baseUrl}/sitemap.xml")" />
     <link rel="icon" type="image/png" href="~/logo/favicon-qaro2a.png" asp-append-version="true" />
     <link rel="manifest" href="/manifest.webmanifest" />
+    <script>
+        // Chrome sends the install offer a second after the page opens, long before the deferred scripts run: catch it here and keep it for pwa-install.js
+        window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__bip = e; window.dispatchEvent(new Event('qaro:bip')); });
+    </script>
     <meta name="theme-color" content="#00346E" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="قروءة" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">

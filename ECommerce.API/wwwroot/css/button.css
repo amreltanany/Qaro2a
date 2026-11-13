@@ -1,5 +1,8 @@
-    .button {
-        --background: white;
+/* Animated add-to-cart button.
+   Written as plain (flat) CSS on purpose: native CSS nesting is ignored by Safari before 16.5, which made the cart icon of this
+   button show up as a black shape at the bottom of the button on older iPhones. */
+.button {
+    --background: white;
     --text: black;
     --cart: black;
     --tick: white;
@@ -11,6 +14,7 @@
     -webkit-appearance: none;
     -webkit-tap-highlight-color: transparent;
     -webkit-mask-image: -webkit-radial-gradient(white, black);
+    isolation: isolate;
     overflow: hidden;
     cursor: pointer;
     text-align: center;
@@ -20,103 +24,113 @@
     transform: scale(var(--scale, 1));
     transition: transform .4s cubic-bezier(.36, 1.01, .32, 1.27);
     border: 2px solid;
-    &:active {
-        --scale: .95;
-    }
-    span {
-        font-size: 14px;
-        font-weight: 500;
-        display: block;
-        position: relative;
-        padding-left: 24px;
-        margin-left: -8px;
-        line-height: 26px;
-        transform: translateY(var(--span-y, 0));
-        transition: transform .7s ease;
-        &:before,
-        &:after {
-            content: '';
-            width: var(--w, 2px);
-            height: var(--h, 14px);
-            border-radius: 1px;
-            position: absolute;
-            left: var(--l, 8px);
-            top: var(--t, 6px);
-            background: currentColor;
-            transform: scale(.75) rotate(var(--icon-r, 0deg)) translateY(var(--icon-y, 0));
-            transition: transform .65s ease .05s;
-        }
-        &:after {
-            --w: 14px;
-            --h: 2px;
-            --l: 2px;
-            --t: 12px;
-        }
-    }
-    .cart {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        margin: -13px 0 0 -18px;
-        transform-origin: 12px 23px;
-        transform: translateX(-120px) rotate(-18deg);
-        &:before,
-        &:after {
-            content: '';
-            position: absolute;
-        }
-        &:before {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            box-shadow: inset 0 0 0 2px var(--cart);
-            bottom: 0;
-            left: 9px;
-            filter: drop-shadow(11px 0 0 var(--cart));
-        }
-        &:after {
-            width: 16px;
-            height: 9px;
-            background: var(--cart);
-            left: 9px;
-            bottom: 7px;
-            transform-origin: 50% 100%;
-            transform: perspective(4px) rotateX(-6deg) scaleY(var(--fill, 0));
-            transition: transform 1.2s ease var(--fill-d);
-        }
-        svg {
-            z-index: 1;
-            width: 36px;
-            height: 26px;
-            display: block;
-            position: relative;
-            fill: none;
-            stroke: var(--cart);
-            stroke-width: 2px;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            polyline {
-                &:last-child {
-                    stroke: var(--tick);
-                    stroke-dasharray: 10px;
-                    stroke-dashoffset: var(--offset, 10px);
-                    transition: stroke-dashoffset .4s ease var(--offset-d);
-                }
-            }
-        }
-    }
-    &.loading {
-        --scale: .95;
-        --span-y: -32px;
-        --icon-r: 180deg;
-        --fill: 1;
-        --fill-d: .8s;
-        --offset: 0;
-        --offset-d: 1.73s;
-        .cart {
-            animation: cart 3.4s linear forwards .2s;
-        }
-    }
+}
+
+.button:active {
+    --scale: .95;
+}
+
+.button span {
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+    position: relative;
+    padding-left: 24px;
+    margin-left: -8px;
+    line-height: 26px;
+    transform: translateY(var(--span-y, 0));
+    transition: transform .7s ease;
+}
+
+.button span:before,
+.button span:after {
+    content: '';
+    width: var(--w, 2px);
+    height: var(--h, 14px);
+    border-radius: 1px;
+    position: absolute;
+    left: var(--l, 8px);
+    top: var(--t, 6px);
+    background: currentColor;
+    transform: scale(.75) rotate(var(--icon-r, 0deg)) translateY(var(--icon-y, 0));
+    transition: transform .65s ease .05s;
+}
+
+.button span:after {
+    --w: 14px;
+    --h: 2px;
+    --l: 2px;
+    --t: 12px;
+}
+
+.button .cart {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -13px 0 0 -18px;
+    transform-origin: 12px 23px;
+    transform: translateX(-120px) rotate(-18deg);
+}
+
+.button .cart:before,
+.button .cart:after {
+    content: '';
+    position: absolute;
+}
+
+.button .cart:before {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 2px var(--cart);
+    bottom: 0;
+    left: 9px;
+    filter: drop-shadow(11px 0 0 var(--cart));
+}
+
+.button .cart:after {
+    width: 16px;
+    height: 9px;
+    background: var(--cart);
+    left: 9px;
+    bottom: 7px;
+    transform-origin: 50% 100%;
+    transform: perspective(4px) rotateX(-6deg) scaleY(var(--fill, 0));
+    transition: transform 1.2s ease var(--fill-d);
+}
+
+.button .cart svg {
+    z-index: 1;
+    width: 36px;
+    height: 26px;
+    display: block;
+    position: relative;
+    fill: none;
+    stroke: var(--cart);
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.button .cart svg polyline:last-child {
+    stroke: var(--tick);
+    stroke-dasharray: 10px;
+    stroke-dashoffset: var(--offset, 10px);
+    transition: stroke-dashoffset .4s ease var(--offset-d);
+}
+
+.button.loading {
+    --scale: .95;
+    --span-y: -32px;
+    --icon-r: 180deg;
+    --fill: 1;
+    --fill-d: .8s;
+    --offset: 0;
+    --offset-d: 1.73s;
+}
+
+.button.loading .cart {
+    animation: cart 3.4s linear forwards .2s;
 }
 
 @keyframes cart {

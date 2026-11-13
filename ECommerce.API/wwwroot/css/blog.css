@@ -53,6 +53,7 @@ a {
 }
 
 a:hover {
+  color: rgba(0, 52, 110, 0.75);
   color: color-mix(in srgb, var(--accent-color), transparent 25%);
   text-decoration: none;
 }
@@ -136,6 +137,7 @@ h6 {
   background-color: var(--background-color);
   padding: 25px 0;
   position: relative;
+  border-bottom: 1px solid rgba(33, 37, 41, 0.10);
   border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
@@ -162,6 +164,7 @@ h6 {
   content: "/";
   display: inline-block;
   padding-right: 10px;
+  color: rgba(33, 37, 41, 0.30);
   color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
@@ -256,11 +259,13 @@ section,
   letter-spacing: 0.07rem;
   text-transform: uppercase;
   font-weight: 600;
+  color: rgba(33, 37, 41, 0.50);
   color: color-mix(in srgb, var(--default-color), transparent 50%);
   margin-bottom: 10px;
 }
 
 .trending-category .custom-border {
+  border-color: rgba(33, 37, 41, 0.10) !important;
   border-color: color-mix(in srgb, var(--default-color), transparent 90%) !important;
 }
 
@@ -288,6 +293,7 @@ section,
 }
 
 .trending-category .trending {
+  border: 1px solid rgba(33, 37, 41, 0.10);
   border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
@@ -295,6 +301,7 @@ section,
   color: var(--default-color);
   padding: 10px;
   margin-bottom: 0;
+  border-bottom: 1px solid rgba(33, 37, 41, 0.10);
   border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
   cursor: default;
   text-decoration: none;
@@ -302,6 +309,7 @@ section,
 }
 
 .trending-category .trending > .trending-section-title:hover {
+  background: rgba(33, 37, 41, 0.06);
   background: color-mix(in srgb, var(--default-color), transparent 94%);
   color: var(--default-color);
   text-decoration: none;
@@ -322,6 +330,7 @@ section,
 .trending-category .trending .trending-post li .trending-post-item {
   display: block;
   padding: 20px;
+  border-bottom: 1px solid rgba(33, 37, 41, 0.10);
   border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
   position: relative;
   overflow: hidden;
@@ -331,6 +340,7 @@ section,
 }
 
 .trending-category .trending .trending-post li .trending-post-item:hover {
+  background: rgba(33, 37, 41, 0.06);
   background: color-mix(in srgb, var(--default-color), transparent 94%);
 }
 
@@ -342,6 +352,7 @@ section,
   top: -20px;
   font-weight: 700;
   font-family: var(--heading-font);
+  color: rgba(33, 37, 41, 0.05);
   color: color-mix(in srgb, var(--default-color), transparent 95%);
 }
 
@@ -352,6 +363,7 @@ section,
 }
 
 .trending-category .trending .trending-post li .trending-post-item .author {
+  color: rgba(33, 37, 41, 0.50);
   color: color-mix(in srgb, var(--default-color), transparent 50%);
   font-weight: 500;
 }
@@ -366,6 +378,7 @@ section,
 .about .content .who-we-are {
   text-transform: uppercase;
   margin-bottom: 15px;
+  color: rgba(33, 37, 41, 0.60);
   color: color-mix(in srgb, var(--default-color), transparent 40%);
 }
 
@@ -431,6 +444,7 @@ section,
 }
 
 .about .content .read-more:hover {
+  background: rgba(0, 52, 110, 0.80);
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
   padding-right: 19px;
 }
@@ -510,6 +524,7 @@ section,
   display: block;
   width: 50px;
   height: 1px;
+  background: rgba(33, 37, 41, 0.15);
   background: color-mix(in srgb, var(--default-color), transparent 85%);
   bottom: 0;
   left: 0;
@@ -541,6 +556,7 @@ section,
 }
 
 .team .team-member .social a {
+  background: rgba(33, 37, 41, 0.06);
   background: color-mix(in srgb, var(--default-color), transparent 94%);
   transition: ease-in-out 0.3s;
   display: flex;
@@ -552,6 +568,7 @@ section,
 }
 
 .team .team-member .social a i {
+  color: rgba(33, 37, 41, 0.80);
   color: color-mix(in srgb, var(--default-color), transparent 20%);
   font-size: 16px;
   margin: 0 2px;
@@ -619,7 +636,9 @@ section,
   box-shadow: none;
   border-radius: 0;
   color: var(--default-color);
+  background-color: rgba(255, 255, 255, 0.50);
   background-color: color-mix(in srgb, var(--background-color), transparent 50%);
+  border-color: rgba(33, 37, 41, 0.20);
   border-color: color-mix(in srgb, var(--default-color), transparent 80%);
 }
 
@@ -632,6 +651,7 @@ section,
 .contact .php-email-form input[type=text]::placeholder,
 .contact .php-email-form input[type=email]::placeholder,
 .contact .php-email-form textarea::placeholder {
+  color: rgba(33, 37, 41, 0.30);
   color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
@@ -645,5 +665,6 @@ section,
 }
 
 .contact .php-email-form button[type=submit]:hover {
+  background: rgba(0, 52, 110, 0.80);
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
 }

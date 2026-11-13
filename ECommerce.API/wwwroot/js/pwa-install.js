@@ -41,7 +41,7 @@
         write(s);
     }
 
-    var deferred = null, shown = false;
+    var deferred = window.__bip || null, shown = false;                       // the install offer caught by the inline script in the page head
 
     /* ---------- footer button ---------- */
     function buttons() { return document.querySelectorAll('[data-install-app]'); }
@@ -99,9 +99,8 @@
     function showPopup() {
         if (shown || !popupAllowed || !window.Swal) return;
         if (window.Swal.isVisible && window.Swal.isVisible()) return;           // never on top of another message
-        if (!isIOS && !deferred) return;                                         // Android: only when the browser really offers installing
         shown = true;
-        if (isIOS) {
+        if (isIOS || !deferred) {                                                 // iPhone, or Android where the browser has not offered the install: show the steps
             window.Swal.fire(Object.assign(popupBase(), { html: howToHtml(), confirmButtonText: T.ok, showCancelButton: true, cancelButtonText: T.later, reverseButtons: ar }))
                 .then(function (r) { remember(r.isConfirmed ? 'installed' : 'later'); });
             return;
@@ -121,13 +120,10 @@
         }, delay);
     }
 
-    window.addEventListener('beforeinstallprompt', function (e) {
-        e.preventDefault();                                                       // our own message replaces the browser's mini bar
-        deferred = e;
-        refreshButtons();
-        schedule();
-    });
+    function gotOffer(e) { deferred = e; refreshButtons(); }
+    window.addEventListener('qaro:bip', function () { gotOffer(window.__bip); });
+    window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__bip = e; gotOffer(e); });   // fallback if the head script is missing
     window.addEventListener('appinstalled', function () { remember('installed'); deferred = null; buttons().forEach(function (b) { b.hidden = true; }); });
-    if (isIOS) window.addEventListener('load', schedule);
+    window.addEventListener('load', schedule);
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindButtons); else bindButtons();
 })();
