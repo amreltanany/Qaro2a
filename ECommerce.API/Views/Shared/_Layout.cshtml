@@ -266,6 +266,7 @@
     <script src="~/js/img-retry.js" asp-append-version="true"></script>
     <script src="~/js/rating.js" defer asp-append-version="true"></script>
     <script src="~/js/pwa-register.js" defer asp-append-version="true"></script>
+    <script src="~/js/pwa-install.js" defer asp-append-version="true"></script>
 </head>
 
 <body class="@bodyPageClass" data-branch="@(ViewData["Branch"] as string)">
@@ -590,6 +591,9 @@
                                     <i class="bi bi-spotify" aria-hidden="true"></i>
                                 </a>
                             </div>
+                            <button type="button" class="footer-install-btn" data-install-app hidden>
+                                <i class="bi bi-phone" aria-hidden="true"></i> @L("Install the app", "ثبّت التطبيق")
+                            </button>
                         </div>
                     </div>
                     <hr class="border-light border-opacity-25 my-4" />
