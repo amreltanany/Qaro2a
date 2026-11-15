@@ -282,23 +282,8 @@
 @section Scripts {
     <script src="~/js/arrow-divider.js" defer asp-append-version="true"></script>
     <script src="~/js/hero-3d.js" defer asp-append-version="true"></script>
-    <script>
-        // Top-rated books: endless ticker (CSS animation over a doubled track), paused while hovered/touched.
-        // Registered before addToCart.js / addToWishlist.js so the cloned set gets its click handlers too.
-        document.addEventListener('DOMContentLoaded', function () {
-            var track = document.querySelector('.top-rated-track');
-            if (!track) return;
-            var items = Array.prototype.slice.call(track.children);
-            items.forEach(function (it) {
-                var c = it.cloneNode(true);
-                c.setAttribute('aria-hidden', 'true');
-                c.querySelectorAll('a,button').forEach(function (x) { x.tabIndex = -1; });
-                track.appendChild(c);
-            });
-            track.style.setProperty('--ticker-secs', Math.max(items.length * 7, 30) + 's');
-            track.classList.add('is-running');
-        });
-    </script>    <script src="~/js/addToCart.js" asp-append-version="true"></script>
+    <script src="~/js/top-rated-ticker.js" defer asp-append-version="true"></script>
+    <script src="~/js/addToCart.js" asp-append-version="true"></script>
     <script src="~/js/addToWishlist.js" asp-append-version="true"></script>
     <script>
         (function () {

@@ -382,14 +382,12 @@ html.reduce-motion .arrow path {
 
 .top-rated-slider { overflow: hidden; max-width: 100%; }
 
-/* top-rated ticker: doubled track slides by itself, pauses on hover/touch */
-.top-rated-slider { overflow: hidden; max-width: 100%; padding-block: 18px 26px; }
+/* top-rated ticker: it glides by itself (top-rated-ticker.js) and the visitor can also swipe, drag or scroll it by hand */
+.top-rated-slider { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding-block: 18px 26px; scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; cursor: grab; }
+.top-rated-slider::-webkit-scrollbar { display: none; }
+.top-rated-slider.is-dragging { cursor: grabbing; user-select: none; -webkit-user-select: none; }
+.top-rated-slider.is-dragging a, .top-rated-slider.is-dragging button { pointer-events: none; }
 .top-rated-track { display: flex; width: max-content; }
 .top-rated-item { flex: 0 0 auto; width: 270px; padding-inline-end: 18px; box-sizing: content-box; display: flex; }
 .top-rated-item > .product-card { width: 100%; }
-.top-rated-track.is-running { animation: top-rated-slide var(--ticker-secs, 42s) linear infinite; }
-.top-rated-slider:hover .top-rated-track, .top-rated-slider:active .top-rated-track, .top-rated-slider:focus-within .top-rated-track { animation-play-state: paused; }
-@keyframes top-rated-slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-html[dir="rtl"] .top-rated-track.is-running, html[lang="ar"] .top-rated-track.is-running { animation-name: top-rated-slide-rtl; }
-@keyframes top-rated-slide-rtl { from { transform: translateX(0); } to { transform: translateX(50%); } }
 @media (max-width: 767.98px) { .top-rated-item { width: 220px; padding-inline-end: 14px; } }
