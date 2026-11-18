@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.qaro2a.app",
+      "sha256_cert_fingerprints": [
+        "E5:BB:64:44:8B:68:13:85:2D:A4:34:00:47:EB:03:A6:C7:A6:79:27:87:CE:FC:06:68:49:69:AF:6E:A7:A6:67"
+      ]
+    }
+  }
+]

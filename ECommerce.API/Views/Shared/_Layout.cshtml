@@ -686,6 +686,14 @@
     <script src="~/js/smooth-reveal.js" defer asp-append-version="true"></script>
     <script src="~/js/site-header.js" defer asp-append-version="true"></script>
     <script src="~/js/tooltips.js" defer asp-append-version="true"></script>
+        @* phone navigation: bottom tab bar (icons with a label, the active page is highlighted); "More" opens the full menu *@
+        <nav class="mobile-tabbar" aria-label="@L("Main navigation", "التنقل الرئيسي")">
+            <a asp-controller="Home" asp-action="Index" class="mobile-tabbar__item @GetActiveClass("Home", "Index")"><i class="bi bi-house-door" aria-hidden="true"></i><span>@L("Home", "الرئيسية")</span></a>
+            <a asp-controller="Home" asp-action="Shop" class="mobile-tabbar__item @GetActiveClass("Home", "Shop")"><i class="bi bi-book" aria-hidden="true"></i><span>@L("Shop", "المتجر")</span></a>
+            <a asp-controller="Home" asp-action="Podcast" class="mobile-tabbar__item @GetActiveClass("Home", "Podcast")"><i class="bi bi-mic" aria-hidden="true"></i><span>@L("Podcast", "بودكاست")</span></a>
+            <a asp-controller="Cart" asp-action="Index" class="mobile-tabbar__item @GetActiveClass("Cart", "Index")"><i class="bi bi-cart3" aria-hidden="true"></i><span>@L("Cart", "السلة")</span><b class="mobile-tabbar__badge" data-cart-count>@await Component.InvokeAsync("CartCount")</b></a>
+            <button type="button" class="mobile-tabbar__item" data-open-menu aria-label="@L("Open the full menu", "فتح القائمة الكاملة")"><i class="bi bi-grid" aria-hidden="true"></i><span>@L("More", "المزيد")</span></button>
+        </nav>
     @* floating cart, bottom-left: same icon and count badge as the header (the badge is refreshed by window.updateCartBadge) *@
     @if (!(ViewContext.RouteData.Values["controller"]?.ToString() ?? "").Equals("Cart", StringComparison.OrdinalIgnoreCase))
     {

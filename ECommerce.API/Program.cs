@@ -377,6 +377,15 @@ app.MapGet("/health", async (AppDbContext db, CancellationToken cancellationToke
         }, statusCode: StatusCodes.Status503ServiceUnavailable);
     }
 });
+// Digital Asset Links: tells Android that the Qaro2a app (package + signing key) belongs to this domain, so the app opens without a browser bar.
+// The file lives in wwwroot/well-known (ASP.NET does not serve dot-folders from wwwroot by default).
+app.MapGet("/.well-known/assetlinks.json", async (HttpContext ctx, IWebHostEnvironment env) =>
+{
+    var file = Path.Combine(env.WebRootPath, "well-known", "assetlinks.json");
+    if (!File.Exists(file)) return Results.NotFound();
+    ctx.Response.Headers.CacheControl = "public, max-age=300";
+    return Results.Text(await File.ReadAllTextAsync(file), "application/json");
+}).AllowAnonymous();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -1,0 +1,42 @@
+@{
+    var isArabic = string.Equals(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "ar", StringComparison.OrdinalIgnoreCase);
+    string L(string en, string ar) => isArabic ? ar : en;
+    ViewData["Title"] = L("Delete your account", "حذف الحساب");
+    ViewData["MetaDescription"] = L("How to delete your Qaro2a account and the data linked to it.", "كيف تحذف حسابك في قروءة والبيانات المرتبطة به.");
+}
+
+<main class="main">
+    <div class="page-title">
+        <div class="container d-lg-flex justify-content-between align-items-center">
+            <h1 class="mb-2 mb-lg-0">@L("Delete your account", "حذف الحساب")</h1>
+        </div>
+    </div>
+
+    <section class="section py-5">
+        <div class="container" style="max-width: 840px;">
+            <p>@L("You can delete your Qaro2a account at any time, from the website or from the Qaro2a app.", "تقدر تحذف حسابك في قروءة في أي وقت، من الموقع أو من تطبيق قروءة.")</p>
+
+            <h2 class="h4 mt-4">@L("How to delete it yourself", "إزاي تحذف حسابك بنفسك")</h2>
+            <ol>
+                <li>@L("Sign in to your account.", "سجّل الدخول إلى حسابك.")</li>
+                <li>@L("Open “My account”.", "افتح صفحة «حسابي».")</li>
+                <li>@L("Scroll to “Delete account”, type your password and press “Delete my account”.", "انزل إلى قسم «حذف الحساب»، اكتب كلمة المرور، واضغط «حذف حسابي».")</li>
+            </ol>
+            <p><a class="btn btn-primary" asp-controller="Home" asp-action="MyAccount">@L("Go to my account", "الذهاب إلى حسابي")</a></p>
+
+            <h2 class="h4 mt-4">@L("What is deleted", "اللي بيتحذف")</h2>
+            <ul>
+                <li>@L("Your profile (name, email, phone) and your password.", "ملفك الشخصي (الاسم والبريد والهاتف) وكلمة المرور.")</li>
+                <li>@L("Your cart, wishlist and the order history linked to your account.", "السلة والمفضلة وسجل الطلبات المرتبط بحسابك.")</li>
+            </ul>
+            <p>@L("Deletion cannot be undone. Orders placed without an account (as a guest) are not linked to an account; to have them removed, contact us.", "الحذف نهائي ولا يمكن التراجع عنه. الطلبات اللي اتعملت بدون حساب (كضيف) مش مرتبطة بحساب، ولحذفها تواصل معنا.")</p>
+
+            <h2 class="h4 mt-4">@L("Can't sign in? Ask us to delete it", "مش قادر تسجّل الدخول؟ اطلب منا الحذف")</h2>
+            <p>
+                @L("Send an email from the address you registered with to", "ابعت رسالة من البريد المسجّل به إلى")
+                <a href="mailto:support@qaro2a.com?subject=Delete%20my%20account">support@qaro2a.com</a>
+                @L("with the subject “Delete my account”. We delete it within 30 days.", "بعنوان «حذف حسابي»، وهنحذف الحساب خلال 30 يومًا.")
+            </p>
+        </div>
+    </section>
+</main>

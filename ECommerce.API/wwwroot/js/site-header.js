@@ -50,6 +50,14 @@
         });
     }
 
+    // bottom tab bar on phones: "More" opens the same menu as the old hamburger
+    document.addEventListener('click', function (e) {
+        var more = e.target.closest && e.target.closest('[data-open-menu]');
+        if (!more || !toggle) return;
+        e.preventDefault();
+        setOpen(!header.classList.contains('is-open'));
+    });
+
     // Search popup (the legacy handler is bound to .navbar, which this header does not use)
     header.addEventListener('click', function (e) {
         var btn = e.target.closest('.search-button');

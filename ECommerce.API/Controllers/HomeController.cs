@@ -221,6 +221,10 @@ public class HomeController : Controller
 
     public IActionResult PrivacyPolicy() => View("/Views/Components/PrivacyPolicy.cshtml");
 
+    // /account-deletion: public page Google Play asks for (how to delete the account and its data)
+    [HttpGet("account-deletion")]
+    public IActionResult AccountDeletion() => View("/Views/Components/AccountDeletion.cshtml");
+
     public IActionResult TermsOfService() => View("/Views/Components/TermsOfService.cshtml");
 
     public IActionResult Register()
