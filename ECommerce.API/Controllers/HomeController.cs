@@ -93,7 +93,7 @@ public class HomeController : Controller
         var query = new QueryParameters
         {
             PageNumber = 1,
-            PageSize = 50, // the repository caps a page at 50; the shop pages (25 books each) are cut from the full result below
+            PageSize = 50, // the repository caps a page at 50; the shop pages (28 books each) are cut from the full result below
             Search = string.IsNullOrWhiteSpace(s) ? null : s.Trim(),
             SortBy = string.IsNullOrWhiteSpace(sortBy) ? null : sortBy.Trim(),
             PublishDate = publishDate,
@@ -103,7 +103,7 @@ public class HomeController : Controller
             CategoryId = categoryId,
             TopRatedOnly = topRated
         };
-        const int shopPageSize = 25;
+        const int shopPageSize = 28;
         var all = new List<ECommerce.Application.DTOs.Product.ProductResponseDto>();
         for (var n = 1; n <= 200; n++)
         {
